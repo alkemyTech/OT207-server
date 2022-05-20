@@ -1,0 +1,33 @@
+package com.alkemy.ong.model;
+
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+
+@Entity
+@Table(name = "roles")
+public class Role implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotEmpty
+    @Column(name = "name_role", length = 40, nullable = false)
+    private String name;
+
+    @CreationTimestamp
+    private LocalDateTime createDateTime;
+
+    @UpdateTimestamp
+    private LocalDateTime updateDateTime;
+}
