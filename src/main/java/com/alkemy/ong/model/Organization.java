@@ -11,21 +11,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-// COMO desarrollador
-//        QUIERO agregar la entidad Organization
-//        PARA representar en la implementación la estructura de datos
-//
-//        Criterios de aceptación:
-//        Nombre de tabla: organizations. Los campos son:
-//        name: VARCHAR NOT NULL
-//        image: VARCHAR NOT NULL
-//        address: VARCHAR NULLABLE
-//        phone: INTEGER NULLABLE
-//        email: VARCHAR NOT NULL
-//        welcomeText: TEXT NOT NULL
-//        aboutUsText: TEXT NULLABLE
-//        timestamps y softDelete
-
 @Entity
 @Table(name = "organization")
 @Getter
