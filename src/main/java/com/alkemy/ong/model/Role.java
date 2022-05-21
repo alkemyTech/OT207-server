@@ -26,6 +26,7 @@ public class Role implements Serializable {
     private String name;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
