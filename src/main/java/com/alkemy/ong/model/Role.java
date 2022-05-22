@@ -5,7 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -21,11 +21,12 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    @Column(name = "name_role", length = 40, nullable = false)
+    @NotBlank(message = "Name can not be emtpy")
+    @Column(name = "name", length = 40, nullable = false)
     private String name;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
