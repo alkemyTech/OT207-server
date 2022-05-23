@@ -1,7 +1,5 @@
 package com.alkemy.ong.model;
 
-
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +24,9 @@ public class Slides implements Serializable {
 
     private String text;
 
+    private Integer order;
+
+     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+     @JoinColumn(name = "organizations_id", insertable = false, updatable = false)
+     private organizations organizations;
 }
