@@ -3,7 +3,7 @@ package com.alkemy.ong.model;
 import lombok.Getter;
 import lombok.Setter;
 
-
+import com.alkemy.ong.model.Organizations;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -28,5 +28,5 @@ public class Slides implements Serializable {
 
      @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
      @JoinColumn(name = "organizations_id", insertable = false, updatable = false)
-     private organizations organizations;
+     private Organizations organizations;
 }
