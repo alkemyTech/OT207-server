@@ -29,10 +29,8 @@ public class Category implements Serializable {
     @NotNull(message = "Name cannot be empty")
     private String name;
 
-    @NotNull(message = "Description cannot be empty")
     private String description;
 
-    @NotNull(message = "Image cannot be empty")
     private String image;
 
     @Column(updatable = false)
