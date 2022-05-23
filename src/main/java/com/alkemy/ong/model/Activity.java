@@ -31,13 +31,13 @@ public class Activity implements Serializable{
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@NotNull
+	@NotNull(message = "Name cannot be empty")
     private String name;
 	
-    @NotNull
+	@NotNull(message = "Content cannot be empty")
     private Integer content;
     
-    @NotNull
+	@NotNull(message = "Image cannot be empty")
     private String image;
     
     private boolean deleted = Boolean.FALSE;
