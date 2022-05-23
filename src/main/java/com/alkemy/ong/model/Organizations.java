@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -29,19 +30,27 @@ public class Organizations implements Serializable {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Name cannot be empty")
     private String name;
 
     @Column(nullable = false)
+    @NotEmpty(message = "Image cannot be empty")
     private String image;
 
     private String address;
 
-    private Integer phone;
+    @Digits(integer = 10, fraction = 0)
+    @Size(min = 9, max = 10)
+    @NotEmpty
+    private String phone;
 
     @Column(nullable = false)
+    @NotEmpty(message = "email cannot be empty") // preguntar si es necesario o lo hace el @email directamente
+    @Email
     private String email;
 
     @Column(columnDefinition = "text", nullable = false)
+    @NotEmpty(message = "welcome text cannot be empty")
     private String welcomeText;
 
     @Column(columnDefinition = "text")
