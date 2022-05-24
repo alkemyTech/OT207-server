@@ -3,7 +3,6 @@ package com.alkemy.ong.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import com.alkemy.ong.model.Organizations;
 import javax.persistence.*;
 import java.io.Serializable;
 
