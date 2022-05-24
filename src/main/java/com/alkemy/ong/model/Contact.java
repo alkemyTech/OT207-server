@@ -1,7 +1,6 @@
 package com.alkemy.ong.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -15,6 +14,7 @@ import java.io.Serializable;
 @Table(name = "contacts")
 @Getter
 @Setter
+@ToString
 @SQLDelete(sql = "UPDATE contacts SET deletedAt = true WHERE id=?")
 @Where(clause = "deletedAt = false")
 public class Contact implements Serializable {
@@ -42,4 +42,5 @@ public class Contact implements Serializable {
     private String message;
 
     private boolean deletedAt = Boolean.FALSE;
+
 }
