@@ -45,7 +45,7 @@ public class Organizations implements Serializable {
     private String phone;
 
     @Column(nullable = false)
-    @NotEmpty(message = "email cannot be empty") // preguntar si es necesario o lo hace el @email directamente
+    @NotEmpty(message = "email cannot be empty")
     @Email
     private String email;
 
