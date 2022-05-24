@@ -25,7 +25,7 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@SQLDelete(sql = "UPDATE user SET @deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE user SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 @Table(name = "users")
 public class User {
@@ -34,19 +34,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "First name can not be null")
+    @NotNull(message = "First name cannot be null")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull(message = "Last name can not be null")
+    @NotNull(message = "Last name cannot be null")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull(message = "Email can not be null")
+    @NotNull(message = "Email cannot be null")
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotNull(message = "Password can not be null")
+    @NotNull(message = "Password cannot be null")
     @Column(name = "password")
     private String password;
 
@@ -54,11 +54,12 @@ public class User {
     @Column(name = "photo")
     private String photo;
 
-    /*@NotNull
+    @NotNull(message = "Rol cannot be null")
     @ManyToOne()
     @JoinColumn(name = "roles_id") 
-    private Role roleId;*/ //Tengo que esperar que se cree la entidad Role
-    private Boolean deleted;
+    private Role roleId;
+    
+    private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp
     private LocalDateTime createDateTime;

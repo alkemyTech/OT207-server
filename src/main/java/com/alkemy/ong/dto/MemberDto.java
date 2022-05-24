@@ -9,7 +9,7 @@ import org.springframework.lang.Nullable;
 @Setter
 public class MemberDto {
 
-    @NotNull(message = "Name can not be null")
+    @NotNull(message = "Name cannot be null")
     private String name;
 
     @Nullable

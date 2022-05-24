@@ -23,7 +23,7 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@SQLDelete(sql = "UPDATE user SET @deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE member SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 @Table(name = "members")
 public class Member {
@@ -32,7 +32,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Name can not be null")
+    @NotNull(message = "Name cannot be null")
     @Column(name = "name")
     private String name;
 
@@ -48,7 +48,7 @@ public class Member {
     @Column(name = "linkedin_url")
     private String linkedinUrl;
 
-    @NotNull(message = "Image can not be null")
+    @NotNull(message = "Image cannot be null")
     @Column(name = "image")
     private String image;
 
@@ -56,7 +56,7 @@ public class Member {
     @Column(name = "description")
     private String description;
 
-    private Boolean deleted;
+    private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp
     private LocalDateTime createDateTime;
