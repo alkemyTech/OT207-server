@@ -1,13 +1,14 @@
-package com.alkemy.ong.util;
+package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.ContactDTO;
 import com.alkemy.ong.model.Contact;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ContactMapper {
 
-    public Contact ContactDTO2Entity(ContactDTO dto) {
+    public Contact ContactDTO2Entity(@NotNull ContactDTO dto) {
         Contact entity = new Contact();
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
@@ -16,7 +17,7 @@ public class ContactMapper {
         return entity;
     }
 
-    public ContactDTO ContactEntity2DTO(Contact entity) {
+    public ContactDTO ContactEntity2DTO(@NotNull Contact entity) {
         ContactDTO dto = new ContactDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
