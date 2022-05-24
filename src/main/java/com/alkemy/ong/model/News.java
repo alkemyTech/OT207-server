@@ -27,18 +27,18 @@ public class News {
     private Long id;
 
     @NotNull(message = "Name cannot be empty")
-    @Column(name = "name", length = 40, nullable = false)
+    @Column(name = "name", length = 40)
     private String name;
 
     @NotNull(message = "Content cannot be empty")
-    @Column(name = "content", nullable = false)
+    @Column(name = "content")
     private String content;
 
     @NotNull(message = "Image URL is required")
-    @Column(name = "image", nullable = false)
+    @Column(name = "image")
     private String image;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Category categoryId;
 
     @CreationTimestamp
