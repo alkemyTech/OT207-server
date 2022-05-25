@@ -27,5 +27,5 @@ public class Slides implements Serializable {
 
      @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
      @JoinColumn(name = "organizations_id", insertable = false, updatable = false)
-     private Organizations organizations;
+     private Organization organizations;
 }

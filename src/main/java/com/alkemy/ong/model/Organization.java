@@ -13,14 +13,14 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "organization")
+@Table(name = "organizations")
 @Getter
 @Setter
 
-@SQLDelete(sql = "UPDATE organization SET softDelete = true WHERE id=?")
+@SQLDelete(sql = "UPDATE organizations SET softDelete = true WHERE id=?")
 @Where(clause = "softDelete = false")
 
-public class Organizations implements Serializable {
+public class Organization implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class Organizations implements Serializable {
     private String phone;
 
     @Column(nullable = false)
-    @NotEmpty(message = "email cannot be empty") // preguntar si es necesario o lo hace el @email directamente
+    @NotEmpty(message = "email cannot be empty")
     @Email
     private String email;
 
