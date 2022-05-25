@@ -39,6 +39,7 @@ public class News {
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
     private Category categoryId;
 
     @CreationTimestamp
