@@ -21,6 +21,6 @@ public class UserDto {
     @NotNull(message = "Password cannot be null")
     private String password;
 
-    @NotNull(message = "Role cannot be null")
+    //@NotNull(message = "Role cannot be null")
     private Role roleId;
 }

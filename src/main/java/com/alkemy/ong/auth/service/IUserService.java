@@ -1,7 +1,7 @@
-package com.alkemy.ong.service;
+package com.alkemy.ong.auth.service;
 
 import com.alkemy.ong.dto.UserDto;
-import com.alkemy.ong.dto.UserResponseDto;
+import com.alkemy.ong.auth.dto.UserResponseDto;
 
 public interface IUserService {
 

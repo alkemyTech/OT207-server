@@ -2,8 +2,9 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.ContactDTO;
 import com.alkemy.ong.model.Contact;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
+
+import javax.validation.constraints.NotNull;
 
 @Component
 public class ContactMapper {

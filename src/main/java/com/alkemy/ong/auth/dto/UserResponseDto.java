@@ -1,4 +1,4 @@
-package com.alkemy.ong.dto;
+package com.alkemy.ong.auth.dto;
 
 import com.alkemy.ong.model.Role;
 import lombok.Getter;
