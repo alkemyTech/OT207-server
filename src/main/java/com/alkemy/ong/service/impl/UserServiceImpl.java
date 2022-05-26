@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.dto.UserResponseDto;
+import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.Role;
 import com.alkemy.ong.model.User;
 import com.alkemy.ong.repository.IRoleRepository;
@@ -23,18 +24,19 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public UserResponseDto register(UserDto userDto) {
 
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        user.setPhoto(userDto.getPassword());
-        user.setRoleId(iRoleRepository.getById(1L));
+        userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userDto.setRoleId(iRoleRepository.getById(1L));
 
+        User user = userMapper.UserDto2Entity(userDto);
 
-        return null;
+        UserResponseDto userResponseDto = userMapper.UserEntity2ResponseDto(userRepository.save(user));
+
+        return userResponseDto;
     }
 }
