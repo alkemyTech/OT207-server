@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
-@SQLDelete(sql = "UPDATE organizations SET soft_delete = true WHERE id=?")//softDelete no va xq en la tabla la genera como soft_delete
-@Where(clause = "soft_delete = false") //softDelete no va xq en la tabla la genera como soft_delete
+@SQLDelete(sql = "UPDATE organizations SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 
 public class Organization implements Serializable {
 
@@ -63,5 +63,5 @@ public class Organization implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    private Boolean softDelete = Boolean.FALSE;
+    private Boolean deleted = Boolean.FALSE;
 }

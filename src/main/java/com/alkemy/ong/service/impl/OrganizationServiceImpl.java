@@ -1,6 +1,7 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.OrganizationDTO;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.OrganizationMapper;
 import com.alkemy.ong.model.Organization;
 import com.alkemy.ong.repository.OrganizationRepository;
@@ -23,8 +24,11 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<OrganizationDTO> findAll() {
+    public List<OrganizationDTO> findAll(){
         List<Organization> entities = organizationRepository.findAll();
+        if(entities.isEmpty()){
+            throw new NotFoundException("The list is empty");
+        }
         List<OrganizationDTO> dtoList = organizationMapper.organizationEntityList2DTOList(entities);
         return dtoList;
     }

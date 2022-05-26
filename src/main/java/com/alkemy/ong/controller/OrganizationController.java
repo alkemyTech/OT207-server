@@ -18,7 +18,7 @@ public class OrganizationController {
     private IOrganizationService organization;
 
     @GetMapping("/public")
-    ResponseEntity<List<OrganizationDTO>> getOrganizationDTO(){
+    public ResponseEntity<List<OrganizationDTO>> getOrganizationDTO(){
         List<OrganizationDTO> organizationDTOS = this.organization.findAll();
         return ResponseEntity.ok().body(organizationDTOS);
     }
