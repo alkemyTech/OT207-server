@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Table(name = "commentaries")
 public class Commentary implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,9 +25,11 @@ public class Commentary implements Serializable {
     @NotBlank(message = "The body cannot be empty")
     private String body;
 
-    @Column(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private Long userId;
 
-    @Column(name = "news_id")
+    @ManyToOne
+    @JoinColumn(name = "news_id")
     private Long newsId;
 }
