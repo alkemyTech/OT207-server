@@ -1,16 +1,18 @@
 package com.alkemy.ong.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Table(name = "commentaries")
 public class Commentary implements Serializable {
@@ -32,4 +34,8 @@ public class Commentary implements Serializable {
     @ManyToOne
     @JoinColumn(name = "news_id")
     private Long newsId;
+
+    @CreationTimestamp
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
 }
