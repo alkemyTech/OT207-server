@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
-@SQLDelete(sql = "UPDATE organizations SET softDelete = true WHERE id=?")
-@Where(clause = "softDelete = false")
+@SQLDelete(sql = "UPDATE organizations SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 
 public class Organization implements Serializable {
 
@@ -41,7 +41,7 @@ public class Organization implements Serializable {
 
     @Digits(integer = 10, fraction = 0)
     @Size(min = 9, max = 10)
-    @NotEmpty
+    @NotEmpty(message = "Phone cannot be empty")
     private String phone;
 
     @Column(nullable = false)
@@ -63,5 +63,5 @@ public class Organization implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    private boolean softDelete = Boolean.FALSE;
+    private Boolean deleted = Boolean.FALSE;
 }
