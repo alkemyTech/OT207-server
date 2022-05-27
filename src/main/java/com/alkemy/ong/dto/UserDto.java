@@ -2,9 +2,12 @@ package com.alkemy.ong.dto;
 
 import com.alkemy.ong.model.Role;
 import javax.validation.constraints.NotNull;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Data
 @Getter
 @Setter
 public class UserDto {
