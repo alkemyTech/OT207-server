@@ -21,14 +21,9 @@ public class AuthController {
     @Autowired
     private IUserService iUserService;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @PostMapping("/register")
     public ResponseEntity<?> userRegistration(@Valid @RequestBody UserDto userDto){
-        if(userRepository.existsByEmail(userDto.getEmail())){
-            return new ResponseEntity<>("There is already an account with this email" + userDto.getEmail(), HttpStatus.BAD_REQUEST);
-        }
+
         UserResponseDto userResponseDto = iUserService.register(userDto);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);

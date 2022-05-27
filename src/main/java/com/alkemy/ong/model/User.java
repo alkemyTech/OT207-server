@@ -61,7 +61,7 @@ public class User {
     @NotNull(message = "Rol cannot be null")
     @ManyToOne()
     @JoinColumn(name = "roles_id")
-    private Role roleId;
+    private Role role;
     
     private Boolean deleted = Boolean.FALSE;
 
