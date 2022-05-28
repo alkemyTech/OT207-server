@@ -1,5 +1,6 @@
 package com.alkemy.ong.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -65,8 +67,8 @@ public class User implements UserDetails{
 
     @NotNull(message = "Rol cannot be null")
     @ManyToOne()
-    @JoinColumn(name = "roles_id") 
-    private Role roleId;
+    @JoinColumn(name = "roles_id")
+    private Role role;
     
     private Boolean deleted = Boolean.FALSE;
 
