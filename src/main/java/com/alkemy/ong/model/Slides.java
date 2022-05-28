@@ -21,7 +21,7 @@ public class Slides implements Serializable {
 
     private String text;
 
-    private Integer orderSlides;// "order" genera un error en la sintaxis de la query para crear la tabla es una palabra reservada de sql
+    private Integer orderSlides;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "organizations_id", referencedColumnName = "id", insertable = false, updatable = false)

@@ -39,8 +39,8 @@ public class News {
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    private Category categoryId;
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 
     @CreationTimestamp
     private LocalDateTime createDateTime;
