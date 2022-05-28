@@ -29,7 +29,7 @@ public class S3ServiceImpl implements IS3Service {
 
 
         if (file.isEmpty()) {
-            throw new NullPointerException("La imagen esta vacia");
+            throw new NullPointerException("file is empty");
         }
 
         if (validFileExtensions(extension)) {
@@ -48,7 +48,7 @@ public class S3ServiceImpl implements IS3Service {
                 throw new RuntimeException(ex);
             }
         } else {
-            throw new NotFoundException("Formanto no valido");
+            throw new NotFoundException("format invalid");
         }
 
     }
