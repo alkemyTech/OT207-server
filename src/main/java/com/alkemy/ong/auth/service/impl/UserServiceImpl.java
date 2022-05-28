@@ -2,6 +2,9 @@ package com.alkemy.ong.auth.service.impl;
 
 import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
+import com.alkemy.ong.exception.BadRequestException;
+import com.alkemy.ong.exception.ConflictException;
+import com.alkemy.ong.exception.ForbiddenException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.Role;
 import com.alkemy.ong.model.User;
@@ -12,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -32,7 +37,8 @@ public class UserServiceImpl implements IUserService {
     public UserResponseDto register(UserDto userDto) throws UsernameNotFoundException {
 
         if(userRepository.existsByEmail(userDto.getEmail())){
-            throw new UsernameNotFoundException("There is already an account with this email" + userDto.getEmail());
+
+            throw new ConflictException("There is already an account with this email " + userDto.getEmail());
         }
 
         userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));

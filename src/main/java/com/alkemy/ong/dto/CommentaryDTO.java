@@ -18,8 +18,8 @@ public class CommentaryDTO {
     private String body;
 
     @NotNull(message = "User id cannot be null")
-    private User userId;
+    private User user;
 
     @NotNull(message = "News id cannot be null")
-    private News newsId;
+    private News news;
 }

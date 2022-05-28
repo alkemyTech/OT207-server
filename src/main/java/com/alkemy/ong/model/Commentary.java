@@ -29,11 +29,11 @@ public class Commentary implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User userId;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "news_id", referencedColumnName = "id")
-    private News newsId;
+    private News news;
 
     @CreationTimestamp
     @Column(name = "creation_date")

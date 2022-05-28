@@ -2,11 +2,13 @@ package com.alkemy.ong.auth.controller;
 
 import com.alkemy.ong.dto.UserDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
-import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.auth.service.IUserService;
+import com.alkemy.ong.exception.BadRequestException;
+import com.alkemy.ong.exception.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +24,11 @@ public class AuthController {
     private IUserService iUserService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> userRegistration(@Valid @RequestBody UserDto userDto){
-
+    public ResponseEntity<?> userRegistration(@Valid @RequestBody UserDto userDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new BadRequestException(bindingResult);
+        }
         UserResponseDto userResponseDto = iUserService.register(userDto);
-
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
 }

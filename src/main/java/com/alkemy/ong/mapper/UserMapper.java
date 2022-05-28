@@ -16,7 +16,7 @@ public class UserMapper {
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
         entity.setPassword(dto.getPassword());
-        entity.setRole(dto.getRoleId());
+        entity.setRole(dto.getRole());
         return entity;
     }
 
@@ -26,7 +26,7 @@ public class UserMapper {
         dto.setLastName(entity.getLastName());
         dto.setEmail(entity.getEmail());
         dto.setPassword(entity.getPassword());
-        dto.setRoleId(entity.getRole());
+        dto.setRole(entity.getRole());
         return dto;
     }
 
