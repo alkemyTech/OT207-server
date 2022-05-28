@@ -4,9 +4,12 @@ import com.alkemy.ong.model.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Data
 @Getter
 @Setter
 public class UserDto {
