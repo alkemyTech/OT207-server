@@ -1,5 +1,6 @@
 package com.alkemy.ong.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -56,7 +58,7 @@ public class User {
     @Column(name = "photo")
     private String photo;
 
-    @NotNull(message = "Rol cannot be null")
+    @NotNull(message = "Role cannot be null")
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"),
@@ -74,34 +76,34 @@ public class User {
     public <T> User(String email, String password, List<T> emptyList) {
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return null;
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return null;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return false;
-//    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+   }
+  
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 
 }
