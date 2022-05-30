@@ -11,12 +11,18 @@ public class CategoryMapper {
 
         Category categoryEntity = new Category();
         categoryEntity.setName(categoryDto.getName());
+        categoryEntity.setDescription(categoryDto.getDescription());
+        categoryEntity.setImage(categoryDto.getImage());
+
         return categoryEntity;
     }
 
     public CategoryDto categoryEntityToCategoryDto(Category savedEntity) {
         CategoryDto categoryDTO = new CategoryDto();
         categoryDTO.setName(savedEntity.getName());
+        categoryDTO.setDescription(savedEntity.getDescription());
+        categoryDTO.setImage(savedEntity.getImage());
+
         return categoryDTO;
     }
 }

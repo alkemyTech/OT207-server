@@ -1,6 +1,7 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.CategoryDto;
+import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.model.Category;
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
-    CategoryMapper categoryMapper;
+   private CategoryMapper categoryMapper;
     @Autowired
-    CategoryRepository categoryRepository;
+   private CategoryRepository categoryRepository;
 
     public CategoryDto addCategory(CategoryDto categoryDto) {
         try{
@@ -23,7 +24,7 @@ public class CategoryServiceImpl implements ICategoryService {
             Category savedEntity = categoryRepository.save(CategoryEntity);
             return categoryMapper.categoryEntityToCategoryDto(savedEntity);}
         catch (Exception e){
-            throw new NotFoundException(e.getMessage());
+            throw new ConflictException(e.getMessage());
         }
     }
 }
