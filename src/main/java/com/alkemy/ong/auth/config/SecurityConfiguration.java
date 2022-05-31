@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                .anyRequest().authenticated()
                .and().exceptionHandling()
                .and().sessionManagement()
-               .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //para cada endpoint haga una atenticacion distinta/nueva
+               .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // agrega un filtro, chequea el header verificando los datos correctos ANTES QUE EL FILTRO DE SPRIGBOOT POR DEFECTO
       httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

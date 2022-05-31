@@ -2,17 +2,11 @@ package com.alkemy.ong.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -66,10 +60,13 @@ public class User implements UserDetails{
     private String photo;
 
     @NotNull(message = "Rol cannot be null")
-    @ManyToOne()
-    @JoinColumn(name = "roles_id")
-    private Role role;
-    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_roles",joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id","roles_id"})})
+    private List<Role> roles = new ArrayList<>();
+
+
     private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp

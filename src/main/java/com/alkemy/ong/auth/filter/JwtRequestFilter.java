@@ -46,10 +46,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             UserDetails userDetails = this.userDetailsCustomService.loadUserByUsername(username);
 
-            if (jwtUtils.validateToken(jwt, userDetails)) { // hace las validadaciones
+            if (jwtUtils.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authReq =
                         new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), Collections.EMPTY_LIST);
-//                Authentication auth = authenticationManager.authenticate(authReq); // le digo a la unidad de spring q estoy autenticado
+  Authentication auth = authenticationManager.authenticate(authReq);
                 SecurityContextHolder.getContext().setAuthentication(authReq);
             }
         }

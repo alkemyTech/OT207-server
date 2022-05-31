@@ -1,4 +1,4 @@
-package com.alkemy.ong.repository;
+package com.alkemy.ong.auth.repository;
 
 import com.alkemy.ong.model.User;
 
