@@ -20,7 +20,6 @@ public class NewsController {
     @Autowired
     private INewsService newsService;
 
-    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<NewsDTO> create(@Valid NewsDTO dto, BindingResult bindingResult){
     if (bindingResult.hasErrors()){

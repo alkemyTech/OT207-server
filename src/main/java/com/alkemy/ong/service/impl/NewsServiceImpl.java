@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class NewsServiceImpl implements INewsService {
 
+    private static final String NEWS = "news";
     @Autowired
     private NewsRepository newsRepository;
 
@@ -23,10 +24,10 @@ public class NewsServiceImpl implements INewsService {
     @Autowired
     private NewsMapper mapper;
     public NewsDTO save(NewsDTO dto){
-        Category category = categoryRepository.findByName("news");
+        Category category = categoryRepository.findByName(NEWS);
         News news = mapper.newsDTO2Entity(dto);
         if (category == null){
-            throw new NotFoundException("Category not found");
+            throw new NotFoundException("Category not found: " + NEWS);
         }
         news.setCategoryId(category);
         News newsSaved = newsRepository.save(news);
