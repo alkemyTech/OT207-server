@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements ICategoryService {
             Category savedEntity = categoryRepository.save(CategoryEntity);
             return categoryMapper.categoryEntityToCategoryDto(savedEntity);}
         catch (Exception e){
-            throw new ConflictException(e.getMessage());
+            throw new ConflictException("There is already a category with this name " + categoryDto.getName());
         }
     }
 }

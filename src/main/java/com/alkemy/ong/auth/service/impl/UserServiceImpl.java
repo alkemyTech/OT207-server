@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements IUserService {
 
@@ -36,14 +38,14 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserResponseDto register(UserDto userDto) throws UsernameNotFoundException {
 
-        if(userRepository.existsByEmail(userDto.getEmail())){
-
+        Optional<User> userEntity  =  userRepository.findByEmail(userDto.getEmail());
+        if(userEntity.isPresent()){
             throw new ConflictException("There is already an account with this email " + userDto.getEmail());
         }
-
+        User user;
         userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         Role role = roleRepository.findByName("ROLE_USER").get();
-        User user = userMapper.UserDto2Entity(userDto);
+        user = userMapper.UserDto2Entity(userDto);
         user.setRole(role);
 
         UserResponseDto userResponseDto = userMapper.UserEntity2ResponseDto(userRepository.save(user));

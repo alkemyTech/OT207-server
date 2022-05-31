@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class UserDetailsCustomService implements UserDetailsService {
@@ -26,11 +27,13 @@ public class UserDetailsCustomService implements UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User userEntity = userRepository.findByEmail(userName);
-        if (userEntity == null) {
+        Optional <User> userEntity = userRepository.findByEmail(userName);
+        if (!userEntity.isPresent()) {
             throw new UsernameNotFoundException("The username or password is incorrect");
         }
-        return new User(userEntity.getEmail(), userEntity.getPassword(), Collections.emptyList());
+        User user = userEntity.get();
+
+        return new User(user.getEmail(), user.getPassword(), Collections.emptyList());
     }
 
     @Transactional()
