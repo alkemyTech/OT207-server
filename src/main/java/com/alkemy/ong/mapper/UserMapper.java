@@ -22,9 +22,8 @@ public class UserMapper {
             for (Role role : dto.getRoles()) {
                 entity.getRoles().add(role);
             }
-
+//aca el for puede llegar a romper el programa
         }
-
         return entity;
     }
 
@@ -47,10 +46,7 @@ public class UserMapper {
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
         dto.setEmail(entity.getEmail());
-
-        for (Role role : entity.getRoles()) {
-            dto.getRoles().add(role);
-        }
+        dto.setRoles(entity.getRoles()); //el for era el problema
 
         return dto;
     }
