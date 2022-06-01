@@ -53,14 +53,10 @@ public class UserDetailsCustomService implements UserDetailsService {
         List<GrantedAuthority> roles = new ArrayList<>();
         for (Role role:userEntity.get().getRoles()) {
             roles.add(new SimpleGrantedAuthority(role.getName()));
-        } //TODO:: Arreglar esto
+        }
         UserEntity user = userEntity.get();
-        //return user;
-        return new User(user.getEmail(),user.getPassword(),true, true,true, true,roles);
-    }  //TODO:: Arreglar esto
-    /*{   "status": "INTERNAL_SERVER_ERROR",
-             "message": "USRMSG-Cannot pass null or empty values to constructor",
-             "errors": null} */
+            return new User(user.getUsername(),user.getPassword(),user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),user.isAccountNonLocked(),roles);
+    }
 
 
     @Transactional()

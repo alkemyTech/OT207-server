@@ -17,6 +17,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -61,7 +62,6 @@ public class UserEntity implements UserDetails {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "roles_id"})})
     private List<Role> roles = new ArrayList<>();
 
-
     private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp
@@ -85,20 +85,23 @@ public class UserEntity implements UserDetails {
     public <T> UserEntity(String email, String password, List<T> emptyList) {
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+        List<GrantedAuthority> roles = new ArrayList<>();
+        for (Role role:this.getRoles()) {
+            roles.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return roles;
+    } //TODO:: A futuro controlar que el return no de conflictos
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.getEmail();
     }
 
     @Override
