@@ -59,7 +59,7 @@ public class UserEntity implements UserDetails {
     @JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "roles_id"})})
-    private List<GrantedAuthority> roles = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
 
 
     private Boolean deleted = Boolean.FALSE;
@@ -85,15 +85,6 @@ public class UserEntity implements UserDetails {
     public <T> UserEntity(String email, String password, List<T> emptyList) {
     }
 
-    public UserEntity(String email, String password, List<GrantedAuthority> roles, boolean accountNonExpired, boolean accountNonLocked, boolean enabled) {
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.accountNonExpired = true;
-        this.accountNonLocked = true;
-        this.credentialsNonExpired = true;
-        this.enabled = true;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

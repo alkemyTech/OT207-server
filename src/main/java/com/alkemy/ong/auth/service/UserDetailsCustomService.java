@@ -54,8 +54,9 @@ public class UserDetailsCustomService implements UserDetailsService {
             roles.add(new SimpleGrantedAuthority(role.getName()));
         } //TODO:: Arreglar esto
         UserEntity user = userEntity.get();
-        return new User( user.getEmail(), user.getPassword(), user.getRoles(), user.isAccountNonExpired(), user.isAccountNonLocked(), user.isEnabled());
+        return new User(user.getEmail(),user.getPassword(),user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),user.isAccountNonLocked(),roles);
     }  //TODO:: Arreglar esto
+
 
     @Transactional()
     public boolean save(UserRequestDto userRequestDto) throws Exception {
