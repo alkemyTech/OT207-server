@@ -3,31 +3,30 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.auth.dto.UserRequestDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.model.Role;
-import com.alkemy.ong.model.User;
+import com.alkemy.ong.model.UserEntity;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 
 @Component
 public class UserMapper {
 
-    public User UserDto2Entity(@NotNull UserRequestDto dto, boolean flag) {
-        User entity = new User();
+    public UserEntity UserDto2Entity(@NotNull UserRequestDto dto, boolean flag) {
+        UserEntity entity = new UserEntity();
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
         entity.setPassword(dto.getPassword());
         if (flag) {
             for (Role role : dto.getRoles()) {
-                entity.getRoles().add(role);
+                entity.getRoles().add(role);  //TODO:: Arreglar esto
             }
 //aca el for puede llegar a romper el programa
         }
         return entity;
     }
 
-    public UserRequestDto UserEntity2Dto(@NotNull User entity) {
+    public UserRequestDto UserEntity2Dto(@NotNull UserEntity entity) {
         UserRequestDto dto = new UserRequestDto();
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
@@ -41,7 +40,7 @@ public class UserMapper {
         return dto;
     }
 
-    public UserResponseDto UserEntity2ResponseDto(@NotNull User entity) {
+    public UserResponseDto UserEntity2ResponseDto(@NotNull UserEntity entity) {
         UserResponseDto dto = new UserResponseDto();
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());

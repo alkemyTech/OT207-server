@@ -1,6 +1,5 @@
 package com.alkemy.ong.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,10 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,18 +20,17 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+@Getter
+@Setter
 @SQLDelete(sql = "UPDATE user SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 @Table(name = "users")
-public class User implements UserDetails{
 
-	private static final long serialVersionUID = 1L;
+public class UserEntity implements UserDetails {
 
-	@Id
+    private static final long serialVersionUID = 1L;
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -59,12 +55,11 @@ public class User implements UserDetails{
     @Column(name = "photo")
     private String photo;
 
-    @NotNull(message = "Rol cannot be null")
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuario_roles",joinColumns = @JoinColumn(name = "usuario_id"),
+    @JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id","roles_id"})})
-    private List<Role> roles = new ArrayList<>();
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "roles_id"})})
+    private List<GrantedAuthority> roles = new ArrayList<>();
 
 
     private Boolean deleted = Boolean.FALSE;
@@ -75,11 +70,38 @@ public class User implements UserDetails{
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    public <T> User(String email, String password, List<T> emptyList) {
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+
+    public UserEntity() {
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
+    }
+
+    public <T> UserEntity(String email, String password, List<T> emptyList) {
+    }
+
+    public UserEntity(String email, String password, List<GrantedAuthority> roles, boolean accountNonExpired, boolean accountNonLocked, boolean enabled) {
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
         return null;
     }
 
@@ -90,22 +112,38 @@ public class User implements UserDetails{
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return this.accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return this.accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return this.credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 }

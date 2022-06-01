@@ -50,8 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                .and().sessionManagement()
                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        // agrega un filtro, chequea el header verificando los datos correctos ANTES QUE EL FILTRO DE SPRIGBOOT POR DEFECTO
-      httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+             httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 }

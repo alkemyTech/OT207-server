@@ -1,7 +1,7 @@
 package com.alkemy.ong.dto;
 
 import com.alkemy.ong.model.News;
-import com.alkemy.ong.model.User;
+import com.alkemy.ong.model.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +18,7 @@ public class CommentaryDTO {
     private String body;
 
     @NotNull(message = "User id cannot be null")
-    private User user;
+    private UserEntity userEntity;
 
     @NotNull(message = "News id cannot be null")
     private News news;

@@ -28,8 +28,6 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 public class AuthController {
 
-
-
     private UserDetailsCustomService userDetailsCustomService;
     private AuthenticationManager authenticationManager;
     private JwtUtils jwtTokenUtil;
