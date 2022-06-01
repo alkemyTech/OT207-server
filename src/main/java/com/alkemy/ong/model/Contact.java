@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@SQLDelete(sql = "UPDATE contacts SET deletedAt = true WHERE id=?")
-@Where(clause = "deletedAt = false")
+@SQLDelete(sql = "UPDATE contacts SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Contact implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +41,6 @@ public class Contact implements Serializable {
     @NotNull(message = "Name cannot be empty")
     private String message;
 
-    private boolean deletedAt = Boolean.FALSE;
+    private boolean deleted = Boolean.FALSE;
 
 }
