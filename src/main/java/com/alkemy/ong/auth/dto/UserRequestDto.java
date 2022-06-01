@@ -29,6 +29,5 @@ public class UserRequestDto {
     @NotNull(message = "Password cannot be null")
     private String password;
 
-    //@NotNull(message = "Role cannot be null")
-    private List<Role> roles;
+      private List<Role> roles;
 }
