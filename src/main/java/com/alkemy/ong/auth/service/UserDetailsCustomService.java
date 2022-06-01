@@ -13,6 +13,7 @@ import com.alkemy.ong.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,8 +55,12 @@ public class UserDetailsCustomService implements UserDetailsService {
             roles.add(new SimpleGrantedAuthority(role.getName()));
         } //TODO:: Arreglar esto
         UserEntity user = userEntity.get();
-        return new User(user.getEmail(),user.getPassword(),user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),user.isAccountNonLocked(),roles);
+        //return user;
+        return new User(user.getEmail(),user.getPassword(),true, true,true, true,roles);
     }  //TODO:: Arreglar esto
+    /*{   "status": "INTERNAL_SERVER_ERROR",
+             "message": "USRMSG-Cannot pass null or empty values to constructor",
+             "errors": null} */
 
 
     @Transactional()

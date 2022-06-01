@@ -33,7 +33,7 @@ public class AuthController {
     private JwtUtils jwtTokenUtil;
 
     @Autowired
-    public AuthController(UserDetailsCustomService userDetailsCustomService,AuthenticationManager authenticationManager,JwtUtils jwtTokenUtil) {
+    public AuthController(UserDetailsCustomService userDetailsCustomService, AuthenticationManager authenticationManager, JwtUtils jwtTokenUtil) {
         this.userDetailsCustomService = userDetailsCustomService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
@@ -41,7 +41,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> userRegistration(@Valid @RequestBody UserRequestDto userRequestDto, BindingResult bindingResult) throws Exception {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }
         UserResponseDto userResponseDto = userDetailsCustomService.register(userRequestDto);
@@ -49,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> singIn(@RequestBody AuthenticationRequest authRequest){
+    public ResponseEntity<AuthenticationResponse> singIn(@RequestBody AuthenticationRequest authRequest) {
 
         UserDetails userDetails;
         try {
