@@ -1,8 +1,9 @@
 package com.alkemy.ong.mapper;
 
-import com.alkemy.ong.dto.UserDto;
+import com.alkemy.ong.auth.dto.UserRequestDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
-import com.alkemy.ong.model.User;
+import com.alkemy.ong.model.Role;
+import com.alkemy.ong.model.UserEntity;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -10,32 +11,42 @@ import javax.validation.constraints.NotNull;
 @Component
 public class UserMapper {
 
-    public User UserDto2Entity(@NotNull UserDto dto){
-        User entity = new User();
+    public UserEntity UserDto2Entity(@NotNull UserRequestDto dto, boolean flag) {
+        UserEntity entity = new UserEntity();
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
         entity.setPassword(dto.getPassword());
-        entity.setRole(dto.getRole());
+        if (flag) {
+            for (Role role : dto.getRoles()) {
+                entity.getRoles().add(role);  //TODO:: Arreglar esto
+            }
+//aca el for puede llegar a romper el programa
+        }
         return entity;
     }
 
-    public UserDto UserEntity2Dto(@NotNull User entity){
-        UserDto dto = new UserDto();
+    public UserRequestDto UserEntity2Dto(@NotNull UserEntity entity) {
+        UserRequestDto dto = new UserRequestDto();
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
         dto.setEmail(entity.getEmail());
         dto.setPassword(entity.getPassword());
-        dto.setRole(entity.getRole());
+
+        for (Role role : entity.getRoles()) {
+            dto.getRoles().add(role);
+        }
+
         return dto;
     }
 
-    public UserResponseDto UserEntity2ResponseDto(@NotNull User entity){
+    public UserResponseDto UserEntity2ResponseDto(@NotNull UserEntity entity) {
         UserResponseDto dto = new UserResponseDto();
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
         dto.setEmail(entity.getEmail());
-        dto.setRoleId(entity.getRole());
+        dto.setRoles(entity.getRoles()); //el for era el problema
+
         return dto;
     }
 
