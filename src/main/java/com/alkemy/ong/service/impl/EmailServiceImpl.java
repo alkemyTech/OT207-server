@@ -1,6 +1,8 @@
 package com.alkemy.ong.service.impl;
 
+import com.alkemy.ong.enumeration.EmailBody;
 import com.alkemy.ong.enumeration.EmailSubject;
+import com.alkemy.ong.enumeration.EmailTitle;
 import com.alkemy.ong.service.IEmailService;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
@@ -44,7 +46,9 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     public void sendWelcomeEmail(String email) {
         EmailSubject subject = EmailSubject.NEW_USER;
-        Mail mail = prepareMail(email, subject);
+        EmailTitle title = EmailTitle.NEW_USER;
+        EmailBody body = EmailBody.NEW_USER;
+        Mail mail = prepareMail(email, subject, title, body);
 
         sendRequest(mail);
     }
@@ -52,7 +56,9 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     public void sendThankForContactingEmail(String email) {
         EmailSubject subject = EmailSubject.NEW_CONTACT;
-        Mail mail = prepareMail(email, subject);
+        EmailTitle title = EmailTitle.NEW_CONTACT;
+        EmailBody body = EmailBody.NEW_CONTACT;
+        Mail mail = prepareMail(email, subject, title, body);
 
         sendRequest(mail);
     }
@@ -71,7 +77,7 @@ public class EmailServiceImpl implements IEmailService {
         }
     }
 
-    private Mail prepareMail(String email, EmailSubject subject) {
+    private Mail prepareMail(String email, EmailSubject subject, EmailTitle title, EmailBody body) {
 
         Mail mail = new Mail();
 
@@ -88,13 +94,27 @@ public class EmailServiceImpl implements IEmailService {
         switch (subject) {
             case NEW_USER:
                 personalization.addDynamicTemplateData("subject", EmailSubject.NEW_USER.getSubject());
-                personalization.addDynamicTemplateData("title", "Te damos la bienvenida a Somos Más!");
-                personalization.addDynamicTemplateData("body", "Agradecemos que quieras formar parte de la comunidad Somos Más, tu usuario fue registrado con éxito en nuestra plataforma. Ante cualquier consulta, no dudes en contactarnos.");
                 break;
             case NEW_CONTACT:
                 personalization.addDynamicTemplateData("subject", EmailSubject.NEW_CONTACT.getSubject());
-                personalization.addDynamicTemplateData("title", "Formulario de contacto recibido");
-                personalization.addDynamicTemplateData("body", "Muchas gracias por escribirnos! Somos Más se contactará con usted muy pronto.");
+                break;
+        }
+
+        switch (title) {
+            case NEW_USER:
+                personalization.addDynamicTemplateData("title", EmailTitle.NEW_USER.getTitle());
+                break;
+            case NEW_CONTACT:
+                personalization.addDynamicTemplateData("title", EmailTitle.NEW_CONTACT.getTitle());
+                break;
+        }
+
+        switch (body) {
+            case NEW_USER:
+                personalization.addDynamicTemplateData("body", EmailBody.NEW_USER.getBody());
+                break;
+            case NEW_CONTACT:
+                personalization.addDynamicTemplateData("body", EmailBody.NEW_CONTACT.getBody());
                 break;
         }
 
