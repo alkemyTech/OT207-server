@@ -1,8 +1,6 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.enumeration.EmailBody;
-import com.alkemy.ong.enumeration.EmailSubject;
-import com.alkemy.ong.enumeration.EmailTitle;
+import com.alkemy.ong.enumeration.EmailConstants;
 import com.alkemy.ong.service.IEmailService;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
@@ -45,20 +43,16 @@ public class EmailServiceImpl implements IEmailService {
 
     @Override
     public void sendWelcomeEmail(String email) {
-        EmailSubject subject = EmailSubject.NEW_USER;
-        EmailTitle title = EmailTitle.NEW_USER;
-        EmailBody body = EmailBody.NEW_USER;
-        Mail mail = prepareMail(email, subject, title, body);
+        EmailConstants constant = EmailConstants.NEW_USER_WELCOME;
+        Mail mail = prepareMail(email, constant);
 
         sendRequest(mail);
     }
 
     @Override
     public void sendThankForContactingEmail(String email) {
-        EmailSubject subject = EmailSubject.NEW_CONTACT;
-        EmailTitle title = EmailTitle.NEW_CONTACT;
-        EmailBody body = EmailBody.NEW_CONTACT;
-        Mail mail = prepareMail(email, subject, title, body);
+        EmailConstants constant = EmailConstants.NEW_CONTACT_WELCOME;
+        Mail mail = prepareMail(email, constant);
 
         sendRequest(mail);
     }
@@ -77,7 +71,7 @@ public class EmailServiceImpl implements IEmailService {
         }
     }
 
-    private Mail prepareMail(String email, EmailSubject subject, EmailTitle title, EmailBody body) {
+    private Mail prepareMail(String email, EmailConstants constant) {
 
         Mail mail = new Mail();
 
@@ -91,33 +85,16 @@ public class EmailServiceImpl implements IEmailService {
 
         Personalization personalization = new Personalization();
         personalization.addTo(to);
-        switch (subject) {
-            case NEW_USER:
-                personalization.addDynamicTemplateData("subject", EmailSubject.NEW_USER.getSubject());
+        switch (constant) {
+            case NEW_USER_WELCOME:
+                personalization.addDynamicTemplateData("welcome", EmailConstants.NEW_USER_WELCOME.getMsg());
+                personalization.addDynamicTemplateData("body", EmailConstants.NEW_USER_BODY.getMsg());
                 break;
-            case NEW_CONTACT:
-                personalization.addDynamicTemplateData("subject", EmailSubject.NEW_CONTACT.getSubject());
-                break;
-        }
-
-        switch (title) {
-            case NEW_USER:
-                personalization.addDynamicTemplateData("title", EmailTitle.NEW_USER.getTitle());
-                break;
-            case NEW_CONTACT:
-                personalization.addDynamicTemplateData("title", EmailTitle.NEW_CONTACT.getTitle());
+            case NEW_CONTACT_WELCOME:
+                personalization.addDynamicTemplateData("welcome", EmailConstants.NEW_CONTACT_WELCOME.getMsg());
+                personalization.addDynamicTemplateData("body", EmailConstants.NEW_CONTACT_BODY.getMsg());
                 break;
         }
-
-        switch (body) {
-            case NEW_USER:
-                personalization.addDynamicTemplateData("body", EmailBody.NEW_USER.getBody());
-                break;
-            case NEW_CONTACT:
-                personalization.addDynamicTemplateData("body", EmailBody.NEW_CONTACT.getBody());
-                break;
-        }
-
         List<String> contacts = Arrays.asList("Mail: somosfundacionmas@gmail.com", "Instagram: SomosMás", "Facebook: Somos_Más", "Teléfono de contacto: 1160112988");
         personalization.addDynamicTemplateData("contacts", contacts);
         mail.addPersonalization(personalization);
