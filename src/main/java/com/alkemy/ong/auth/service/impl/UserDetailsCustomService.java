@@ -1,4 +1,4 @@
-package com.alkemy.ong.auth.service;
+package com.alkemy.ong.auth.service.impl;
 
 import com.alkemy.ong.auth.config.SecurityConfiguration;
 
@@ -6,6 +6,7 @@ import com.alkemy.ong.auth.dto.UserRequestDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.enums.RolName;
 import com.alkemy.ong.exception.ConflictException;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.Role;
 import com.alkemy.ong.model.UserEntity;
@@ -91,6 +92,16 @@ public class UserDetailsCustomService implements UserDetailsService {
         UserResponseDto userResponseDto = userMapper.userEntity2ResponseDto(result,true);
 
         return userResponseDto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserResponseDto> getAllUsers() {
+        List<UserEntity> entities = this.userRepository.findAll();
+        if(entities.isEmpty()){
+            throw new NotFoundException("The list is empty");
+        }
+        List<UserResponseDto> userResponseDtos = userMapper.userEntityList2ResponseDtoList(entities,true);
+        return userResponseDtos;
     }
 
 
