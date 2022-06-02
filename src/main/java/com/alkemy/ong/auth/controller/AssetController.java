@@ -2,7 +2,6 @@ package com.alkemy.ong.auth.controller;
 
 import com.alkemy.ong.auth.model.vm.Asset;
 import com.alkemy.ong.auth.service.IS3Service;
-import com.alkemy.ong.auth.service.S3ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
