@@ -53,11 +53,11 @@ public class UserDetailsCustomService implements UserDetailsService {
             throw new UsernameNotFoundException("The username or password is incorrect");
         }
         List<GrantedAuthority> roles = new ArrayList<>();
-        for (Role role:userEntity.get().getRoles()) {
+        for (Role role : userEntity.get().getRoles()) {
             roles.add(new SimpleGrantedAuthority(role.getName()));
         }
         UserEntity user = userEntity.get();
-            return new User(user.getUsername(),user.getPassword(),user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),user.isAccountNonLocked(),roles);
+        return new User(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(), roles);
     }
 
 
@@ -80,16 +80,12 @@ public class UserDetailsCustomService implements UserDetailsService {
             throw new ConflictException("There is already an account with this email " + userRequestDto.getEmail());
         }
         UserEntity user;
-        user = userMapper.userDto2Entity(userRequestDto, false);
-
+        user = userMapper.userDto2Entity(userRequestDto);
         user.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
-
         Role role = roleRepository.findByName(RolName.ROLE_USER.toString()).get();
         user.setRoles(Arrays.asList(role));
-
         UserEntity result = userRepository.save(user);
-
-        UserResponseDto userResponseDto = userMapper.userEntity2ResponseDto(result,true);
+        UserResponseDto userResponseDto = userMapper.userEntity2ResponseDto(result);
 
         return userResponseDto;
     }
@@ -97,10 +93,10 @@ public class UserDetailsCustomService implements UserDetailsService {
     @Transactional(readOnly = true)
     public List<UserResponseDto> getAllUsers() {
         List<UserEntity> entities = this.userRepository.findAll();
-        if(entities.isEmpty()){
+        if (entities.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }
-        List<UserResponseDto> userResponseDtos = userMapper.userEntityList2ResponseDtoList(entities,true);
+        List<UserResponseDto> userResponseDtos = userMapper.userEntityList2ResponseDtoList(entities);
         return userResponseDtos;
     }
 
