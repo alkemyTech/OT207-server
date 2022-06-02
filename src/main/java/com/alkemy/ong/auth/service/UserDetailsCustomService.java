@@ -4,6 +4,7 @@ import com.alkemy.ong.auth.config.SecurityConfiguration;
 
 import com.alkemy.ong.auth.dto.UserRequestDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
+import com.alkemy.ong.enums.RolName;
 import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.Role;
@@ -70,7 +71,7 @@ public class UserDetailsCustomService implements UserDetailsService {
         return userEntityResult != null;
     }
 
-    //@Transactional()
+    @Transactional()
     public UserResponseDto register(UserRequestDto userRequestDto) throws Exception {
 
         Optional<UserEntity> userEntity = userRepository.findByEmail(userRequestDto.getEmail());
@@ -78,17 +79,19 @@ public class UserDetailsCustomService implements UserDetailsService {
             throw new ConflictException("There is already an account with this email " + userRequestDto.getEmail());
         }
         UserEntity user;
-        user = userMapper.UserDto2Entity(userRequestDto, false);
+        user = userMapper.userDto2Entity(userRequestDto, false);
 
         user.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_USER").get();
+        Role role = roleRepository.findByName(RolName.ROLE_USER.toString()).get();
         user.setRoles(Arrays.asList(role));
 
         UserEntity result = userRepository.save(user);
 
-        UserResponseDto userResponseDto = userMapper.UserEntity2ResponseDto(result);
+        UserResponseDto userResponseDto = userMapper.userEntity2ResponseDto(result,true);
 
         return userResponseDto;
     }
+
+
 }
