@@ -29,7 +29,7 @@ public class NewsServiceImpl implements INewsService {
         if (category == null){
             throw new NotFoundException("Category not found: " + NEWS);
         }
-        news.setCategoryId(category);
+        news.setCategory(category);
         News newsSaved = newsRepository.save(news);
         return mapper.newsEntity2DTO(newsSaved);
     }
