@@ -1,4 +1,4 @@
-package com.alkemy.ong.dto;
+package com.alkemy.ong.auth.dto;
 
 import com.alkemy.ong.model.Role;
 
@@ -9,10 +9,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Data
 @Getter
 @Setter
-public class UserDto {
+public class UserRequestDto {
 
     @NotNull(message = "First name cannot be null")
     private String firstName;
@@ -27,6 +29,5 @@ public class UserDto {
     @NotNull(message = "Password cannot be null")
     private String password;
 
-    //@NotNull(message = "Role cannot be null")
-    private Role role;
+      private List<Role> roles;
 }

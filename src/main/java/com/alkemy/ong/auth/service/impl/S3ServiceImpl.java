@@ -1,6 +1,7 @@
-package com.alkemy.ong.auth.service;
+package com.alkemy.ong.auth.service.impl;
 
 import com.alkemy.ong.auth.model.vm.Asset;
+import com.alkemy.ong.auth.service.IS3Service;
 import com.alkemy.ong.exception.NotFoundException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;

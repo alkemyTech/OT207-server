@@ -2,7 +2,7 @@ package com.alkemy.ong.auth.controller;
 
 import com.alkemy.ong.auth.model.Img;
 import com.alkemy.ong.auth.repository.ImgRepository;
-import com.alkemy.ong.auth.service.S3ServiceImpl;
+import com.alkemy.ong.auth.service.impl.S3ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

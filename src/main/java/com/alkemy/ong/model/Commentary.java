@@ -29,7 +29,7 @@ public class Commentary implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "news_id", referencedColumnName = "id")
