@@ -51,16 +51,16 @@ public class UserDetailsCustomService implements UserDetailsService {
             throw new UsernameNotFoundException("The username or password is incorrect");
         }
         List<GrantedAuthority> roles = new ArrayList<>();
-        for (Role role:userEntity.get().getRoles()) {
+        for (Role role : userEntity.get().getRoles()) {
             roles.add(new SimpleGrantedAuthority(role.getName()));
         }
         UserEntity user = userEntity.get();
-            return new User(user.getUsername(),user.getPassword(),user.isEnabled(),user.isAccountNonExpired(),user.isCredentialsNonExpired(),user.isAccountNonLocked(),roles);
+        return new User(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(), roles);
     }
 
 
     @Transactional()
-    public boolean save(UserRequestDto userRequestDto) throws Exception {
+    public boolean save(UserRequestDto userRequestDto){
         String encrypted = securityConfiguration.passwordEncoder().encode(userRequestDto.getPassword());
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userRequestDto.getEmail());
@@ -90,5 +90,11 @@ public class UserDetailsCustomService implements UserDetailsService {
         UserResponseDto userResponseDto = userMapper.UserEntity2ResponseDto(result);
 
         return userResponseDto;
+    }
+
+    public UserResponseDto getDataFromUser(String username) {
+        UserEntity entity = userRepository.findByEmail(username).get();
+        UserResponseDto responseDto = userMapper.UserEntity2ResponseDto(entity);
+        return responseDto;
     }
 }

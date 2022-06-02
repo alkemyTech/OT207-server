@@ -1,9 +1,6 @@
 package com.alkemy.ong.auth.controller;
 
-import com.alkemy.ong.auth.dto.AuthenticationRequest;
-import com.alkemy.ong.auth.dto.AuthenticationResponse;
-import com.alkemy.ong.auth.dto.UserRequestDto;
-import com.alkemy.ong.auth.dto.UserResponseDto;
+import com.alkemy.ong.auth.dto.*;
 import com.alkemy.ong.auth.service.JwtUtils;
 import com.alkemy.ong.auth.service.UserDetailsCustomService;
 import com.alkemy.ong.exception.BadRequestException;
@@ -17,10 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -65,4 +59,11 @@ public class AuthController {
 
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> getUserInfo(@RequestHeader(name = "Authorization") String token){
+        String jwt = token.substring(7);
+        String username = jwtTokenUtil.extractUsername(jwt);
+        UserResponseDto responseDto = userDetailsCustomService.getDataFromUser(username);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+    }
 }

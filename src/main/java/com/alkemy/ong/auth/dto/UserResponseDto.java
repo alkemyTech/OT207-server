@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -25,4 +24,5 @@ public class UserResponseDto {
 
     //@NotNull(message = "Role cannot be null")
     private List<Role> roles;
+
 }
