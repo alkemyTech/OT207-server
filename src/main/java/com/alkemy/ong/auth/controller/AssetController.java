@@ -42,7 +42,7 @@ public class AssetController {
     }
 
     @DeleteMapping(value = "/delete-object", params = "key")
-    public void deleteObject(@RequestParam String key){
+    public void deleteObject(@RequestParam String key) {
         s3ServiceImpl.deleteObject(key);
     }
 
