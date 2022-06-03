@@ -40,7 +40,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
         Optional<Organization> org = organizationRepository.findById(orgUpdate.getId());
 
         if (org.isEmpty()) {
-            throw new NotFoundException("Organization id does not exist" + orgUpdate.getId());
+            throw new NotFoundException("Organization id does not exist");
         } else {
             return organizationMapper.OrganizationUpdateDTO2Entity(orgUpdate, org.get());
         }
