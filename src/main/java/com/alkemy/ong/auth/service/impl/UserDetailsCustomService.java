@@ -12,6 +12,7 @@ import com.alkemy.ong.model.Role;
 import com.alkemy.ong.model.UserEntity;
 import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.auth.repository.UserRepository;
+import com.amazonaws.services.sns.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -98,6 +99,27 @@ public class UserDetailsCustomService implements UserDetailsService {
         }
         List<UserResponseDto> userResponseDtos = userMapper.userEntityList2ResponseDtoList(entities);
         return userResponseDtos;
+    }
+
+    @Transactional()
+    public UserResponseDto updateUser(Long userId, String firstName, String lastName, String email, String password){
+        UserEntity user = userRepository.findById(userId).
+                orElseThrow(() -> new ResourceNotFoundException("User with id = " + userId + " was not found"));
+        if (firstName != null || !firstName.isEmpty()) {
+            user.setFirstName(firstName);
+        }
+        if (lastName != null || !lastName.isEmpty()) {
+            user.setLastName(lastName);
+        }
+        if (email != null || !email.isEmpty()) {
+            user.setEmail(email);
+        }
+        if (password != null || !password.isEmpty()) {
+            user.setPassword(password);
+        }
+        UserEntity updatedUser = userRepository.save(user);
+
+        return userMapper.userEntity2ResponseDto(updatedUser);
     }
 
 
