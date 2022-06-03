@@ -4,6 +4,7 @@ import com.alkemy.ong.auth.config.SecurityConfiguration;
 
 import com.alkemy.ong.auth.dto.UserRequestDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
+import com.alkemy.ong.auth.dto.UserUpdateDto;
 import com.alkemy.ong.enums.RolName;
 import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.exception.NotFoundException;
@@ -102,20 +103,17 @@ public class UserDetailsCustomService implements UserDetailsService {
     }
 
     @Transactional()
-    public UserResponseDto updateUser(Long userId, String firstName, String lastName, String email, String password){
+    public UserResponseDto updateUser(Long userId, UserUpdateDto userUpdateDto){
         UserEntity user = userRepository.findById(userId).
                 orElseThrow(() -> new ResourceNotFoundException("User with id = " + userId + " was not found"));
-        if (firstName != null || !firstName.isEmpty()) {
-            user.setFirstName(firstName);
+        if (userUpdateDto.getFirstName() != null) {
+            user.setFirstName(userUpdateDto.getFirstName());
         }
-        if (lastName != null || !lastName.isEmpty()) {
-            user.setLastName(lastName);
+        if (userUpdateDto.getLastName()!= null) {
+            user.setLastName(userUpdateDto.getLastName());
         }
-        if (email != null || !email.isEmpty()) {
-            user.setEmail(email);
-        }
-        if (password != null || !password.isEmpty()) {
-            user.setPassword(password);
+        if (userUpdateDto.getEmail() != null && !userRepository.findByEmail(userUpdateDto.getEmail()).isPresent()) {
+            user.setEmail(userUpdateDto.getEmail());
         }
         UserEntity updatedUser = userRepository.save(user);
 
