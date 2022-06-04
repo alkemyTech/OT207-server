@@ -15,8 +15,8 @@ import com.alkemy.ong.model.Category;
 @Setter
 @NoArgsConstructor
 
-@SQLDelete(sql = "UPDATE news SET softDelete = true WHERE id=?")
-@Where(clause = "softDelete = false")
+@SQLDelete(sql = "UPDATE news SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 
 @Entity
 @Table(name="news")
@@ -43,10 +43,11 @@ public class News {
     private Category category;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    private boolean softDelete = Boolean.FALSE;
+    private boolean deleted = Boolean.FALSE;
 }
