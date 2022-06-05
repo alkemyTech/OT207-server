@@ -1,4 +1,4 @@
-package com.alkemy.ong.enumeration;
+package com.alkemy.ong.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

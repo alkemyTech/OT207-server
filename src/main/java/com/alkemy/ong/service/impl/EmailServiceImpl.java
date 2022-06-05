@@ -1,6 +1,6 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.enumeration.EmailConstants;
+import com.alkemy.ong.enums.EmailConstants;
 import com.alkemy.ong.service.IEmailService;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
