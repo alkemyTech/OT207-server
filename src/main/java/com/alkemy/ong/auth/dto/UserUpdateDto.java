@@ -12,7 +12,4 @@ public class UserUpdateDto {
     private String firstName;
 
     private String lastName;
-
-    @Email
-    private String email;
 }

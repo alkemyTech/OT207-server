@@ -112,9 +112,6 @@ public class UserDetailsCustomService implements UserDetailsService {
         if (userUpdateDto.getLastName()!= null) {
             user.setLastName(userUpdateDto.getLastName());
         }
-        if (userUpdateDto.getEmail() != null && !userRepository.findByEmail(userUpdateDto.getEmail()).isPresent()) {
-            user.setEmail(userUpdateDto.getEmail());
-        }
         UserEntity updatedUser = userRepository.save(user);
 
         return userMapper.userEntity2ResponseDto(updatedUser);

@@ -67,7 +67,7 @@ public class AuthController {
         return ResponseEntity.ok().body(usersDTOs);
     }
 
-    @PatchMapping("user/{id}")
+    @PatchMapping("users/{id}")
     public UserResponseDto updateUser(
             @PathVariable(value = "id") Long userId, @Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
