@@ -11,6 +11,7 @@ import com.alkemy.ong.repository.SlidesRepository;
 import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +27,7 @@ public class SlideServiceImpl implements ISlideService {
     @Autowired
     private SlideMapper slidesMapper;
 
+    @Transactional
     @Override
     public SlidesResponseDTO save(SlidesRequestDTO requestDTO) {
         Base64ImageDTO base64ImageDto = new Base64ImageDTO(requestDTO.getBase64Value(), requestDTO.getNameImage());
@@ -40,7 +42,7 @@ public class SlideServiceImpl implements ISlideService {
             if (orden.isEmpty()) {
                 requestDTO.setOrderSlides(1);
             } else {
-                requestDTO.setOrderSlides(buscaMayor(orden) + 1);
+                requestDTO.setOrderSlides(findLargerInteger(orden) + 1);
             }
         }
         Slides entity = this.slidesMapper.requestDto2SlidesEntity(requestDTO);
@@ -48,7 +50,7 @@ public class SlideServiceImpl implements ISlideService {
         return result;
     }
 
-    public int buscaMayor(List<Integer> integers) {
+    public int findLargerInteger(List<Integer> integers) {
         Collections.sort(integers, Collections.reverseOrder());
         return integers.get(0);
     }

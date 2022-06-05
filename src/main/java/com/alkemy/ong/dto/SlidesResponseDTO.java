@@ -12,5 +12,5 @@ public class SlidesResponseDTO {
     private String imageUrl;
     private String text;
     private Integer orderSlides;
-    private Organization organizations;
+    private OrganizationDTO organizations;
 }

@@ -3,6 +3,7 @@ package com.alkemy.ong.auth.service.impl;
 import com.alkemy.ong.auth.model.vm.Asset;
 import com.alkemy.ong.auth.service.IS3Service;
 import com.alkemy.ong.dto.Base64ImageDTO;
+import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
@@ -52,26 +53,26 @@ public class S3ServiceImpl implements IS3Service {
 
     @Override
     public String uploadBase64Image(Base64ImageDTO base64ImageDto) {
-        InputStream stream = new ByteArrayInputStream(base64ImageDto.getImageBytes());
 
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentLength(base64ImageDto.getImageBytes().length);
-        metadata.setContentType("image/"+base64ImageDto.getFileType());
-
-        String bucketName = BUCKET;
-        String key = String.format("%s_%s", System.currentTimeMillis(), base64ImageDto.getFileName().replace(" ", "")); //pathToFile + base64ImageDto.getFileName();
-
-        try {
-           // LOGGER.info("Uploading file " + base64ImageDto.getFileName() + " to AWS S3");
-            PutObjectRequest objectRequest = new PutObjectRequest(bucketName, key, stream, metadata);
-            objectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
-            s3Client.putObject(objectRequest);
-            return key;
-        } catch (Exception e) {
-            e.printStackTrace();
-            //LOGGER.info("Error uploading file " + base64ImageDto.getFileName() + " to AWS S3");
+        if (!base64ImageDto.isHasErrors()) {
+            InputStream stream = new ByteArrayInputStream(base64ImageDto.getImageBytes());
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(base64ImageDto.getImageBytes().length);
+            metadata.setContentType("image/" + base64ImageDto.getFileType());
+            String bucketName = BUCKET;
+            String key = String.format("%s_%s", System.currentTimeMillis(), base64ImageDto.getFileName().replace(" ", "")); //pathToFile + base64ImageDto.getFileName();
+            try {
+                PutObjectRequest objectRequest = new PutObjectRequest(bucketName, key, stream, metadata);
+                objectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
+                s3Client.putObject(objectRequest);
+                return key;
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        } else {
+            throw new ConflictException(base64ImageDto.getErrorMessages().toString());
         }
-        return null;
+
     }
 
     @Override
