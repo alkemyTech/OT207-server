@@ -10,6 +10,7 @@ public class CategoryMapper {
     public Category categoryDtoToCategoryEntity(CategoryDTO categoryDto){
 
         Category categoryEntity = new Category();
+        categoryEntity.setId(categoryDto.getId());
         categoryEntity.setName(categoryDto.getName());
         categoryEntity.setDescription(categoryDto.getDescription());
         categoryEntity.setImage(categoryDto.getImage());
@@ -19,6 +20,7 @@ public class CategoryMapper {
 
     public CategoryDTO categoryEntityToCategoryDto(Category savedEntity) {
         CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(savedEntity.getId());
         categoryDTO.setName(savedEntity.getName());
         categoryDTO.setDescription(savedEntity.getDescription());
         categoryDTO.setImage(savedEntity.getImage());

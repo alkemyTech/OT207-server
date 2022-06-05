@@ -11,18 +11,19 @@ import com.alkemy.ong.service.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class NewsServiceImpl implements INewsService {
 
     private static final String NEWS = "news";
     @Autowired
     private NewsRepository newsRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private NewsMapper mapper;
+
     public NewsDTO save(NewsDTO dto){
         Category category = categoryRepository.findByName(NEWS);
         News news = mapper.newsDTO2Entity(dto);
@@ -32,6 +33,15 @@ public class NewsServiceImpl implements INewsService {
         news.setCategory(category);
         News newsSaved = newsRepository.save(news);
         return mapper.newsEntity2DTO(newsSaved);
+    }
+
+    @Override
+    public NewsDTO getById(Long id){
+        Optional<News> entityResult = this.newsRepository.findById(id);
+        if(entityResult.isEmpty()){
+            throw new NotFoundException("Id not found");
+        }
+        return this.mapper.newsEntity2DTO(entityResult.get());
     }
 
 }
