@@ -1,6 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.OrganizationDTO;
+import com.alkemy.ong.dto.OrganizationUpdateDTO;
 import com.alkemy.ong.model.Organization;
 import org.springframework.stereotype.Component;
 
@@ -29,4 +30,18 @@ public class OrganizationMapper {
         }
         return dtoList;
     }
+    
+    public Organization OrganizationUpdateDTO2Entity(@NotNull OrganizationUpdateDTO orgUpdate, @NotNull Organization org){
+               
+        org.setName(orgUpdate.getName());
+        org.setImage(orgUpdate.getImage());
+        org.setAddress(orgUpdate.getAddress());
+        org.setPhone(orgUpdate.getPhone());
+        org.setEmail(orgUpdate.getEmail());
+        org.setWelcomeText(orgUpdate.getWelcomeText());
+        org.setAboutUsText(orgUpdate.getAboutUsText());
+                
+        return org;
+        
+    } 
 }
