@@ -8,6 +8,7 @@ import com.alkemy.ong.auth.service.JwtUtils;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.exception.ForbiddenException;
+import com.alkemy.ong.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,6 +68,15 @@ public class AuthController {
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         List<UserResponseDto> usersDTOs = this.userDetailsCustomService.getAllUsers();
         return ResponseEntity.ok().body(usersDTOs);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable(name = "id") Long userId) {
+
+        this.userDetailsCustomService.deleteUserById(userId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
     }
 
 }

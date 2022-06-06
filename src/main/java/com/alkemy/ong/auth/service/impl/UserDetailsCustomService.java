@@ -100,5 +100,13 @@ public class UserDetailsCustomService implements UserDetailsService {
         return userResponseDtos;
     }
 
+    public void deleteUserById(Long userId)  {
+        Optional<UserEntity> user = this.userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new NotFoundException("the user does not exist or has already been deleted");
+        }
+        user.get().setDeleted(true);
+        userRepository.save(user.get());
+    }
 
 }
