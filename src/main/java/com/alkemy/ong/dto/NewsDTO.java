@@ -1,5 +1,6 @@
 package com.alkemy.ong.dto;
 
+import com.alkemy.ong.model.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,5 +22,6 @@ public class NewsDTO {
     private String image;
 
     private CategoryDTO category;
+
 
 }
