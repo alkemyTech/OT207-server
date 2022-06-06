@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -58,12 +59,9 @@ public class AuthController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
 
     }
-
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDto> getUserInfo(@RequestHeader(name = "Authorization") String token){
-        String jwt = token.substring(7);
-        String username = jwtTokenUtil.extractUsername(jwt);
-        UserResponseDto responseDto = userDetailsCustomService.getDataFromUser(username);
+    public ResponseEntity<UserResponseDto> getProfile(HttpServletRequest request){
+        UserResponseDto responseDto = userDetailsCustomService.getProfile(request);
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 }

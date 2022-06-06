@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -41,6 +42,9 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private JwtUtils jwtTokenUtil;
 
 
     @Transactional(readOnly = true)
@@ -92,7 +96,10 @@ public class UserDetailsCustomService implements UserDetailsService {
         return userResponseDto;
     }
 
-    public UserResponseDto getDataFromUser(String username) {
+    public UserResponseDto getProfile(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+        String jwt = authorizationHeader.substring(7);
+        String username = jwtTokenUtil.extractUsername(jwt);
         UserEntity entity = userRepository.findByEmail(username).get();
         UserResponseDto responseDto = userMapper.UserEntity2ResponseDto(entity);
         return responseDto;
