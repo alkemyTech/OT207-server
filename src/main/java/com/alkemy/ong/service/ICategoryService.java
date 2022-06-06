@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ICategoryService {
     CategoryDTO addCategory(CategoryDTO categoryDto);
+
+    CategoryDTO modifyCategory(Long categoryId, CategoryDTO categoryDto);
 }
