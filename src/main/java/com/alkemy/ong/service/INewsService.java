@@ -7,4 +7,6 @@ public interface INewsService {
     NewsDTO save(NewsDTO dto);
 
     NewsDTO getById(Long id);
+
+    void deleteById(Long id);
 }
