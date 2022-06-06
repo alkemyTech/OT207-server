@@ -17,6 +17,7 @@ import java.util.Optional;
 public class NewsServiceImpl implements INewsService {
 
     private static final String NEWS = "news";
+    private static final String ID_NOT_FOUND = "Id not found";
     @Autowired
     private NewsRepository newsRepository;
     @Autowired
@@ -39,9 +40,17 @@ public class NewsServiceImpl implements INewsService {
     public NewsDTO getById(Long id){
         Optional<News> entityResult = this.newsRepository.findById(id);
         if(entityResult.isEmpty()){
-            throw new NotFoundException("Id not found");
+            throw new NotFoundException(ID_NOT_FOUND);
         }
         return this.mapper.newsEntity2DTO(entityResult.get());
+    }
+
+    @Override
+    public NewsDTO putById(Long id, NewsDTO dto) {
+        News newsEntity = newsRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(ID_NOT_FOUND));
+        mapper.newsDTO2EntityWithId(newsEntity, dto);
+        return mapper.newsEntity2DTO(newsRepository.save(newsEntity));
     }
 
 }
