@@ -34,9 +34,9 @@ public class CategoryServiceImpl implements ICategoryService {
         if (categoryRepository.existsById(categoryId)) {
 
             Category category = categoryRepository.getById(categoryId);
-            category.setName(categoryDto.getName());
-            Category newCategory = categoryRepository.save(category);
-            CategoryDTO newCategoryDto = categoryMapper.categoryEntityToCategoryDto(newCategory);
+            category = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
+            Category result = categoryRepository.save(category);
+            CategoryDTO newCategoryDto = categoryMapper.categoryEntityToCategoryDto(result);
 
             return newCategoryDto;
 
