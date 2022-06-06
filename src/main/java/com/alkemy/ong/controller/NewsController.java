@@ -19,7 +19,7 @@ public class NewsController {
     private INewsService newsService;
 
     @PostMapping
-    public ResponseEntity<NewsDTO> create(@Valid NewsDTO dto, BindingResult bindingResult){
+    public ResponseEntity<NewsDTO> create(@Valid @RequestBody NewsDTO dto, BindingResult bindingResult){
     if (bindingResult.hasErrors()){
         throw new BadRequestException(bindingResult);
     }
@@ -36,7 +36,7 @@ public class NewsController {
     @PutMapping("/{id}")
     public ResponseEntity<NewsDTO> putById(@PathVariable("id") Long id,
                                            @Valid @RequestBody NewsDTO dto){
-        NewsDTO newsDTO = this.newsService.getById(id);
+        NewsDTO newsDTO = this.newsService.putById(id, dto);
         return ResponseEntity.ok().body(newsDTO);
     }
 }
