@@ -1,9 +1,6 @@
 package com.alkemy.ong.auth.controller;
 
-import com.alkemy.ong.auth.dto.AuthenticationRequest;
-import com.alkemy.ong.auth.dto.AuthenticationResponse;
-import com.alkemy.ong.auth.dto.UserRequestDto;
-import com.alkemy.ong.auth.dto.UserResponseDto;
+import com.alkemy.ong.auth.dto.*;
 import com.alkemy.ong.auth.service.JwtUtils;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.exception.BadRequestException;
@@ -70,15 +67,13 @@ public class AuthController {
         return ResponseEntity.ok().body(usersDTOs);
     }
 
-    @PatchMapping("user/{id}")
+    @PatchMapping("users/{id}")
     public UserResponseDto updateUser(
-            @PathVariable(value = "id") Long userId,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) @Email String email,
-            @RequestParam(required = false) String password
-            ) throws ResourceNotFoundException {
-        UserResponseDto userResponseDto = userDetailsCustomService.updateUser(userId, firstName, lastName, email, password);
+            @PathVariable(value = "id") Long userId, @Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(bindingResult);
+        }
+        UserResponseDto userResponseDto = userDetailsCustomService.updateUser(userId, userUpdateDto);
         return userResponseDto;
     }
 

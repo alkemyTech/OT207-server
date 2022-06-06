@@ -2,6 +2,8 @@ package com.alkemy.ong.auth.service.impl;
 
 import com.alkemy.ong.auth.model.vm.Asset;
 import com.alkemy.ong.auth.service.IS3Service;
+import com.alkemy.ong.dto.Base64ImageDTO;
+import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -27,22 +30,16 @@ public class S3ServiceImpl implements IS3Service {
     @Override
     public String putObject(MultipartFile file) {
         String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-
-
         if (file.isEmpty()) {
             throw new NullPointerException("file is empty");
         }
-
         if (validFileExtensions(extension)) {
-
             String key = String.format("%s_%s", System.currentTimeMillis(), file.getOriginalFilename().replace(" ", ""));
-
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentType(file.getContentType());
             try {
                 PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET, key, file.getInputStream(), objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead); //Dar permiso de acceso publico para ver por url solo lectura
-
                 s3Client.putObject(putObjectRequest);
                 return key;
             } catch (IOException ex) {
@@ -50,6 +47,30 @@ public class S3ServiceImpl implements IS3Service {
             }
         } else {
             throw new NotFoundException("format invalid");
+        }
+
+    }
+
+    @Override
+    public String uploadBase64Image(Base64ImageDTO base64ImageDto) {
+
+        if (!base64ImageDto.isHasErrors()) {
+            InputStream stream = new ByteArrayInputStream(base64ImageDto.getImageBytes());
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(base64ImageDto.getImageBytes().length);
+            metadata.setContentType("image/" + base64ImageDto.getFileType());
+            String bucketName = BUCKET;
+            String key = String.format("%s_%s", System.currentTimeMillis(), base64ImageDto.getFileName().replace(" ", "")); //pathToFile + base64ImageDto.getFileName();
+            try {
+                PutObjectRequest objectRequest = new PutObjectRequest(bucketName, key, stream, metadata);
+                objectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
+                s3Client.putObject(objectRequest);
+                return key;
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        } else {
+            throw new ConflictException(base64ImageDto.getErrorMessages().toString());
         }
 
     }

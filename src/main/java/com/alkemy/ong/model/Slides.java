@@ -23,7 +23,8 @@ public class Slides implements Serializable {
 
     private Integer orderSlides;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "organizations_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organizations_id", referencedColumnName = "id")
     private Organization organizations;
+
 }
