@@ -48,9 +48,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
        httpSecurity.csrf().disable()
                .authorizeRequests().antMatchers("/auth/login","/auth/register").permitAll()
-               .antMatchers("/auth/users","/auth/users/*","/api/assets/upload", "/organization/public").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
-               .antMatchers(HttpMethod.POST,"/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
-               .antMatchers(HttpMethod.PUT,"/news/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+               .antMatchers("/auth/users","/auth/users/*","/api/assets/upload", "/organization/public", "/categories/:id").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+               .antMatchers(HttpMethod.POST,"/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString()) 
+                .antMatchers(HttpMethod.PUT,"/news/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                .antMatchers(HttpMethod.GET,"/news/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                .anyRequest().authenticated()
                .and().exceptionHandling()

@@ -13,6 +13,7 @@ import com.alkemy.ong.model.Role;
 import com.alkemy.ong.model.UserEntity;
 import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.auth.repository.UserRepository;
+import com.alkemy.ong.service.IEmailService;
 import com.amazonaws.services.sns.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,7 +46,10 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
-
+    
+    @Autowired
+    private IEmailService emailService;
+    
 
     @Transactional(readOnly = true)
     @Override
@@ -88,7 +92,9 @@ public class UserDetailsCustomService implements UserDetailsService {
         user.setRoles(Arrays.asList(role));
         UserEntity result = userRepository.save(user);
         UserResponseDto userResponseDto = userMapper.userEntity2ResponseDto(result);
-
+        
+        emailService.sendWelcomeEmail(userRequestDto.getEmail());
+        
         return userResponseDto;
     }
 
