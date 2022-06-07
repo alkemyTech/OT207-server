@@ -1,8 +1,7 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.dto.CategoryDto;
+import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.exception.ConflictException;
-import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.repository.CategoryRepository;
@@ -18,7 +17,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
    private CategoryRepository categoryRepository;
 
-    public CategoryDto addCategory(CategoryDto categoryDto) {
+    public CategoryDTO addCategory(CategoryDTO categoryDto) {
         try{
             Category CategoryEntity = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
             Category savedEntity = categoryRepository.save(CategoryEntity);

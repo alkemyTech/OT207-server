@@ -20,6 +20,6 @@ public class NewsDTO {
     @NotNull(message = "The image cannot be empty")
     private String image;
 
-    private CategoryDto category;
+    private CategoryDTO category;
 
 }

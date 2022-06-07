@@ -1,13 +1,13 @@
 package com.alkemy.ong.mapper;
 
-import com.alkemy.ong.dto.CategoryDto;
+import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.model.Category;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CategoryMapper {
 
-    public Category categoryDtoToCategoryEntity(CategoryDto categoryDto){
+    public Category categoryDtoToCategoryEntity(CategoryDTO categoryDto){
 
         Category categoryEntity = new Category();
         categoryEntity.setName(categoryDto.getName());
@@ -17,8 +17,8 @@ public class CategoryMapper {
         return categoryEntity;
     }
 
-    public CategoryDto categoryEntityToCategoryDto(Category savedEntity) {
-        CategoryDto categoryDTO = new CategoryDto();
+    public CategoryDTO categoryEntityToCategoryDto(Category savedEntity) {
+        CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setName(savedEntity.getName());
         categoryDTO.setDescription(savedEntity.getDescription());
         categoryDTO.setImage(savedEntity.getImage());
