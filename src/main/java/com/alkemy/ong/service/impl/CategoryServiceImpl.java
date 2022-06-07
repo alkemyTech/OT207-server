@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.exception.ConflictException;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.repository.CategoryRepository;
@@ -13,10 +14,11 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
-   private CategoryMapper categoryMapper;
+    private CategoryMapper categoryMapper;
     @Autowired
-   private CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
+    @Override
     public CategoryDTO addCategory(CategoryDTO categoryDto) {
         try{
             Category CategoryEntity = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
@@ -25,5 +27,15 @@ public class CategoryServiceImpl implements ICategoryService {
         catch (Exception e){
             throw new ConflictException("There is already a category with this name " + categoryDto.getName());
         }
+    }
+
+    @Override
+    public void deleteCategory(Long id) throws NotFoundException {
+        try {
+            categoryRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFoundException("Category id does not exist");
+        }
+
     }
 }
