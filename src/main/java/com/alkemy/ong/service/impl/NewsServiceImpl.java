@@ -45,7 +45,7 @@ public class NewsServiceImpl implements INewsService {
     }
 
     @Override
-    public NewsDTO putById(Long id, NewsDTO dto) {
+    public NewsDTO updateNewsById(Long id, NewsDTO dto) {
         Category category = getCategoryNews();
         News newsEntity = newsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(ID_NOT_FOUND + id));

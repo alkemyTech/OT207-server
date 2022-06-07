@@ -8,5 +8,5 @@ public interface INewsService {
 
     NewsDTO getById(Long id);
 
-    NewsDTO putById(Long id, NewsDTO dto);
+    NewsDTO updateNewsById(Long id, NewsDTO dto);
 }

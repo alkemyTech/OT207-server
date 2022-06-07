@@ -34,9 +34,9 @@ public class NewsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NewsDTO> putById(@PathVariable("id") Long id,
+    public ResponseEntity<NewsDTO> updateNewsById(@PathVariable("id") Long id,
                                            @Valid @RequestBody NewsDTO dto){
-        NewsDTO newsDTO = this.newsService.putById(id, dto);
+        NewsDTO newsDTO = this.newsService.updateNewsById(id, dto);
         return ResponseEntity.ok().body(newsDTO);
     }
 }
