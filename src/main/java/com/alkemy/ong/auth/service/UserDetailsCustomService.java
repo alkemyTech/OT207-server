@@ -64,7 +64,7 @@ public class UserDetailsCustomService implements UserDetailsService {
 
 
     @Transactional()
-    public boolean save(UserRequestDto userRequestDto){
+    public boolean save(UserRequestDto userRequestDto) throws Exception{
         String encrypted = securityConfiguration.passwordEncoder().encode(userRequestDto.getPassword());
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userRequestDto.getEmail());
