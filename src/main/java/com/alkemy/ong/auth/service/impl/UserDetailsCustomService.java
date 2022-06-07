@@ -4,6 +4,7 @@ import com.alkemy.ong.auth.config.SecurityConfiguration;
 
 import com.alkemy.ong.auth.dto.UserRequestDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
+import com.alkemy.ong.auth.dto.UserUpdateDto;
 import com.alkemy.ong.enums.RolName;
 import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.exception.NotFoundException;
@@ -12,6 +13,8 @@ import com.alkemy.ong.model.Role;
 import com.alkemy.ong.model.UserEntity;
 import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.auth.repository.UserRepository;
+import com.alkemy.ong.service.IEmailService;
+import com.amazonaws.services.sns.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -43,7 +46,10 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
-
+    
+    @Autowired
+    private IEmailService emailService;
+    
 
     @Transactional(readOnly = true)
     @Override
@@ -86,7 +92,9 @@ public class UserDetailsCustomService implements UserDetailsService {
         user.setRoles(Arrays.asList(role));
         UserEntity result = userRepository.save(user);
         UserResponseDto userResponseDto = userMapper.userEntity2ResponseDto(result);
-
+        
+        emailService.sendWelcomeEmail(userRequestDto.getEmail());
+        
         return userResponseDto;
     }
 
@@ -98,6 +106,21 @@ public class UserDetailsCustomService implements UserDetailsService {
         }
         List<UserResponseDto> userResponseDtos = userMapper.userEntityList2ResponseDtoList(entities);
         return userResponseDtos;
+    }
+
+    @Transactional()
+    public UserResponseDto updateUser(Long userId, UserUpdateDto userUpdateDto){
+        UserEntity user = userRepository.findById(userId).
+                orElseThrow(() -> new ResourceNotFoundException("User with id = " + userId + " was not found"));
+        if (userUpdateDto.getFirstName() != null) {
+            user.setFirstName(userUpdateDto.getFirstName());
+        }
+        if (userUpdateDto.getLastName()!= null) {
+            user.setLastName(userUpdateDto.getLastName());
+        }
+        UserEntity updatedUser = userRepository.save(user);
+
+        return userMapper.userEntity2ResponseDto(updatedUser);
     }
 
 

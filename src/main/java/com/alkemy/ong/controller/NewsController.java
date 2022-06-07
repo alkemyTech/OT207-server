@@ -39,5 +39,14 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<NewsDTO> updateNewsById(@PathVariable("id") Long id,
+                                           @Valid @RequestBody NewsDTO dto, BindingResult bindingResult){
+     if (bindingResult.hasErrors()){
+         throw new BadRequestException(bindingResult);
+     }
+        NewsDTO newsDTO = this.newsService.updateNewsById(id, dto);
+        return ResponseEntity.ok().body(newsDTO);
+    }
 
 }
