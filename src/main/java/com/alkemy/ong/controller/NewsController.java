@@ -19,7 +19,7 @@ public class NewsController {
     private INewsService newsService;
 
     @PostMapping
-    public ResponseEntity<NewsDTO> create(@Valid NewsDTO dto, BindingResult bindingResult){
+    public ResponseEntity<NewsDTO> create(@Valid @RequestBody NewsDTO dto, BindingResult bindingResult){
     if (bindingResult.hasErrors()){
         throw new BadRequestException(bindingResult);
     }

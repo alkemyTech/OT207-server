@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -28,12 +29,12 @@ public class NewsServiceImpl implements INewsService {
 
     @Transactional
     public NewsDTO save(NewsDTO dto){
-        Category category = categoryRepository.findByName(NEWS);
+        Optional<Category> category = categoryRepository.findByName(NEWS);
         News news = mapper.newsDTO2Entity(dto);
-        if (category == null){
+        if (category.isEmpty()){
             throw new NotFoundException("Category not found: " + NEWS);
         }
-        news.setCategory(category);
+        news.setCategory(category.get());
         News newsSaved = newsRepository.save(news);
         return mapper.newsEntity2DTO(newsSaved);
     }
@@ -43,7 +44,7 @@ public class NewsServiceImpl implements INewsService {
     public NewsDTO getById(Long id){
         Optional<News> entityResult = this.newsRepository.findById(id);
         if(entityResult.isEmpty()){
-            throw new NotFoundException("Id not found");
+            throw new NotFoundException("News with id provided not found,");
         }
         return this.mapper.newsEntity2DTO(entityResult.get());
     }
@@ -53,9 +54,11 @@ public class NewsServiceImpl implements INewsService {
     public void deleteById(Long id) {
         Optional<News> entity = this.newsRepository.findById(id);
         if(entity.isEmpty()){
-            throw new NotFoundException("Id not found");
+            throw new NotFoundException("News with id provided not found");
         }
-        this.newsRepository.delete(entity.get());
+        entity.get().setDeleted(true);
+        entity.get().setUpdateDateTime(LocalDateTime.now());
+        this.newsRepository.save(entity.get());
     }
 
 }
