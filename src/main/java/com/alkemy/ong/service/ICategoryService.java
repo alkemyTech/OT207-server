@@ -8,4 +8,6 @@ public interface ICategoryService {
     CategoryDTO addCategory(CategoryDTO categoryDto);
 
     CategoryDTO getCategoryById(Long id);
+    
+    void deleteCategory(Long id);
 }

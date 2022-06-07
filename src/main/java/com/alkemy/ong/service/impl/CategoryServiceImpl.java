@@ -15,10 +15,11 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
-   private CategoryMapper categoryMapper;
+    private CategoryMapper categoryMapper;
     @Autowired
-   private CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
+    @Override
     public CategoryDTO addCategory(CategoryDTO categoryDto) {
         try{
             Category CategoryEntity = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
@@ -32,5 +33,15 @@ public class CategoryServiceImpl implements ICategoryService {
     public CategoryDTO getCategoryById(Long id) {
         Category categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
         return categoryMapper.categoryEntityToCategoryDto(categoryEntity);
+    }
+}
+    @Override
+    public void deleteCategory(Long id) throws NotFoundException {
+        try {
+            categoryRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFoundException("Category id does not exist");
+        }
+
     }
 }
