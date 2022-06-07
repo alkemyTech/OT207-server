@@ -6,6 +6,7 @@ import com.alkemy.ong.enums.RolName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -46,8 +47,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
        httpSecurity.csrf().disable()
-               .authorizeRequests().antMatchers("/auth/login","auth/register").permitAll()
-               .antMatchers("/auth/users","/api/assets/upload").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+               .authorizeRequests().antMatchers("/auth/login","/auth/register").permitAll()
+               .antMatchers("/auth/users","/auth/users/*","/api/assets/upload", "/organization/public", "/categories/:id").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+               .antMatchers(HttpMethod.POST,"/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+               .antMatchers(HttpMethod.GET,"/categories").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+               .antMatchers(HttpMethod.GET,"/news/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                .anyRequest().authenticated()
                .and().exceptionHandling()
                .and().sessionManagement()
