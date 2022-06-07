@@ -64,7 +64,7 @@ public class UserDetailsCustomService implements UserDetailsService {
 
 
     @Transactional()
-    public boolean save(UserRequestDto userRequestDto) throws Exception{
+    public boolean save(UserRequestDto userRequestDto) throws Exception {
         String encrypted = securityConfiguration.passwordEncoder().encode(userRequestDto.getPassword());
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userRequestDto.getEmail());
@@ -74,7 +74,7 @@ public class UserDetailsCustomService implements UserDetailsService {
         return userEntityResult != null;
     }
 
-    //@Transactional()
+    @Transactional()
     public UserResponseDto register(UserRequestDto userRequestDto) throws Exception {
 
         Optional<UserEntity> userEntity = userRepository.findByEmail(userRequestDto.getEmail());
@@ -82,16 +82,12 @@ public class UserDetailsCustomService implements UserDetailsService {
             throw new ConflictException("There is already an account with this email " + userRequestDto.getEmail());
         }
         UserEntity user;
-        user = userMapper.UserDto2Entity(userRequestDto, false);
-
+        user = userMapper.userDto2Entity(userRequestDto);
         user.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
-
-        Role role = roleRepository.findByName("ROLE_USER").get();
+        Role role = roleRepository.findByName(RolName.ROLE_USER.toString()).get();
         user.setRoles(Arrays.asList(role));
-
         UserEntity result = userRepository.save(user);
-
-        UserResponseDto userResponseDto = userMapper.UserEntity2ResponseDto(result);
+        UserResponseDto userResponseDto = userMapper.userEntity2ResponseDto(result);
 
         return userResponseDto;
     }
