@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -29,19 +28,14 @@ public class NewsServiceImpl implements INewsService {
     @Autowired
     private NewsMapper mapper;
 
-
     @Transactional
     public NewsDTO save(NewsDTO dto){
-        Optional<Category> category = categoryRepository.findByName(NEWS);
+        Category category = getCategoryNews();
         News news = mapper.newsDTO2Entity(dto);
-        if (category.isEmpty()){
-            throw new NotFoundException("Category not found: " + NEWS);
-        }
-        news.setCategory(category.get());
+        news.setCategory(category);
         News newsSaved = newsRepository.save(news);
         return mapper.newsEntity2DTO(newsSaved);
     }
-
 
     @Transactional(readOnly = true)
     @Override
@@ -57,13 +51,14 @@ public class NewsServiceImpl implements INewsService {
     @Override
     public void deleteById(Long id) {
         Optional<News> entity = this.newsRepository.findById(id);
-        if(entity.isEmpty()){
+        if (entity.isEmpty()) {
             throw new NotFoundException("News with id provided not found");
         }
         entity.get().setDeleted(true);
         entity.get().setUpdateDateTime(LocalDateTime.now());
         this.newsRepository.save(entity.get());
-      
+    }
+
     @Transactional
     @Override
     public NewsDTO updateNewsById(Long id, NewsDTO dto) {
@@ -77,11 +72,11 @@ public class NewsServiceImpl implements INewsService {
 
     @NotNull
     private Category getCategoryNews() {
-        Category category = categoryRepository.findByName(NEWS);
-        if (category == null) {
+        Optional<Category> category = categoryRepository.findByName(NEWS);
+        if (category.isEmpty()) {
             throw new NotFoundException("Category not found: " + NEWS);
         }
-        return category;
+        return category.get();
     }
 
 }
