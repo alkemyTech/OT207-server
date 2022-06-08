@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import java.util.List;
@@ -75,6 +76,12 @@ public class AuthController {
         }
         UserResponseDto userResponseDto = userDetailsCustomService.updateUser(userId, userUpdateDto);
         return userResponseDto;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> getProfile(HttpServletRequest request){
+        UserResponseDto responseDto = userDetailsCustomService.getProfile(request);
+        return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
 
 }
