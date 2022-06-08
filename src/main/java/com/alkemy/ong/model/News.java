@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-import com.alkemy.ong.model.Category;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,7 +37,7 @@ public class News {
     @Column(name = "image")
     private String image;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
@@ -49,5 +48,5 @@ public class News {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    private boolean deleted = Boolean.FALSE;
+    private Boolean deleted = Boolean.FALSE;
 }
