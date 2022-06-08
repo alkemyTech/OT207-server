@@ -134,7 +134,7 @@ public class UserDetailsCustomService implements UserDetailsService {
         String jwt = authorizationHeader.substring(7);
         String username = jwtTokenUtil.extractUsername(jwt);
         UserEntity entity = userRepository.findByEmail(username).get();
-        UserResponseDto responseDto = userMapper.UserEntity2ResponseDto(entity);
+        UserResponseDto responseDto = userMapper.userEntity2ResponseDto(entity);
         return responseDto;
     }
 }

@@ -50,12 +50,4 @@ public class UserMapper {
         return responseDtos;
     }
 
-    public UserResponseDto UserEntity2ResponseDto(UserEntity entity) {
-        UserResponseDto responseDto = new UserResponseDto();
-        responseDto.setFirstName(entity.getFirstName());
-        responseDto.setLastName(entity.getLastName());
-        responseDto.setEmail(entity.getEmail());
-        responseDto.setRoles(entity.getRoles());
-        return responseDto;
-    }
 }
