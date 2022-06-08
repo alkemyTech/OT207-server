@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements ICategoryService {
             return newCategoryDto;
 
         } else {
-            throw new NotFoundException("InvalidDto");
+            throw new NotFoundException("Category id not found");
         }
 
     }
