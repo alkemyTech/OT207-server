@@ -21,14 +21,31 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryDTO addCategory(CategoryDTO categoryDto) {
-        try{
+        try {
             Category CategoryEntity = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
             Category savedEntity = categoryRepository.save(CategoryEntity);
-            return categoryMapper.categoryEntityToCategoryDto(savedEntity);}
-        catch (Exception e){
+            return categoryMapper.categoryEntityToCategoryDto(savedEntity);
+        } catch (Exception e) {
             throw new ConflictException("There is already a category with this name " + categoryDto.getName());
         }
     }
+
+    @Override
+    public CategoryDTO modifyCategory(Long categoryId, CategoryDTO categoryDto) {
+
+        if (categoryRepository.existsById(categoryId)) {
+
+            Category category = categoryRepository.getById(categoryId);
+            category = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
+            Category result = categoryRepository.save(category);
+            CategoryDTO newCategoryDto = categoryMapper.categoryEntityToCategoryDto(result);
+
+            return newCategoryDto;
+
+        } else {
+            throw new NotFoundException("Category id not found");
+        }
+
 
     public CategoryDTO getCategoryById(Long id) {
         Category categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
@@ -44,4 +61,7 @@ public class CategoryServiceImpl implements ICategoryService {
         }
 
     }
+}
+
+
 }
