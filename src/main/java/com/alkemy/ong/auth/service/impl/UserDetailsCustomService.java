@@ -2,12 +2,11 @@ package com.alkemy.ong.auth.service.impl;
 
 import com.alkemy.ong.auth.config.SecurityConfiguration;
 
-import com.alkemy.ong.auth.dto.UserRequestDto;
-import com.alkemy.ong.auth.dto.UserResponseDto;
-import com.alkemy.ong.auth.dto.UserUpdateDto;
+import com.alkemy.ong.auth.dto.*;
 import com.alkemy.ong.auth.service.JwtUtils;
 import com.alkemy.ong.enums.RolName;
 import com.alkemy.ong.exception.ConflictException;
+import com.alkemy.ong.exception.ForbiddenException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.Role;
@@ -17,6 +16,11 @@ import com.alkemy.ong.auth.repository.UserRepository;
 import com.alkemy.ong.service.IEmailService;
 import com.amazonaws.services.sns.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -55,12 +59,15 @@ public class UserDetailsCustomService implements UserDetailsService {
     @Autowired
     private JwtUtils jwtTokenUtil;
     
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Optional<UserEntity> userEntity = userRepository.findByEmail(userName);
-        if (!userEntity.isPresent()) {
+        if (userEntity.isEmpty()) {
             throw new UsernameNotFoundException("The username or password is incorrect");
         }
         List<GrantedAuthority> roles = new ArrayList<>();
@@ -137,4 +144,19 @@ public class UserDetailsCustomService implements UserDetailsService {
         UserResponseDto responseDto = userMapper.userEntity2ResponseDto(entity);
         return responseDto;
     }
+    
+     public AuthenticationResponse login(AuthenticationRequest authRequest){
+        UserDetails userDetails;
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+            );
+            userDetails = (UserDetails) auth.getPrincipal();
+        } catch (BadCredentialsException e) {
+            throw new ForbiddenException("Incorrect username or password");
+        }
+        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        return new AuthenticationResponse(jwt);
+   
+     }
 }
