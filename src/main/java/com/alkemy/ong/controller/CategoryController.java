@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -25,8 +26,8 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO, BindingResult result){
-        if(result.hasErrors()){
+    public ResponseEntity<CategoryDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO, BindingResult result) {
+        if (result.hasErrors()) {
             throw new BadRequestException(result);
         }
         CategoryDTO savedCategory = categoryService.addCategory(categoryDTO);
@@ -47,7 +48,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> getCategoryDTO(@PathVariable(name = "id") Long id){
+    public ResponseEntity<CategoryDTO> getCategoryDTO(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 

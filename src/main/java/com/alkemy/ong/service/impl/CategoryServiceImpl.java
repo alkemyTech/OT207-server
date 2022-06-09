@@ -31,6 +31,13 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    public CategoryDTO getCategoryById(Long id) {
+        Category categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
+        return categoryMapper.categoryEntityToCategoryDto(categoryEntity);
+    }
+
+
+    @Override
     public CategoryDTO modifyCategory(Long categoryId, CategoryDTO categoryDto) {
 
         if (categoryRepository.existsById(categoryId)) {
@@ -46,12 +53,8 @@ public class CategoryServiceImpl implements ICategoryService {
             throw new NotFoundException("Category id not found");
         }
 
-
-    public CategoryDTO getCategoryById(Long id) {
-        Category categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
-        return categoryMapper.categoryEntityToCategoryDto(categoryEntity);
     }
-}
+
     @Override
     public void deleteCategory(Long id) throws NotFoundException {
         try {
@@ -64,4 +67,4 @@ public class CategoryServiceImpl implements ICategoryService {
 }
 
 
-}
+

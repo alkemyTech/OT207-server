@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ICategoryService {
+
     CategoryDTO addCategory(CategoryDTO categoryDto);
 
     CategoryDTO getCategoryById(Long id);
