@@ -22,4 +22,5 @@ public class NewsDTO {
 
     private CategoryDTO category;
 
+
 }

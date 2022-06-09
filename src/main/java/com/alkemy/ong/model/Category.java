@@ -32,6 +32,7 @@ public class Category implements Serializable {
     @NotBlank(message = "Name cannot be empty")
     @NotEmpty(message = "Name cannot be null")
     @Pattern(regexp = "[a-zA-Z\\s]*", message = "Name cannot contain numbers or characters other than letters")
+    @Column(unique = true)
     private String name;
 
     private String description;
@@ -45,6 +46,6 @@ public class Category implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    private boolean deleted = Boolean.FALSE;
+    private Boolean deleted = Boolean.FALSE;
 
 }

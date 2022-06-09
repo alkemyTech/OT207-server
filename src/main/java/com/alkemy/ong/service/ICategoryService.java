@@ -7,7 +7,15 @@ import java.util.List;
 
 
 public interface ICategoryService {
+
     CategoryDTO addCategory(CategoryDTO categoryDto);
+  
     List<CategoryDtoName> getAllCategories();
+  
+    CategoryDTO getCategoryById(Long id);
+  
+    void deleteCategory(Long id);
+  
+    CategoryDTO modifyCategory(Long categoryId, CategoryDTO categoryDto);
 
 }

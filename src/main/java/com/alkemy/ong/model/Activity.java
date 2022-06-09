@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +20,8 @@ import org.hibernate.annotations.Where;
 import lombok.Data;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "activities")
 @SQLDelete(sql = "UPDATE activities SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
@@ -40,7 +43,7 @@ public class Activity implements Serializable{
 	@NotNull(message = "Image cannot be empty")
     private String image;
     
-    private boolean deleted = Boolean.FALSE;
+    private Boolean deleted = Boolean.FALSE;
     
     @CreationTimestamp
     private LocalDateTime createDateTime;

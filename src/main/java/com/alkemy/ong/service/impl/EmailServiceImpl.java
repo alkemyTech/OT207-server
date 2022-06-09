@@ -1,6 +1,6 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.enumeration.EmailConstants;
+import com.alkemy.ong.enums.EmailConstants;
 import com.alkemy.ong.service.IEmailService;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
@@ -98,7 +98,7 @@ public class EmailServiceImpl implements IEmailService {
         List<String> contacts = Arrays.asList("Mail: somosfundacionmas@gmail.com", "Instagram: SomosMás", "Facebook: Somos_Más", "Teléfono de contacto: 1160112988");
         personalization.addDynamicTemplateData("contacts", contacts);
         mail.addPersonalization(personalization);
-
+        
         mail.setTemplateId(templateId);
 
         return mail;

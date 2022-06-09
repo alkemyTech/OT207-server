@@ -10,13 +10,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-import com.alkemy.ong.model.Category;
 @Getter
 @Setter
 @NoArgsConstructor
 
-@SQLDelete(sql = "UPDATE news SET softDelete = true WHERE id=?")
-@Where(clause = "softDelete = false")
+@SQLDelete(sql = "UPDATE news SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 
 @Entity
 @Table(name="news")
@@ -38,15 +37,16 @@ public class News {
     @Column(name = "image")
     private String image;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    private boolean softDelete = Boolean.FALSE;
+    private Boolean deleted = Boolean.FALSE;
 }

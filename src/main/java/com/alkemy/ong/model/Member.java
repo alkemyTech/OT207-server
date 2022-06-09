@@ -8,10 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,7 +17,8 @@ import org.hibernate.annotations.Where;
 import org.springframework.lang.Nullable;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -59,6 +58,7 @@ public class Member {
     private Boolean deleted = Boolean.FALSE;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createDateTime;
 
     @UpdateTimestamp

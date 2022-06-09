@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -47,17 +47,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
        httpSecurity.csrf().disable()
-               .authorizeRequests().antMatchers("/auth/login","/auth/register").permitAll()
-               .antMatchers("/auth/users","/auth/users/*","/api/assets/upload", "/organization/public", "/categories/:id").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
-               .antMatchers(HttpMethod.POST,"/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
-               .antMatchers(HttpMethod.GET,"/categories").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
-               .antMatchers(HttpMethod.GET,"/news/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
-               .anyRequest().authenticated()
-               .and().exceptionHandling()
-               .and().sessionManagement()
-               .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .authorizeRequests().antMatchers("/auth/login", "/auth/register").permitAll()
+                .antMatchers("/auth/users", "/auth/users/*", "/api/assets/upload", "/organization/public", "/categories/:id", "/activities").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.POST, "/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.PUT, "/news/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/news/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.GET,"/categories").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/categories/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.DELETE, "/news/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers("/auth/users", "/api/assets/upload", "/organization/public").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.PUT, "/categories/{categoryId}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .anyRequest().authenticated()
+                .and().exceptionHandling()
+                .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-             httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 }

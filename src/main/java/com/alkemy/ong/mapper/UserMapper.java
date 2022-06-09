@@ -2,15 +2,12 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.auth.dto.UserRequestDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
-import com.alkemy.ong.model.Role;
 import com.alkemy.ong.model.UserEntity;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -52,4 +49,5 @@ public class UserMapper {
         }
         return responseDtos;
     }
+
 }
