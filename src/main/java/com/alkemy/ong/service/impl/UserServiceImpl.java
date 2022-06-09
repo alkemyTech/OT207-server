@@ -1,11 +1,13 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.dto.UserResponseDto;
+import com.alkemy.ong.auth.dto.UserUpdateDto;
 import com.alkemy.ong.auth.repository.UserRepository;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.UserMapper;
 import com.alkemy.ong.model.UserEntity;
 import com.alkemy.ong.service.IUserService;
+import com.amazonaws.services.sns.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +24,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
-
+    @Override
     @Transactional(readOnly = true)
     public List<UserResponseDto> getAllUsers() {
         List<UserEntity> entities = this.userRepository.findAll();
@@ -33,7 +35,9 @@ public class UserServiceImpl implements IUserService {
         return userResponseDtos;
     }
 
-    public void deleteUserById(Long userId)  {
+    @Override
+    @Transactional()
+    public void deleteUserById(Long userId) {
         Optional<UserEntity> user = this.userRepository.findById(userId);
         if (user.isEmpty()) {
             throw new NotFoundException("the user does not exist or has already been deleted");
@@ -42,6 +46,21 @@ public class UserServiceImpl implements IUserService {
         userRepository.save(user.get());
     }
 
-    //TODO: Aca esta el endpoint GetAll y deberian de pasarse las otras funcionalidades que no hacen a la autenticacion aca tambien
+    @Override
+    @Transactional()
+    public UserResponseDto updateUser(Long userId, UserUpdateDto userUpdateDto) {
+        UserEntity user = userRepository.findById(userId).
+                orElseThrow(() -> new ResourceNotFoundException("User with id = " + userId + " was not found"));
+        if (userUpdateDto.getFirstName() != null) {
+            user.setFirstName(userUpdateDto.getFirstName());
+        }
+        if (userUpdateDto.getLastName() != null) {
+            user.setLastName(userUpdateDto.getLastName());
+        }
+        UserEntity updatedUser = userRepository.save(user);
+
+        return userMapper.userEntity2ResponseDto(updatedUser);
+    }
+
 
 }
