@@ -1,4 +1,5 @@
 package com.alkemy.ong.dto;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ public class CategoryDTO {
 
     private Long id;
 
-    @NotNull(message = "Name cannot be null")
+    //@NotNull(message = "Name cannot be null")
     private String name;
 
     private String description;

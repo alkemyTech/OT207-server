@@ -5,7 +5,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ICategoryService {
+
     CategoryDTO addCategory(CategoryDTO categoryDto);
+
+    CategoryDTO getCategoryById(Long id);
     
     void deleteCategory(Long id);
+
+    CategoryDTO modifyCategory(Long categoryId, CategoryDTO categoryDto);
 }
