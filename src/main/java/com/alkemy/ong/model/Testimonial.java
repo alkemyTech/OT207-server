@@ -40,7 +40,7 @@ public class Testimonial {
     @Column(name = "image")
     private String image;
 
-    @Nullable
+    @NotNull
     @Column(name = "content")
     private String content;
 
@@ -51,4 +51,10 @@ public class Testimonial {
 
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
+
+    public Testimonial(String name, @Nullable String image, @NotNull String content) {
+        this.name = name;
+        this.image = image;
+        this.content = content;
+    }
 }
