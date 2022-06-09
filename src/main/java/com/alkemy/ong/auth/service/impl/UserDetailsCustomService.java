@@ -90,23 +90,4 @@ public class UserDetailsCustomService implements UserDetailsService {
         return userResponseDto;
     }
 
-    @Transactional(readOnly = true)
-    public List<UserResponseDto> getAllUsers() {
-        List<UserEntity> entities = this.userRepository.findAll();
-        if (entities.isEmpty()) {
-            throw new NotFoundException("The list is empty");
-        }
-        List<UserResponseDto> userResponseDtos = userMapper.userEntityList2ResponseDtoList(entities);
-        return userResponseDtos;
-    }
-
-    public void deleteUserById(Long userId)  {
-        Optional<UserEntity> user = this.userRepository.findById(userId);
-        if (user.isEmpty()) {
-            throw new NotFoundException("the user does not exist or has already been deleted");
-        }
-        user.get().setDeleted(true);
-        userRepository.save(user.get());
-    }
-
 }
