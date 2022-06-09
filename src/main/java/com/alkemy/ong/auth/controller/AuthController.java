@@ -67,6 +67,7 @@ public class AuthController {
         List<UserResponseDto> usersDTOs = this.userDetailsCustomService.getAllUsers();
         return ResponseEntity.ok().body(usersDTOs);
     }
+    //TODO: Este endpoint se debe de pasar a UserController (yo ya lo puse) lo dejo por si alguien en otra tarea lo tiene usando este
 
     @PatchMapping("users/{id}")
     public UserResponseDto updateUser(
@@ -79,9 +80,9 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDto> getProfile(HttpServletRequest request){
+    public ResponseEntity<UserResponseDto> getProfile(HttpServletRequest request) {
         UserResponseDto responseDto = userDetailsCustomService.getProfile(request);
-        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 }

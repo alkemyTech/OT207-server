@@ -42,5 +42,6 @@ public class UserServiceImpl implements IUserService {
         userRepository.save(user.get());
     }
 
+    //TODO: Aca esta el endpoint GetAll y deberian de pasarse las otras funcionalidades que no hacen a la autenticacion aca tambien
 
 }
