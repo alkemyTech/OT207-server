@@ -48,13 +48,13 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
-    
+
     @Autowired
     private IEmailService emailService;
 
     @Autowired
     private JwtUtils jwtTokenUtil;
-    
+
 
     @Transactional(readOnly = true)
     @Override
@@ -97,37 +97,11 @@ public class UserDetailsCustomService implements UserDetailsService {
         user.setRoles(Arrays.asList(role));
         UserEntity result = userRepository.save(user);
         UserResponseDto userResponseDto = userMapper.userEntity2ResponseDto(result);
-        
+
         emailService.sendWelcomeEmail(userRequestDto.getEmail());
-        
+
         return userResponseDto;
     }
-
-    @Transactional(readOnly = true)
-    public List<UserResponseDto> getAllUsers() {
-        List<UserEntity> entities = this.userRepository.findAll();
-        if (entities.isEmpty()) {
-            throw new NotFoundException("The list is empty");
-        }
-        List<UserResponseDto> userResponseDtos = userMapper.userEntityList2ResponseDtoList(entities);
-        return userResponseDtos;
-    }
-
-    @Transactional()
-    public UserResponseDto updateUser(Long userId, UserUpdateDto userUpdateDto){
-        UserEntity user = userRepository.findById(userId).
-                orElseThrow(() -> new ResourceNotFoundException("User with id = " + userId + " was not found"));
-        if (userUpdateDto.getFirstName() != null) {
-            user.setFirstName(userUpdateDto.getFirstName());
-        }
-        if (userUpdateDto.getLastName()!= null) {
-            user.setLastName(userUpdateDto.getLastName());
-        }
-        UserEntity updatedUser = userRepository.save(user);
-
-        return userMapper.userEntity2ResponseDto(updatedUser);
-    }
-
 
     public UserResponseDto getProfile(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
