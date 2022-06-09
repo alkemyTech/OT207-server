@@ -54,26 +54,10 @@ public class AuthController {
         return ResponseEntity.ok().body(authResponse);
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        List<UserResponseDto> usersDTOs = this.userDetailsCustomService.getAllUsers();
-        return ResponseEntity.ok().body(usersDTOs);
-    }
-
-    @PatchMapping("users/{id}")
-    public UserResponseDto updateUser(
-            @PathVariable(value = "id") Long userId, @Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()) {
-            throw new BadRequestException(bindingResult);
-        }
-        UserResponseDto userResponseDto = userDetailsCustomService.updateUser(userId, userUpdateDto);
-        return userResponseDto;
-    }
-
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDto> getProfile(HttpServletRequest request){
+    public ResponseEntity<UserResponseDto> getProfile(HttpServletRequest request) {
         UserResponseDto responseDto = userDetailsCustomService.getProfile(request);
-        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 }
