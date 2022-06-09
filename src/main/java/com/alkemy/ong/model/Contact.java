@@ -41,6 +41,6 @@ public class Contact implements Serializable {
     @NotNull(message = "Name cannot be empty")
     private String message;
 
-    private boolean deleted = Boolean.FALSE;
+    private Boolean deleted = Boolean.FALSE;
 
 }

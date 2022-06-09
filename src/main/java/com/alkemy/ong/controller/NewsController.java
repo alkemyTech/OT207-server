@@ -19,7 +19,7 @@ public class NewsController {
     private INewsService newsService;
 
     @PostMapping
-    public ResponseEntity<NewsDTO> create(@Valid NewsDTO dto, BindingResult bindingResult){
+    public ResponseEntity<NewsDTO> create(@Valid @RequestBody NewsDTO dto, BindingResult bindingResult){
     if (bindingResult.hasErrors()){
         throw new BadRequestException(bindingResult);
     }
@@ -30,6 +30,22 @@ public class NewsController {
     @GetMapping("/{id}")
     public ResponseEntity<NewsDTO> getById(@PathVariable("id") Long id){
         NewsDTO newsDTO = this.newsService.getById(id);
+        return ResponseEntity.ok().body(newsDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable("id") Long id){
+        this.newsService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NewsDTO> updateNewsById(@PathVariable("id") Long id,
+                                           @Valid @RequestBody NewsDTO dto, BindingResult bindingResult){
+     if (bindingResult.hasErrors()){
+         throw new BadRequestException(bindingResult);
+     }
+        NewsDTO newsDTO = this.newsService.updateNewsById(id, dto);
         return ResponseEntity.ok().body(newsDTO);
     }
 

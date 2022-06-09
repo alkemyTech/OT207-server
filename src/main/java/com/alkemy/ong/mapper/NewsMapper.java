@@ -31,4 +31,10 @@ public class NewsMapper {
         dto.setCategory(this.categoryMapper.categoryEntityToCategoryDto(entity.getCategory()));
         return dto;
     }
+
+    public void newsDTO2EntityWithId(News entity, NewsDTO dto){
+        entity.setName(dto.getName());
+        entity.setContent(dto.getContent());
+        entity.setImage(dto.getImage());
+    }
 }
