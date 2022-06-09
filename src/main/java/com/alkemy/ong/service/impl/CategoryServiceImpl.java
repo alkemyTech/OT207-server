@@ -7,6 +7,7 @@ import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.ICategoryService;
+import com.amazonaws.services.sns.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class CategoryServiceImpl implements ICategoryService {
         }
     }
 
+    public CategoryDTO getCategoryById(Long id) {
+        Category categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
+        return categoryMapper.categoryEntityToCategoryDto(categoryEntity);
+    }
+}
     @Override
     public void deleteCategory(Long id) throws NotFoundException {
         try {
