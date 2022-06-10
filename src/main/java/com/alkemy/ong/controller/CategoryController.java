@@ -37,7 +37,7 @@ public class CategoryController {
         CategoryDTO savedCategory = categoryService.addCategory(categoryDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
-    
+
     @GetMapping
     public ResponseEntity<List<CategoryDtoName>> getAllCategories() {
         List<CategoryDtoName> categoriesDTOs = categoryService.getAllCategories();
