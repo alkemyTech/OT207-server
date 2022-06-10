@@ -20,7 +20,6 @@ public class ContactServiceImpl implements IContactService {
     public ContactDTO save(ContactDTO contactDTO) {
         Contact entity = mapper.ContactDTO2Entity(contactDTO);
         Contact entitySaved = contactRepository.save(entity);
-        ContactDTO dtoReturn = mapper.ContactEntity2DTO(entitySaved);
-        return dtoReturn;
+        return mapper.ContactEntity2DTO(entitySaved);
     }
 }
