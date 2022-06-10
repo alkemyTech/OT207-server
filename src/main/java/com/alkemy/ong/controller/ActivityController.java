@@ -38,12 +38,4 @@ public class ActivityController {
         return ResponseEntity.ok().body(resultDTO);
     }
 
-//    Descripción
-//    COMO usuario administrador
-//    QUIERO actualizar una actividad existente
-//    PARA mantener la información actualizada
-//    Criterios de aceptación:
-//    PUT /activities/:id - Deberá validar que la actividad exista en base al id enviado por parámetro.
-//    En el caso de que no exista devolver un error, caso contrario actualizarla y devolverla con los datos actualizados
-
 }
