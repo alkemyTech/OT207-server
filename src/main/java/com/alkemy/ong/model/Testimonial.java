@@ -23,7 +23,7 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@SQLDelete(sql = "UPDATE testimonial SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE testimonials SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 @Table(name = "testimonials")
 public class Testimonial {
