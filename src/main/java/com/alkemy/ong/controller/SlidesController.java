@@ -19,15 +19,5 @@ public class SlidesController {
         SlidesResponseDTO result = this.iSlideService.save(requestDTO);
         return ResponseEntity.ok().body(result);
     }
-//    COMO usuario
-//    QUIERO ver Slides cuando entro a la pagina
-//    PARA estar más informados sobre ellos
-//
-//    Criterios de aceptación:
-//
-//    En el endpoint de datos públicos de la Organización,
-//    se deberán agregar el listado de Slides ordenados por el campo "order".
-//    Los Slides serán los pertenecientes a la Organización,
-//    en base al campo organization_id que deberá corresponder a la Organización que se está devolviendo
 
 }
