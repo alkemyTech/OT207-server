@@ -17,8 +17,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
-import lombok.Data;
-
 @Entity
 @Getter
 @Setter
