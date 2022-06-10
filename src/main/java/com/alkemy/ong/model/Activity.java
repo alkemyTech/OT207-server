@@ -3,11 +3,7 @@ package com.alkemy.ong.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
@@ -46,6 +42,7 @@ public class Activity implements Serializable{
     private Boolean deleted = Boolean.FALSE;
     
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createDateTime;
     
     @UpdateTimestamp

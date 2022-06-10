@@ -55,7 +55,6 @@ public class NewsServiceImpl implements INewsService {
             throw new NotFoundException("News with id provided not found");
         }
         entity.get().setDeleted(true);
-        entity.get().setUpdateDateTime(LocalDateTime.now());
         this.newsRepository.save(entity.get());
     }
 

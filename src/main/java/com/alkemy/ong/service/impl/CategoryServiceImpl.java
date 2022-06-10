@@ -1,20 +1,16 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
 import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.model.Category;
-import com.alkemy.ong.model.UserEntity;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.ICategoryService;
-import com.amazonaws.services.sns.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,16 +39,13 @@ public class CategoryServiceImpl implements ICategoryService {
             throw new NotFoundException("The list is empty");
         }
         List<CategoryDtoName> allCategories = categoryMapper.CategoryListResponseDtoList(categories);
-
         return allCategories;
     }
-}
 
     public CategoryDTO getCategoryById(Long id) {
         Category categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
         return categoryMapper.categoryEntityToCategoryDto(categoryEntity);
     }
-
 
     @Override
     public CategoryDTO modifyCategory(Long categoryId, CategoryDTO categoryDto) {
