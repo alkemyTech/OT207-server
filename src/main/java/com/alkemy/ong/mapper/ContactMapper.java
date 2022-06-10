@@ -2,6 +2,8 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.ContactDTO;
 import com.alkemy.ong.model.Contact;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -26,6 +28,14 @@ public class ContactMapper {
         dto.setEmail(entity.getEmail());
         dto.setMessage(entity.getMessage());
         return dto;
+    }
+    
+    public List<ContactDTO> entityListToDtoList(@NotNull List<Contact> listEntity){
+        List<ContactDTO> listDto = new ArrayList();
+        for (Contact entity : listEntity) {
+            listDto.add(this.ContactEntity2DTO(entity));
+        }
+        return listDto;
     }
 }
 
