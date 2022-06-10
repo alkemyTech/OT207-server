@@ -29,11 +29,10 @@ public class ContactMapper {
         dto.setMessage(entity.getMessage());
         return dto;
     }
-    
-    public List<ContactDTO> entityListToDtoList(@NotNull List<Contact> listEntity){
-        List<ContactDTO> listDto = new ArrayList();        
-        listEntity.forEach(entity -> listDto.add(contactEntity2DTO(entity)));        
+
+    public List<ContactDTO> entityListToDtoList(@NotNull List<Contact> listEntity) {
+        List<ContactDTO> listDto = new ArrayList();
+        listEntity.forEach(entity -> listDto.add(contactEntity2DTO(entity)));
         return listDto;
     }
 }
-

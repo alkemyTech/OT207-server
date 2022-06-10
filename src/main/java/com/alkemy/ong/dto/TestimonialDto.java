@@ -2,13 +2,20 @@ package com.alkemy.ong.dto;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TestimonialDto {
+
+    private Long id;
 
     @NotNull(message = "Name cannot be null")
     @Column(name = "name")
@@ -18,7 +25,7 @@ public class TestimonialDto {
     @Column(name = "image")
     private String image;
 
-    @Nullable
+    @NotNull(message = "Content cannot be null")
     @Column(name = "content")
     private String content;
 

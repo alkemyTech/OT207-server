@@ -47,6 +47,7 @@ public class CategoryServiceImpl implements ICategoryService {
         return allCategories;
     }
 
+
     public CategoryDTO getCategoryById(Long id) {
         Category categoryEntity = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException("Category not found"));
         return categoryMapper.categoryEntityToCategoryDto(categoryEntity);

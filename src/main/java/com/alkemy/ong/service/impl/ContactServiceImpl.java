@@ -22,17 +22,16 @@ public class ContactServiceImpl implements IContactService {
     public ContactDTO save(ContactDTO contactDTO) {
         Contact entity = mapper.contactDTO2Entity(contactDTO);
         Contact entitySaved = contactRepository.save(entity);
-        ContactDTO dtoReturn = mapper.contactEntity2DTO(entitySaved);
-        return dtoReturn;
+        return mapper.contactEntity2DTO(entitySaved);
     }
 
     @Override
     public List<ContactDTO> getAll() {
         List<Contact> listEntity = contactRepository.findAll();
-        if(listEntity.isEmpty()){
+        if (listEntity.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }
         List<ContactDTO> listDto = mapper.entityListToDtoList(listEntity);
         return listDto;
-        }
+    }
 }
