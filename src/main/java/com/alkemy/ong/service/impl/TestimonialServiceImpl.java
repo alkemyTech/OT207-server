@@ -31,7 +31,7 @@ public class TestimonialServiceImpl implements ITestimonialService {
         try {
             testimonialRepository.deleteById(id);
         } catch (Exception e) {
-            throw new NotFoundException("Testimonial id does not exist" + id);
+            throw new NotFoundException("Testimonial id does not exist");
         }
     }
 }
