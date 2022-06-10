@@ -26,7 +26,6 @@ public class ContactController {
         if (result.hasErrors()) {
             throw new BadRequestException(result);
         }
-        ContactDTO result = contactService.save(dto);
-        return new ResponseEntity<>(dto, HttpStatus.CREATED);
+        return new ResponseEntity<>(contactService.save(dto), HttpStatus.CREATED);
     }
 }
