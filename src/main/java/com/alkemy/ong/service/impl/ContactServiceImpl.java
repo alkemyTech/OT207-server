@@ -18,8 +18,8 @@ public class ContactServiceImpl implements IContactService {
 
     @Override
     public ContactDTO save(ContactDTO contactDTO) {
-        Contact entity = mapper.ContactDTO2Entity(contactDTO);
+        Contact entity = mapper.contactDTO2Entity(contactDTO);
         Contact entitySaved = contactRepository.save(entity);
-        return mapper.ContactEntity2DTO(entitySaved);
+        return mapper.contactEntity2DTO(entitySaved);
     }
 }

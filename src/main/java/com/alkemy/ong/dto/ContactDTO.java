@@ -19,7 +19,7 @@ public class ContactDTO {
     private String phone;
 
     @Email(message = "Has to be an email format")
-    @NotBlank
+    @NotBlank(message = "Email cannot be empty")
     private String email;
 
     private String message;
