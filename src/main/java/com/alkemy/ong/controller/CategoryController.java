@@ -41,6 +41,7 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDtoName>> getAllCategories() {
         List<CategoryDtoName> categoriesDTOs = categoryService.getAllCategories();
         return ResponseEntity.ok().body(categoriesDTOs);
+    }
 
     @PutMapping("/{categoryId}")
     public ResponseEntity<CategoryDTO> modifyCategory(@PathVariable Long categoryId, @RequestBody CategoryDTO categoryDto) {
