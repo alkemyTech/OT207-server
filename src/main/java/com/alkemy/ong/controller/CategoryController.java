@@ -37,10 +37,12 @@ public class CategoryController {
         CategoryDTO savedCategory = categoryService.addCategory(categoryDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
-
+    
+    @GetMapping
     public ResponseEntity<List<CategoryDtoName>> getAllCategories() {
         List<CategoryDtoName> categoriesDTOs = categoryService.getAllCategories();
         return ResponseEntity.ok().body(categoriesDTOs);
+    }
 
     @PutMapping("/{categoryId}")
     public ResponseEntity<CategoryDTO> modifyCategory(@PathVariable Long categoryId, @RequestBody CategoryDTO categoryDto) {
