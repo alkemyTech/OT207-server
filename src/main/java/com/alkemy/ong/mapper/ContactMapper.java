@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Component
 public class ContactMapper {
 
-    public Contact ContactDTO2Entity(@NotNull ContactDTO dto) {
+    public Contact contactDTO2Entity(@NotNull ContactDTO dto) {
         Contact entity = new Contact();
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
@@ -18,7 +18,7 @@ public class ContactMapper {
         return entity;
     }
 
-    public ContactDTO ContactEntity2DTO(@NotNull Contact entity) {
+    public ContactDTO contactEntity2DTO(@NotNull Contact entity) {
         ContactDTO dto = new ContactDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());

@@ -29,8 +29,7 @@ public class Contact implements Serializable {
     @NotNull(message = "Name cannot be empty")
     private String name;
 
-    @Column(nullable = false, length = 50)
-    @NotBlank(message = "Phone cannot be empty")
+    @Column(length = 50)
     private String phone;
 
     @Column(nullable = false, unique = true)
@@ -38,7 +37,6 @@ public class Contact implements Serializable {
     @NotBlank
     private String email;
 
-    @NotNull(message = "Name cannot be empty")
     private String message;
 
     private Boolean deleted = Boolean.FALSE;
