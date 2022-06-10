@@ -16,13 +16,11 @@ public class ContactDTO {
     @NotNull(message = "Name cannot be empty")
     private String name;
 
-    @NotBlank(message = "Phone cannot be empty")
     private String phone;
 
     @Email(message = "Has to be an email format")
-    @NotBlank
+    @NotBlank(message = "Email cannot be empty")
     private String email;
 
-    @NotNull(message = "Name cannot be empty")
     private String message;
 }
