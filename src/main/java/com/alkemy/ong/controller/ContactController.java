@@ -1,6 +1,8 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.ContactDTO;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.service.IContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,16 @@ public class ContactController {
     private IContactService contactService;
 
     @PostMapping
-    public ResponseEntity<ContactDTO> createContact(@Valid @RequestBody ContactDTO dto, BindingResult result){
+    public ResponseEntity<ContactDTO> createContact(@Valid @RequestBody ContactDTO dto, BindingResult result) {
         if (result.hasErrors()) {
             throw new BadRequestException(result);
         }
         return new ResponseEntity<>(contactService.save(dto), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ContactDTO>> getContacts() {
+        List<ContactDTO> listDto = this.contactService.getAll();
+        return ResponseEntity.ok().body(listDto);
     }
 }
