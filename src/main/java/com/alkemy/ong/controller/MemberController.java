@@ -1,9 +1,9 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.dto.CategoryDTO;
+
 import com.alkemy.ong.dto.MemberDto;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.service.ICategoryService;
+
 import com.alkemy.ong.service.IMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
