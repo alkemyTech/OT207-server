@@ -6,4 +6,6 @@ import com.alkemy.ong.dto.SlidesResponseDTO;
 public interface ISlideService {
 
     SlidesResponseDTO save(SlidesRequestDTO requestDTO);
+
+    void deleteById(Long id);
 }
