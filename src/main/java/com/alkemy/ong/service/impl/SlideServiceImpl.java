@@ -50,6 +50,14 @@ public class SlideServiceImpl implements ISlideService {
         return result;
     }
 
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        Slides slide = slidesRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ID: " + id));
+        slidesRepository.delete(slide);
+    }
+
     public int findLargerInteger(List<Integer> integers) {
         Collections.sort(integers, Collections.reverseOrder());
         return integers.get(0);
