@@ -4,6 +4,7 @@ import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,12 @@ public class SlidesController {
     public ResponseEntity<SlidesResponseDTO> createSlides(@RequestBody SlidesRequestDTO requestDTO){
         SlidesResponseDTO result = this.iSlideService.save(requestDTO);
         return ResponseEntity.ok().body(result);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSlidesById(@PathVariable Long id){
+        iSlideService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
