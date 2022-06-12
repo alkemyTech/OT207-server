@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,10 +20,24 @@ public class TestimonialController {
 
     @PostMapping
     public ResponseEntity<TestimonialDto> createTestimonial(@Valid @RequestBody TestimonialDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }
         return new ResponseEntity<>(testimonialService.save(dto), HttpStatus.CREATED);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<TestimonialDto> updateTestimonial(@Valid @RequestBody TestimonialDto dto, BindingResult bindingResult,
+            @PathVariable Long id) {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(bindingResult);
+        }
+        return new ResponseEntity<>(testimonialService.update(id, dto), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTestimonial(@PathVariable(name = "id") Long id) {
+        testimonialService.deleteTestimonial(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

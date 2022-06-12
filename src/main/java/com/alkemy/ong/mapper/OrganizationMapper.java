@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class OrganizationMapper {
 
-    public OrganizationDTO oganizationEntity2DTO(@NotNull Organization entity) {
+    public OrganizationDTO organizationEntity2DTO(@NotNull Organization entity) {
         OrganizationDTO dto = new OrganizationDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -26,7 +26,7 @@ public class OrganizationMapper {
     public List<OrganizationDTO> organizationEntityList2DTOList(@NotNull @NotEmpty List<Organization> entities) {
         List<OrganizationDTO> dtoList = new ArrayList<>();
         for (Organization entity : entities) {
-            dtoList.add(this.oganizationEntity2DTO(entity));
+            dtoList.add(this.organizationEntity2DTO(entity));
         }
         return dtoList;
     }

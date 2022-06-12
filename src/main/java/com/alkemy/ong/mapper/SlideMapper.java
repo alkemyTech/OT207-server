@@ -29,7 +29,7 @@ public class SlideMapper {
         responseDTO.setImageUrl(entity.getImageUrl());
         responseDTO.setOrderSlides(entity.getOrderSlides());
         responseDTO.setText(entity.getText());
-        responseDTO.setOrganizations(organizationMapper.oganizationEntity2DTO(entity.getOrganizations()));
+        responseDTO.setOrganizations(organizationMapper.organizationEntity2DTO(entity.getOrganizations()));
         return responseDTO;
     }
 
