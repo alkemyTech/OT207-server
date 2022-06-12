@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -46,12 +47,22 @@ public class SlideServiceImpl implements ISlideService {
             }
         }
         Slides entity = this.slidesMapper.requestDto2SlidesEntity(requestDTO);
-        SlidesResponseDTO result = this.slidesMapper.entitySlides2responseDto(this.slidesRepository.save(entity));
+        return this.slidesMapper.entitySlides2responseDto(this.slidesRepository.save(entity));
+    }
+
+    @Override
+    public List<SlidesResponseDTO> findAll() {
+        List<Slides> entities = this.slidesRepository.findAll();
+        if(entities.isEmpty()){
+            throw new NotFoundException("The Slides list is empty");
+        }
+        List<SlidesResponseDTO> result = this.slidesMapper.entitySlidesList2responseDtoList(entities);
+        result.sort(Comparator.comparing(SlidesResponseDTO::getOrderSlides));
         return result;
     }
 
     public int findLargerInteger(List<Integer> integers) {
-        Collections.sort(integers, Collections.reverseOrder());
+        integers.sort(Collections.reverseOrder());
         return integers.get(0);
     }
 

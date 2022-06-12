@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@AllArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role implements Serializable {
@@ -26,4 +26,7 @@ public class Role implements Serializable {
     @Column(name = "name", length = 40, nullable = false)
     private String name;
 
+    public Role(String name) {
+        this.name = name;
+    }
 }
