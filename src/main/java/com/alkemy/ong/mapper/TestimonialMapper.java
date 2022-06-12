@@ -11,11 +11,9 @@ public class TestimonialMapper {
 
 
     public Testimonial testimonialDto2Entity(@NotNull TestimonialDto dto) {
-        return new Testimonial(
-                dto.getName(),
-                dto.getImage(),
-                dto.getContent()
-        );
+        Testimonial entityResult = new Testimonial();
+        this.entityTestimonialRefreshValues(entityResult,dto);
+        return entityResult;
     }
 
     public TestimonialDto testimonialEntity2Dto(@NotNull Testimonial entity) {
@@ -25,5 +23,11 @@ public class TestimonialMapper {
                 entity.getImage(),
                 entity.getContent()
         );
+    }
+
+    public void entityTestimonialRefreshValues(Testimonial entity, TestimonialDto dto){
+        entity.setName(dto.getName());
+        entity.setContent(dto.getContent());
+        entity.setImage(dto.getImage());
     }
 }

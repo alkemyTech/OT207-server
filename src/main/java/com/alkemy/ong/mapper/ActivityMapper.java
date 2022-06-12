@@ -9,9 +9,7 @@ public class ActivityMapper {
 
     public Activity activityDTOtoEntity(ActivityDTO dto) {
         Activity entity = new Activity();
-        entity.setName(dto.getName());
-        entity.setContent(dto.getContent());
-        entity.setImage(dto.getImage());
+        this.activityEntityRefreshValues(entity,dto);
         return entity;
     }
 
@@ -22,5 +20,12 @@ public class ActivityMapper {
         dto.setContent(entity.getContent());
         dto.setImage(entity.getImage());
         return dto;
+    }
+
+    public void activityEntityRefreshValues(Activity entity, ActivityDTO dto){
+        entity.setName(dto.getName());
+        entity.setContent(dto.getContent());
+        entity.setImage(dto.getImage());
+        entity.setDeleted(false);
     }
 }

@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CommentaryMapper;
 import com.alkemy.ong.model.Commentary;
 import com.alkemy.ong.repository.CommentaryRepository;
@@ -28,8 +29,11 @@ public class CommentaryServiceImpl implements ICommentaryService {
 
     @Override
     public List<CommentaryBodyDTO> getCommentaries() {
-     List<Commentary> entityList = commentaryRepository.findAllByOrderByCreationDate();
-     List<CommentaryBodyDTO> DtoList = mapper.entityListToDtoList(entityList);
-     return DtoList;
+        List<Commentary> entityList = commentaryRepository.findAllByOrderByCreationDate();
+        if (entityList.isEmpty()) {
+            throw new NotFoundException("Commentary list is empty");
+        }
+        List<CommentaryBodyDTO> dtoList = mapper.entityListToDtoList(entityList);
+        return dtoList;
     }
 }
