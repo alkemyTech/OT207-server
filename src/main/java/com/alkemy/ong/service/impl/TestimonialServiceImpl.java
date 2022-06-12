@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class TestimonialServiceImpl implements ITestimonialService {
 
@@ -27,6 +29,19 @@ public class TestimonialServiceImpl implements ITestimonialService {
     }
 
     @Override
+    @Transactional
+    public TestimonialDto update(Long id, TestimonialDto dto) {
+        Optional<Testimonial> entity = this.testimonialRepository.findById(id);
+        if (entity.isEmpty()) {
+            throw new NotFoundException("Testimonial id does not exist");
+        }
+        this.mapper.entityTestimonialRefreshValues(entity.get(), dto);
+        Testimonial result = this.testimonialRepository.save(entity.get());
+        return this.mapper.testimonialEntity2Dto(result);
+    }
+
+    @Override
+    @Transactional
     public void deleteTestimonial(Long id) throws NotFoundException {
         try {
             testimonialRepository.deleteById(id);
