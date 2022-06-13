@@ -11,4 +11,9 @@ public interface ISlideService {
     SlidesResponseDTO save(SlidesRequestDTO requestDTO);
 
     List<SlidesDTO> findAll();
+
+    void deleteById(Long id);
+
+    SlidesResponseDTO getSlidesById(Long id);
+
 }

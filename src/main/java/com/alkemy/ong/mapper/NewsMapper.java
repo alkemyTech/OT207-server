@@ -1,6 +1,5 @@
 package com.alkemy.ong.mapper;
 
-import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.model.News;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,7 @@ public class NewsMapper {
 
     public News newsDTO2Entity(@NotNull NewsDTO dto) {
         News entity = new News();
-        entity.setName(dto.getName());
-        entity.setContent(dto.getContent());
-        entity.setImage(dto.getImage());
+        setDtoAttributes2Entity(dto, entity);
         return entity;
     }
 
@@ -32,7 +29,11 @@ public class NewsMapper {
         return dto;
     }
 
-    public void newsDTO2EntityWithId(News entity, NewsDTO dto){
+    public void newsDTO2EntityWithId(News entity, NewsDTO dto) {
+        setDtoAttributes2Entity(dto, entity);
+    }
+
+    private void setDtoAttributes2Entity(NewsDTO dto, News entity) {
         entity.setName(dto.getName());
         entity.setContent(dto.getContent());
         entity.setImage(dto.getImage());
