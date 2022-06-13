@@ -11,6 +11,7 @@ import com.alkemy.ong.repository.MemberRepository;
 import com.alkemy.ong.service.IMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
@@ -21,13 +22,12 @@ public class MemberServiceImpl implements IMemberService {
     @Autowired
     private MemberRepository memberRepository;
     @Override
+    @Transactional
     public MemberDto addMember(MemberDto memberDto) {
-        try {
+
             Member MemberEntity = memberMapper.memberDtoToMemberEntity(memberDto);
             Member savedEntity = memberRepository.save(MemberEntity);
             return memberMapper.memberEntityToMemberDto(savedEntity);
-        } catch (Exception e) {
-            throw new ConflictException("There is already a Member with this name " + memberDto.getName());
-        }
+
     }
 }
