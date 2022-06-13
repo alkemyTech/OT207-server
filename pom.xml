@@ -103,6 +103,11 @@
             <artifactId>springdoc-openapi-webflux-ui</artifactId>
             <version>1.6.9</version>
         </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+            <version>1.6.9</version>
+        </dependency>
         <!-- Documenting a Spring REST API Using OpenAPI 3.0 -->
     </dependencies>
 

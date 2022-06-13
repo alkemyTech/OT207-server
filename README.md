@@ -1,3 +1,6 @@
+To access the documentation once the application is running, enter the following link:
+http://localhost:8080/swagger-ui/index.html
+
 if there are no users in the database these users will be loaded
 
             ROLE_ADMIN, ROLE_USER
@@ -24,3 +27,4 @@ Usuario : "maria7@user.com" Password: "test1234"
 Usuario : "maria8@user.com" Password: "test1234"
 Usuario : "maria9@user.com" Password: "test1234"
 Usuario : "maria10@user.com" Password: "test1234"
+
