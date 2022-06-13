@@ -7,7 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,6 +36,9 @@ public class Member {
 
     @NotNull(message = "Name cannot be null")
     @Column(name = "name")
+    @NotBlank(message = "Name cannot be empty")
+    @NotEmpty(message = "Name cannot be null")
+    @Pattern(regexp = "[a-zA-Z\\s]*", message = "Name cannot contain numbers or characters other than letters")
     private String name;
 
     @Nullable
