@@ -52,9 +52,18 @@ public class SlideServiceImpl implements ISlideService {
     }
 
     @Override
+    @Transactional
+    public void deleteById(Long id) {
+        Slides slide = slidesRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ID: " + id));
+        slidesRepository.delete(slide);
+    }
+
+   @Override
     public SlidesResponseDTO getSlidesById(Long id) {
         Slides slidesEntity = slidesRepository.findById(id).orElseThrow(() -> new NotFoundException("Slides with id provided not found"));
         return slidesMapper.entitySlides2responseDto(slidesEntity);
+
     }
 
     public int findLargerInteger(List<Integer> integers) {

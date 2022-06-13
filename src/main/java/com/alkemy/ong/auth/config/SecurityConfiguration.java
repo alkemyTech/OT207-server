@@ -49,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/auth/login", "/auth/register").permitAll()
                 .antMatchers("/auth/users", "/auth/users/*", "/api/assets/upload").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.POST, "/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.DELETE, "/slides/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/slides/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.POST, "/testimonials").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.PUT, "/testimonials").hasAnyAuthority(RolName.ROLE_ADMIN.toString())

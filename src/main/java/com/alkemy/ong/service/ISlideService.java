@@ -8,5 +8,9 @@ public interface ISlideService {
 
     SlidesResponseDTO save(SlidesRequestDTO requestDTO);
 
+
+    void deleteById(Long id);
+
     SlidesResponseDTO getSlidesById(Long id);
+
 }
