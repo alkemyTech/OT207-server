@@ -6,6 +6,7 @@ import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.SlideMapper;
+import com.alkemy.ong.model.Category;
 import com.alkemy.ong.model.Slides;
 import com.alkemy.ong.repository.SlidesRepository;
 import com.alkemy.ong.service.ISlideService;
@@ -56,6 +57,13 @@ public class SlideServiceImpl implements ISlideService {
         Slides slide = slidesRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("ID: " + id));
         slidesRepository.delete(slide);
+    }
+
+   @Override
+    public SlidesResponseDTO getSlidesById(Long id) {
+        Slides slidesEntity = slidesRepository.findById(id).orElseThrow(() -> new NotFoundException("Slides with id provided not found"));
+        return slidesMapper.entitySlides2responseDto(slidesEntity);
+
     }
 
     public int findLargerInteger(List<Integer> integers) {

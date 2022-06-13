@@ -20,7 +20,7 @@ public class TestimonialController {
 
     @PostMapping
     public ResponseEntity<TestimonialDto> createTestimonial(@Valid @RequestBody TestimonialDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }
         return new ResponseEntity<>(testimonialService.save(dto), HttpStatus.CREATED);
@@ -28,11 +28,16 @@ public class TestimonialController {
 
     @PutMapping("{id}")
     public ResponseEntity<TestimonialDto> updateTestimonial(@Valid @RequestBody TestimonialDto dto, BindingResult bindingResult,
-                                                            @PathVariable Long id) {
-        if (bindingResult.hasErrors()){
+            @PathVariable Long id) {
+        if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }
         return new ResponseEntity<>(testimonialService.update(id, dto), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTestimonial(@PathVariable(name = "id") Long id) {
+        testimonialService.deleteTestimonial(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

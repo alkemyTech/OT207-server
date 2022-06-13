@@ -38,6 +38,15 @@ public class TestimonialServiceImpl implements ITestimonialService {
         this.mapper.entityTestimonialRefreshValues(entity.get(), dto);
         Testimonial result = this.testimonialRepository.save(entity.get());
         return this.mapper.testimonialEntity2Dto(result);
+    }
 
+    @Override
+    @Transactional
+    public void deleteTestimonial(Long id) throws NotFoundException {
+        try {
+            testimonialRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFoundException("Testimonial id does not exist");
+        }
     }
 }

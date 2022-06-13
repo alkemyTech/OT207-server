@@ -9,6 +9,8 @@ import org.springframework.lang.Nullable;
 @Setter
 public class MemberDto {
 
+    private Long id;
+
     @NotNull(message = "Name cannot be null")
     private String name;
 

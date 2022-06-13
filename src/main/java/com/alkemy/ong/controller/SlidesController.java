@@ -1,5 +1,6 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 import com.alkemy.ong.service.ISlideService;
@@ -21,10 +22,18 @@ public class SlidesController {
         return ResponseEntity.ok().body(result);
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSlidesById(@PathVariable Long id){
         iSlideService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SlidesResponseDTO> getSlidesResponseDTO(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(iSlideService.getSlidesById(id));
+
+
     }
 
 }
