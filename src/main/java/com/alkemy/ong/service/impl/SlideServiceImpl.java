@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.service.IS3Service;
 import com.alkemy.ong.dto.Base64ImageDTO;
+import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 import com.alkemy.ong.exception.NotFoundException;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -47,7 +49,17 @@ public class SlideServiceImpl implements ISlideService {
             }
         }
         Slides entity = this.slidesMapper.requestDto2SlidesEntity(requestDTO);
-        SlidesResponseDTO result = this.slidesMapper.entitySlides2responseDto(this.slidesRepository.save(entity));
+        return this.slidesMapper.entitySlides2responseDto(this.slidesRepository.save(entity));
+    }
+
+    @Override
+    public List<SlidesDTO> findAll() {
+        List<Slides> entities = this.slidesRepository.findAll();
+        if(entities.isEmpty()){
+            throw new NotFoundException("The Slides list is empty");
+        }
+        List<SlidesDTO> result = this.slidesMapper.entitySlidesList2SlidesDtoList(entities);
+        result.sort(Comparator.comparing(SlidesDTO::getOrderSlides));
         return result;
     }
 
@@ -67,7 +79,7 @@ public class SlideServiceImpl implements ISlideService {
     }
 
     public int findLargerInteger(List<Integer> integers) {
-        Collections.sort(integers, Collections.reverseOrder());
+        integers.sort(Collections.reverseOrder());
         return integers.get(0);
     }
 
