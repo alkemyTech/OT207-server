@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.service.IS3Service;
 import com.alkemy.ong.dto.Base64ImageDTO;
+import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 import com.alkemy.ong.exception.NotFoundException;
@@ -51,13 +52,13 @@ public class SlideServiceImpl implements ISlideService {
     }
 
     @Override
-    public List<SlidesResponseDTO> findAll() {
+    public List<SlidesDTO> findAll() {
         List<Slides> entities = this.slidesRepository.findAll();
         if(entities.isEmpty()){
             throw new NotFoundException("The Slides list is empty");
         }
-        List<SlidesResponseDTO> result = this.slidesMapper.entitySlidesList2responseDtoList(entities);
-        result.sort(Comparator.comparing(SlidesResponseDTO::getOrderSlides));
+        List<SlidesDTO> result = this.slidesMapper.entitySlidesList2SlidesDtoList(entities);
+        result.sort(Comparator.comparing(SlidesDTO::getOrderSlides));
         return result;
     }
 

@@ -1,5 +1,6 @@
 package com.alkemy.ong.service;
 
+import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 
@@ -9,5 +10,5 @@ public interface ISlideService {
 
     SlidesResponseDTO save(SlidesRequestDTO requestDTO);
 
-    List<SlidesResponseDTO> findAll();
+    List<SlidesDTO> findAll();
 }

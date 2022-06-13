@@ -1,5 +1,6 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 import com.alkemy.ong.service.ISlideService;
@@ -17,8 +18,8 @@ public class SlidesController {
     private ISlideService iSlideService;
 
     @GetMapping
-    public ResponseEntity<List<SlidesResponseDTO>> getSlides(){
-        List<SlidesResponseDTO> result = this.iSlideService.findAll();
+    public ResponseEntity<List<SlidesDTO>> getSlides(){
+        List<SlidesDTO> result = this.iSlideService.findAll();
         return ResponseEntity.ok().body(result);
     }
 
