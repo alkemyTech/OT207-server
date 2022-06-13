@@ -1,3 +1,4 @@
+
 To access the documentation once the application is running, enter the following link:
 http://localhost:8080/swagger-ui/index.html
 
@@ -27,4 +28,3 @@ Usuario : "maria7@user.com" Password: "test1234"
 Usuario : "maria8@user.com" Password: "test1234"
 Usuario : "maria9@user.com" Password: "test1234"
 Usuario : "maria10@user.com" Password: "test1234"
-
