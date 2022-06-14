@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.MemberDto;
 import com.alkemy.ong.exception.ConflictException;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.mapper.MemberMapper;
 import com.alkemy.ong.model.Category;
@@ -29,5 +30,12 @@ public class MemberServiceImpl implements IMemberService {
             Member savedEntity = memberRepository.save(MemberEntity);
             return memberMapper.memberEntityToMemberDto(savedEntity);
 
+    }
+    @Transactional
+    @Override
+    public void deleteById(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new NotFoundException("Member not found with id: " + id));
+        member.setDeleted(true);
+        memberRepository.save(member);
     }
 }

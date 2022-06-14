@@ -6,4 +6,6 @@ public interface IMemberService {
 
     @Transactional
     MemberDto addMember(MemberDto memberDto);
+
+    void deleteById(Long id);
 }
