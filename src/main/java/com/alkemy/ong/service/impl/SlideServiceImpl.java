@@ -83,15 +83,15 @@ public class SlideServiceImpl implements ISlideService {
 
     }
 
-    //Obtener slides por id de organizacion
+
     @Override
-    public SlidesResponseDTO getSlidesByOrganiztionId(Long organizationId) { //le paso el id de organizacion
+    public List<SlidesResponseDTO> getSlidesByOrganiztionId(Long organizationId) {
         if (!organizationRepository.findById(organizationId).isPresent()) {
-            throw new NotFoundException("Organization with id provided not found"); //corroboro que este o no presente
+            throw new NotFoundException("Organization with id provided not found");
         } else {
-            ArrayList<Slides> organizationSlidesList; //si esta presente le devuelvo los slides que estan en la organizacion
-            organizationSlidesList = slidesRepository.findSlideByOrganizationId(organizationId); //desde el repo los encuentro por id
-            return slidesMapper.organizationSlidesList2organizationSlidesDto(organizationSlidesList); //los devuelvo como DTO
+            ArrayList<Slides> organizationSlidesList;
+            organizationSlidesList = slidesRepository.findSlideByOrganizationId(organizationId);
+            return slidesMapper.organizationSlidesList2organizationSlidesDto(organizationSlidesList);
         }
     }
 

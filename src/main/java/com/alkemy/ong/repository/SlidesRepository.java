@@ -11,10 +11,8 @@ import java.util.List;
 @Repository
 public interface SlidesRepository extends JpaRepository<Slides, Long> {
 
-   //ArrayList de slides por id de organizacion
-    @Query(nativeQuery = true, value = "SELECT * FROM slides WHERE organization = ?1 ORDER BY order_slides DESC")
+
+    @Query(nativeQuery = true, value = "SELECT * FROM slides WHERE organization = ?1 ORDER BY order_slides")
     ArrayList<Slides> findSlideByOrganizationId(Long organizationId);
-
-
 
 }
