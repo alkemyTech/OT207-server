@@ -10,9 +10,6 @@ import java.util.List;
 @Repository
 public interface SlidesRepository extends JpaRepository<Slides, Long> {
 
-
-    //@Query(nativeQuery = true, value = "SELECT s FROM Slides s WHERE organization.id = ? ORDER BY order_slides")
-
     List<Slides> findByOrganizations(Organization organization);
 
 }
