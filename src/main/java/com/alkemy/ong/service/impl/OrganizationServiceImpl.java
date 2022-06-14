@@ -24,6 +24,16 @@ public class OrganizationServiceImpl implements IOrganizationService {
     private OrganizationMapper organizationMapper;
 
 
+    @Override
+    @Transactional
+    public OrganizationDTO addOrganization(OrganizationDTO organizationDto) {
+
+        Organization organization = organizationMapper.organizationDto2Entity(organizationDto);
+        Organization savedEntity = organizationRepository.save(organization);
+        return organizationMapper.organizationEntity2DTO(savedEntity);
+
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<OrganizationDTO> findAll(){

@@ -43,5 +43,16 @@ public class OrganizationMapper {
                 
         return org;
         
-    } 
+    }
+
+
+    public Organization organizationDto2Entity(OrganizationDTO organizationDto) {
+        Organization organization = new Organization();
+        organization.setId(organizationDto.getId());
+        organization.setName(organizationDto.getName());
+        organization.setImage(organizationDto.getImage());
+        organization.setPhone(organizationDto.getPhone());
+        organization.setAddress(organizationDto.getAddress());
+        return organization;
+    }
 }

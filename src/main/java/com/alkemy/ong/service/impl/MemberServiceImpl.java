@@ -21,6 +21,7 @@ public class MemberServiceImpl implements IMemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+
     @Override
     @Transactional
     public MemberDto addMember(MemberDto memberDto) {
