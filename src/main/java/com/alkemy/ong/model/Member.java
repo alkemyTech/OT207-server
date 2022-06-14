@@ -53,7 +53,7 @@ public class Member {
     @Column(name = "linkedin_url")
     private String linkedinUrl;
 
-    @NotNull(message = "Image cannot be null")
+    //@NotNull(message = "Image cannot be null")
     @Column(name = "image")
     private String image;
 

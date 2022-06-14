@@ -36,7 +36,7 @@ public class MemberServiceImpl implements IMemberService {
     @Transactional
     public MemberDto updateById(MemberDto dto, Long id) {
         Member memberEntity = memberRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("asd"));
+                .orElseThrow(() -> new NotFoundException("ID: " + id));
         memberMapper.memberDto2EntityWithId(memberEntity, dto);
         Member entitySaved = memberRepository.save(memberEntity);
         return memberMapper.memberEntityToMemberDto(entitySaved);
