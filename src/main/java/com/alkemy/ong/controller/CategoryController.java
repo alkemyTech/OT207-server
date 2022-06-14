@@ -5,6 +5,9 @@ import com.alkemy.ong.dto.CategoryDtoName;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +40,12 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<CategoryDtoName>> getAllCategories() {
         List<CategoryDtoName> categoriesDTOs = categoryService.getAllCategories();
+        return ResponseEntity.ok().body(categoriesDTOs);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<CategoryDTO>> getAllCategoriesPageable(@PageableDefault Pageable page) {
+        Page<CategoryDTO> categoriesDTOs = categoryService.getAllCategoriesPageable(page);
         return ResponseEntity.ok().body(categoriesDTOs);
     }
 

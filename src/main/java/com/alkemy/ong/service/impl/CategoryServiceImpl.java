@@ -9,9 +9,12 @@ import com.alkemy.ong.model.Category;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
@@ -23,13 +26,13 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryDTO addCategory(CategoryDTO categoryDto) {
-        try {
-            Category CategoryEntity = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
-            Category savedEntity = categoryRepository.save(CategoryEntity);
-            return categoryMapper.categoryEntityToCategoryDto(savedEntity);
-        } catch (Exception e) {
-            throw new ConflictException("There is already a category with this name " + categoryDto.getName());
+        Optional<Category> categoryEntity = this.categoryRepository.findByName(categoryDto.getName());
+        if(categoryEntity.isPresent()){
+            throw new ConflictException("There is already a category with that name");
         }
+        Category CategoryEntity = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
+        Category savedEntity = categoryRepository.save(CategoryEntity);
+        return categoryMapper.categoryEntityToCategoryDto(savedEntity);
     }
 
     @Override
@@ -39,6 +42,16 @@ public class CategoryServiceImpl implements ICategoryService {
             throw new NotFoundException("The list is empty");
         }
         List<CategoryDtoName> allCategories = categoryMapper.CategoryListResponseDtoList(categories);
+        return allCategories;
+    }
+
+    @Override
+    public Page<CategoryDTO> getAllCategoriesPageable(Pageable page) {
+        Page<Category> categories = categoryRepository.findAll(page);
+        if (categories.isEmpty()) {
+            throw new NotFoundException("The list is empty");
+        }
+        Page<CategoryDTO> allCategories = categoryMapper.categoryEntityPage2DtoPage(categories);
         return allCategories;
     }
 

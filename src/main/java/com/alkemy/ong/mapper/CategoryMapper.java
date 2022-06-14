@@ -1,10 +1,10 @@
 package com.alkemy.ong.mapper;
 
-import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
 import com.alkemy.ong.model.Category;
-import com.alkemy.ong.model.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
@@ -43,5 +43,11 @@ public class CategoryMapper {
             responseDTos.add(this.categoryResponseDto(category));
         }
         return responseDTos;
+    }
+
+    public Page<CategoryDTO> categoryEntityPage2DtoPage(Page<Category> entities){
+        List<CategoryDTO> dto = new ArrayList<>();
+        entities.getContent().forEach(entity -> dto.add(this.categoryEntityToCategoryDto(entity)));
+        return new PageImpl<>(dto);
     }
 }
