@@ -36,9 +36,9 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<OrganizationDTO> findAll(){
+    public List<OrganizationDTO> findAll() {
         List<Organization> entities = organizationRepository.findAll();
-        if(entities.isEmpty()){
+        if (entities.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }
         List<OrganizationDTO> dtoList = organizationMapper.organizationEntityList2DTOList(entities);
@@ -46,19 +46,16 @@ public class OrganizationServiceImpl implements IOrganizationService {
     }
 
     @Override
-    public Organization updateOrganizationDto(OrganizationUpdateDTO orgUpdate) throws NotFoundException {
-        Optional<Organization> org = organizationRepository.findById(orgUpdate.getId());
+    public OrganizationUpdateDTO updateOrganizationDto(Long id, OrganizationUpdateDTO orgUpdate) throws NotFoundException {
+        Optional<Organization> org = organizationRepository.findById(id);
 
         if (org.isEmpty()) {
             throw new NotFoundException("Organization id does not exist");
-        } else {
-            return organizationMapper.OrganizationUpdateDTO2Entity(orgUpdate, org.get());
         }
+
+        Organization savedOrg = this.organizationRepository.save(this.organizationMapper.organizationUpdateDTO2Entity(orgUpdate, org.get()));
+
+            return organizationMapper.entity2organizationUpdateDTO(savedOrg);
+
     }
-
-    @Override
-    public void updateOrganization(Organization org) {
-        organizationRepository.save(org);
-       }
-
 }

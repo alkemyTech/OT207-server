@@ -41,17 +41,17 @@ public class OrganizationController {
         return ResponseEntity.ok().body(slidesResponseDTOList);
     }
 
-    //TODO: Cambie el metodo a PUT
-    @PutMapping("/public")
-    public ResponseEntity<OrganizationUpdateDTO> putUpdateOrganization (@RequestBody @Valid OrganizationUpdateDTO orgUpdate, BindingResult bindingResult){
+
+    @PutMapping("/public/{id}")
+    public ResponseEntity<OrganizationUpdateDTO> putUpdateOrganization (@PathVariable Long id, @RequestBody @Valid OrganizationUpdateDTO orgUpdate, BindingResult bindingResult){
     if (bindingResult.hasErrors()){
         throw new BadRequestException(bindingResult);
     }
-    Organization org = organizationService.updateOrganizationDto(orgUpdate);
-        organizationService.updateOrganization(org);
-    return ResponseEntity.ok().body(orgUpdate);
+        OrganizationUpdateDTO org = organizationService.updateOrganizationDto(id, orgUpdate);
+
+    return ResponseEntity.ok().body(org);
 }
-    //TODO: Agregue metodo POST para el ADD
+
     @PostMapping
     public ResponseEntity<OrganizationDTO> addOrganization(@Valid @RequestBody OrganizationDTO organizationDTO, BindingResult result) {
         if (result.hasErrors()) {

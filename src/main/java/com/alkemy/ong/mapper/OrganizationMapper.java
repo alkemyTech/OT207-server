@@ -20,6 +20,9 @@ public class OrganizationMapper {
         dto.setImage(entity.getImage());
         dto.setPhone(entity.getPhone());
         dto.setAddress(entity.getAddress());
+        dto.setEmail(entity.getEmail());
+        dto.setWelcomeText(entity.getWelcomeText());
+
         return dto;
     }
 
@@ -30,9 +33,9 @@ public class OrganizationMapper {
         }
         return dtoList;
     }
-    
-    public Organization OrganizationUpdateDTO2Entity(@NotNull OrganizationUpdateDTO orgUpdate, @NotNull Organization org){
-               
+
+    public Organization organizationUpdateDTO2Entity(@NotNull OrganizationUpdateDTO orgUpdate, @NotNull Organization org) {
+
         org.setName(orgUpdate.getName());
         org.setImage(orgUpdate.getImage());
         org.setAddress(orgUpdate.getAddress());
@@ -40,9 +43,25 @@ public class OrganizationMapper {
         org.setEmail(orgUpdate.getEmail());
         org.setWelcomeText(orgUpdate.getWelcomeText());
         org.setAboutUsText(orgUpdate.getAboutUsText());
-                
         return org;
-        
+
+    }
+
+    public OrganizationUpdateDTO entity2organizationUpdateDTO(Organization org) {
+
+        OrganizationUpdateDTO organizationUpdateDto = new OrganizationUpdateDTO();
+
+        organizationUpdateDto.setId(org.getId());
+        organizationUpdateDto.setName(org.getName());
+        organizationUpdateDto.setImage(org.getImage());
+        organizationUpdateDto.setAddress(org.getAddress());
+        organizationUpdateDto.setPhone(org.getPhone());
+        organizationUpdateDto.setEmail(org.getEmail());
+        organizationUpdateDto.setWelcomeText(org.getWelcomeText());
+        organizationUpdateDto.setAboutUsText(org.getAboutUsText());
+
+        return organizationUpdateDto;
+
     }
 
 
@@ -53,6 +72,8 @@ public class OrganizationMapper {
         organization.setImage(organizationDto.getImage());
         organization.setPhone(organizationDto.getPhone());
         organization.setAddress(organizationDto.getAddress());
+        organization.setEmail(organizationDto.getEmail());
+        organization.setWelcomeText(organizationDto.getWelcomeText());
         return organization;
     }
 }
