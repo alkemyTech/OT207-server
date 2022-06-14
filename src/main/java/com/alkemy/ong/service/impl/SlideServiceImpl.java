@@ -7,13 +7,15 @@ import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.SlideMapper;
-import com.alkemy.ong.model.Category;
 import com.alkemy.ong.model.Slides;
+import com.alkemy.ong.repository.OrganizationRepository;
 import com.alkemy.ong.repository.SlidesRepository;
 import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +31,9 @@ public class SlideServiceImpl implements ISlideService {
     private SlidesRepository slidesRepository;
     @Autowired
     private SlideMapper slidesMapper;
+    @Autowired
+    OrganizationRepository organizationRepository;
+
 
     @Transactional
     @Override
@@ -76,6 +81,18 @@ public class SlideServiceImpl implements ISlideService {
         Slides slidesEntity = slidesRepository.findById(id).orElseThrow(() -> new NotFoundException("Slides with id provided not found"));
         return slidesMapper.entitySlides2responseDto(slidesEntity);
 
+    }
+
+    //Obtener slides por id de organizacion
+    @Override
+    public SlidesResponseDTO getSlidesByOrganiztionId(Long organizationId) { //le paso el id de organizacion
+        if (!organizationRepository.findById(organizationId).isPresent()) {
+            throw new NotFoundException("Organization with id provided not found"); //corroboro que este o no presente
+        } else {
+            ArrayList<Slides> organizationSlidesList; //si esta presente le devuelvo los slides que estan en la organizacion
+            organizationSlidesList = slidesRepository.findSlideByOrganizationId(organizationId); //desde el repo los encuentro por id
+            return slidesMapper.organizationSlidesList2organizationSlidesDto(organizationSlidesList); //los devuelvo como DTO
+        }
     }
 
     public int findLargerInteger(List<Integer> integers) {

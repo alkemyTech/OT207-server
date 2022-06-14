@@ -55,4 +55,11 @@ public class SlideMapper {
         entities.forEach(entity -> dtos.add(this.entitySlides2SlidesDto(entity)));
         return dtos;
     }
+
+//Pasar de slides de la organizacion entidad, a DTO
+    public SlidesResponseDTO organizationSlidesList2organizationSlidesDto(List<Slides> organizationSlidesList){
+        List<SlidesResponseDTO> organizationSlidesDto = new ArrayList<>();
+        organizationSlidesList.forEach(entity -> organizationSlidesDto.add(this.entitySlides2responseDto(entity)));
+        return (SlidesResponseDTO) organizationSlidesDto;
+}
 }
