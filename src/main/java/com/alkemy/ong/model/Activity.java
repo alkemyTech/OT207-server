@@ -20,30 +20,31 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE activities SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 
-public class Activity implements Serializable{
+public class Activity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-	@Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
-	@NotNull(message = "Name cannot be empty")
+
+    @NotNull(message = "Name cannot be empty")
     private String name;
-	
-	@NotNull(message = "Content cannot be empty")
-    private Integer content;
     
-	@NotNull(message = "Image cannot be empty")
+    @Lob
+    @NotNull(message = "Content cannot be empty")
+    private String content;
+
+    @NotNull(message = "Image cannot be empty")
     private String image;
-    
+
     private Boolean deleted = Boolean.FALSE;
-    
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createDateTime;
-    
+
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
-    
+
 }
