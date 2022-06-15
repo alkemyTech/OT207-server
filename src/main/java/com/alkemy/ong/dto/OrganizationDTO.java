@@ -34,4 +34,5 @@ public class OrganizationDTO {
     @Column(columnDefinition = "text", nullable = false)
     @NotEmpty(message = "welcome text cannot be empty")
     private String welcomeText;
+
 }
