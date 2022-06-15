@@ -29,16 +29,10 @@ public class OrganizationController {
     @Autowired
     private ISlideService slidesService;
 
-    @GetMapping("/public")
-    public ResponseEntity<List<OrganizationDTO>> getOrganizationDTO(){
-        List<OrganizationDTO> organizationDTOS = this.organizationService.findAll();
-        return ResponseEntity.ok().body(organizationDTOS);
-    }
-
-    @GetMapping("/public/{organizationId}")
-    public ResponseEntity<List<SlidesResponseDTO>> getSlidesByOrganizationId(@PathVariable Long organizationId){
-        List<SlidesResponseDTO> slidesResponseDTOList = slidesService.getSlidesByOrganiztionId(organizationId);
-        return ResponseEntity.ok().body(slidesResponseDTOList);
+    @GetMapping("/public/{id}")
+    public ResponseEntity<OrganizationDTO> getOrganizationDTO(@PathVariable Long id){
+        OrganizationDTO organizationDTO = this.organizationService.getOrg(id);
+        return ResponseEntity.ok().body(organizationDTO);
     }
 
 

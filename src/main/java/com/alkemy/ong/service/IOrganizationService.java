@@ -13,7 +13,8 @@ public interface IOrganizationService {
     @Transactional
     OrganizationDTO addOrganization(OrganizationDTO organizationDto);
 
-    List<OrganizationDTO> findAll();
+    @Transactional(readOnly = true)
+    OrganizationDTO getOrg(Long id);
 
     OrganizationUpdateDTO updateOrganizationDto(Long id, OrganizationUpdateDTO orgUpdate);
 }

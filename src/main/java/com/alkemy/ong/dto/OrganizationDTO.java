@@ -5,11 +5,11 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Getter
 @Setter
 public class OrganizationDTO {
-
 
     private Long id;
 
@@ -34,5 +34,7 @@ public class OrganizationDTO {
     @Column(columnDefinition = "text", nullable = false)
     @NotEmpty(message = "welcome text cannot be empty")
     private String welcomeText;
+
+    private List<SlidesDTO> slidesDTOS;
 
 }
