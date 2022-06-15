@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
+import com.alkemy.ong.dto.CategoryPageDTO;
 import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
@@ -10,7 +11,8 @@ import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,8 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
+    private static final int MAX_PAGE = 10;
+    private static final String URL = "http://localhost:8080/categories/page?page=";
     @Autowired
     private CategoryMapper categoryMapper;
     @Autowired
@@ -27,7 +31,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public CategoryDTO addCategory(CategoryDTO categoryDto) {
         Optional<Category> categoryEntity = this.categoryRepository.findByName(categoryDto.getName());
-        if(categoryEntity.isPresent()){
+        if (categoryEntity.isPresent()) {
             throw new ConflictException("There is already a category with that name");
         }
         Category CategoryEntity = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
@@ -46,13 +50,22 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public Page<CategoryDTO> getAllCategoriesPageable(Pageable page) {
-        Page<Category> categories = categoryRepository.findAll(page);
+    public CategoryPageDTO getAllCategoriesPageable(Integer page) {
+        CategoryPageDTO categoryPageDTO = new CategoryPageDTO();
+        Page<Category> categories = categoryRepository.findAll(PageRequest.of(page - 1, MAX_PAGE, Sort.by("name")));
         if (categories.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }
-        Page<CategoryDTO> allCategories = categoryMapper.categoryEntityPage2DtoPage(categories);
-        return allCategories;
+        if (categories.hasNext()) {
+            categoryPageDTO.setNext(URL + Integer.toString(page + 1));
+        }
+        if (!categories.isFirst()) {
+            categoryPageDTO.setPrevious(URL + Integer.toString(page - 1));
+        }
+        categoryPageDTO.setCurrent(Integer.toString(page));
+        categoryPageDTO.setCategoryList(this.categoryMapper.categoryEntityPage2Dto(categories));
+
+        return categoryPageDTO;
     }
 
 

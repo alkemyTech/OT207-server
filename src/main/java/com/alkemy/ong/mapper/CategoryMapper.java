@@ -45,9 +45,9 @@ public class CategoryMapper {
         return responseDTos;
     }
 
-    public Page<CategoryDTO> categoryEntityPage2DtoPage(Page<Category> entities){
+    public List<CategoryDTO> categoryEntityPage2Dto(Page<Category> entities){
         List<CategoryDTO> dto = new ArrayList<>();
         entities.getContent().forEach(entity -> dto.add(this.categoryEntityToCategoryDto(entity)));
-        return new PageImpl<>(dto);
+        return dto;
     }
 }
