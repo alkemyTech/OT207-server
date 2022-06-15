@@ -62,7 +62,7 @@ public class CategoryController {
                 content = @Content),
         @ApiResponse(responseCode = "400", description = "Invalid field",
                 content = @Content),
-        @ApiResponse(responseCode = "403", description = "Invalid token or token expired | Accessing with invalid role",
+        @ApiResponse(responseCode = "403", description = "Invalid token or accessing with invalid role",
                 content = @Content),
         @ApiResponse(responseCode = "404", description = "Invalid id supplied",
                 content = @Content)})
