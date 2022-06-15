@@ -7,5 +7,9 @@ public interface IMemberService {
     @Transactional
     MemberDto addMember(MemberDto memberDto);
 
+
+    MemberDto updateById(MemberDto dto, Long id);
+
     void deleteById(Long id);
+
 }

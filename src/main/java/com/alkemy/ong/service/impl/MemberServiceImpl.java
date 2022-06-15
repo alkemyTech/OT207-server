@@ -31,11 +31,24 @@ public class MemberServiceImpl implements IMemberService {
             return memberMapper.memberEntityToMemberDto(savedEntity);
 
     }
+
+
+    @Override
+    @Transactional
+    public MemberDto updateById(MemberDto dto, Long id) {
+        Member memberEntity = memberRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ID: " + id));
+        memberMapper.memberDto2EntityWithId(memberEntity, dto);
+        Member entitySaved = memberRepository.save(memberEntity);
+        return memberMapper.memberEntityToMemberDto(entitySaved);
+    }
+
     @Transactional
     @Override
     public void deleteById(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new NotFoundException("Member not found with id: " + id));
         member.setDeleted(true);
         memberRepository.save(member);
+
     }
 }
