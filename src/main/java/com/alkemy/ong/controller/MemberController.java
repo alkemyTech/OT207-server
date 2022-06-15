@@ -36,9 +36,19 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMember);
     }
 
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MemberDto> updateMember(@Valid @RequestBody MemberDto dto,
+                                                  @PathVariable Long id,
+                                                  BindingResult result){
+        if (result.hasErrors()) {throw new BadRequestException(result);}
+        return new ResponseEntity<>(memberService.updateById(dto, id), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMember(@PathVariable(name = "id") Long id){
         memberService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
     }
 }

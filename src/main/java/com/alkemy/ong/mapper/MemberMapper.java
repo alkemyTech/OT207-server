@@ -19,6 +19,7 @@ public class MemberMapper {
         memberEntity.setInstragramUrl(memberDto.getInstagramUrl());
         memberEntity.setLinkedinUrl(memberDto.getLinkedinUrl());
         memberEntity.setDescription(memberDto.getDescription());
+        setAttributerMemberDto2Entity(memberDto,memberEntity);
         return memberEntity;
     }
     public MemberDTO memberEntityToMemberDto(Member savedEntity) {
@@ -41,4 +42,17 @@ public class MemberMapper {
         return memberDTOList;
     }
 
+
+    public void memberDto2EntityWithId(Member memberEntity, MemberDto dto) {
+        setAttributerMemberDto2Entity(dto,memberEntity);
+    }
+
+    private void setAttributerMemberDto2Entity(MemberDto memberDto, Member memberEntity) {
+        memberEntity.setName(memberDto.getName());
+        memberEntity.setFacebookUrl(memberDto.getFacebookUrl());
+        memberEntity.setInstragramUrl(memberDto.getInstagramUrl());
+        memberEntity.setLinkedinUrl(memberDto.getLinkedinUrl());
+        memberEntity.setDescription(memberDto.getDescription());
+        memberEntity.setImage(memberDto.getImage());
+    }
 }
