@@ -14,7 +14,7 @@ public class ActivityDTO {
     private String name;
 
     @NotNull(message = "Content cannot be empty")
-    private Integer content;
+    private String content;
 
     @NotNull(message = "Image cannot be empty")
     private String image;

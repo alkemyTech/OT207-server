@@ -32,6 +32,7 @@ public class MemberServiceImpl implements IMemberService {
 
     }
 
+
     @Override
     @Transactional
     public MemberDto updateById(MemberDto dto, Long id) {
@@ -40,5 +41,14 @@ public class MemberServiceImpl implements IMemberService {
         memberMapper.memberDto2EntityWithId(memberEntity, dto);
         Member entitySaved = memberRepository.save(memberEntity);
         return memberMapper.memberEntityToMemberDto(entitySaved);
+    }
+
+    @Transactional
+    @Override
+    public void deleteById(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new NotFoundException("Member not found with id: " + id));
+        member.setDeleted(true);
+        memberRepository.save(member);
+
     }
 }

@@ -114,6 +114,11 @@
             <version>1.6.9</version>
         </dependency>
         <!-- Documenting a Spring REST API Using OpenAPI 3.0 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
