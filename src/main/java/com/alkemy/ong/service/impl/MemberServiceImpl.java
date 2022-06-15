@@ -1,18 +1,16 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.dto.MemberDto;
-import com.alkemy.ong.exception.ConflictException;
+import com.alkemy.ong.dto.MemberDTO;
 import com.alkemy.ong.exception.NotFoundException;
-import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.mapper.MemberMapper;
-import com.alkemy.ong.model.Category;
 import com.alkemy.ong.model.Member;
-import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.repository.MemberRepository;
 import com.alkemy.ong.service.IMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
@@ -24,7 +22,7 @@ public class MemberServiceImpl implements IMemberService {
     private MemberRepository memberRepository;
     @Override
     @Transactional
-    public MemberDto addMember(MemberDto memberDto) {
+    public MemberDTO addMember(MemberDTO memberDto) {
 
             Member MemberEntity = memberMapper.memberDtoToMemberEntity(memberDto);
             Member savedEntity = memberRepository.save(MemberEntity);
@@ -50,5 +48,15 @@ public class MemberServiceImpl implements IMemberService {
         member.setDeleted(true);
         memberRepository.save(member);
 
+    }
+
+    @Override
+    public List<MemberDTO> getAll() {
+        List<Member> memberList = memberRepository.findAll();
+        if (memberList.isEmpty()) {
+            throw new NotFoundException("The list is empty");
+        }
+        List<MemberDTO> memberDTOList = memberMapper.memberEntityListToMemberDtoList(memberList);
+        return memberDTOList;
     }
 }

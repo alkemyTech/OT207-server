@@ -7,12 +7,15 @@ import org.springframework.lang.Nullable;
 
 @Getter
 @Setter
-public class MemberDto {
+public class MemberDTO {
 
     private Long id;
 
     @NotNull(message = "Name cannot be null")
     private String name;
+
+    @NotNull
+    private String image;
 
     @Nullable
     private String facebookUrl;

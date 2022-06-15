@@ -1,15 +1,15 @@
 package com.alkemy.ong.service;
 
-import com.alkemy.ong.dto.TestimonialDto;
+import com.alkemy.ong.dto.TestimonialDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface ITestimonialService {
 
     @Transactional
-    TestimonialDto save(TestimonialDto dto);
+    TestimonialDTO save(TestimonialDTO dto);
 
     @Transactional
-    TestimonialDto update(Long id, TestimonialDto dto);
+    TestimonialDTO update(Long id, TestimonialDTO dto);
 
     @Transactional
     void deleteTestimonial(Long id);
