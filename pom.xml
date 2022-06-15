@@ -15,7 +15,6 @@
     <description>ONG project with Spring Boot</description>
     <properties>
         <java.version>11</java.version>
-        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
     </properties>
     <dependencies>
         <dependency>
@@ -98,6 +97,28 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- Documenting a Spring REST API Using OpenAPI 3.0 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-data-rest</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-webflux-ui</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+        <!-- Documenting a Spring REST API Using OpenAPI 3.0 -->
     </dependencies>
 
     <dependencyManagement>
