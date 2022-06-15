@@ -46,35 +46,36 @@ public class OrganizationServiceImpl implements IOrganizationService {
 
     @Transactional(readOnly = true)
     @Override
-    public OrganizationDTO getOrg(Long id) {
+    public OrganizationDTO getOrg() {
 
-        Optional<Organization> org = organizationRepository.findById(id);
+        Optional<Organization> org = organizationRepository.findAll().stream().findFirst();
 
-       if (!org.isPresent()){
-           throw new NotFoundException("The organization ins't exist");
-       }
+        if (!org.isPresent()) {
+            throw new NotFoundException("The organization ins't exist");
+        }
 
         List<Slides> slides = slidesRepository.findAll();
         List<SlidesDTO> slidesDTOS = slides.stream().map(s -> slidesMapper.entitySlides2SlidesDto(s)).collect(Collectors.toList());
 
-       OrganizationDTO orgDTO = organizationMapper.organizationEntity2DTOSlides(org.get(), slidesDTOS);
+        OrganizationDTO orgDTO = organizationMapper.organizationEntity2DTOSlides(org.get(), slidesDTOS);
 
         return orgDTO;
 
-        }
+    }
 
     @Override
-        public OrganizationUpdateDTO updateOrganizationDto (Long id, OrganizationUpdateDTO orgUpdate) throws
-        NotFoundException {
-            Optional<Organization> org = organizationRepository.findById(id);
+    public Organization updateOrganizationDto(OrganizationUpdateDTO orgUpdate) throws NotFoundException {
+        Optional<Organization> org = organizationRepository.findById(orgUpdate.getId());
 
-            if (org.isEmpty()) {
-                throw new NotFoundException("Organization id does not exist");
-            }
-
-            Organization savedOrg = this.organizationRepository.save(this.organizationMapper.organizationUpdateDTO2Entity(orgUpdate, org.get()));
-
-            return organizationMapper.entity2organizationUpdateDTO(savedOrg);
-
+        if (org.isEmpty()) {
+            throw new NotFoundException("Organization id does not exist");
+        } else {
+            return organizationMapper.organizationUpdateDTO2Entity(orgUpdate, org.get());
         }
     }
+
+    @Override
+    public void updateOrganization(Organization org) {
+        organizationRepository.save(org);
+    }
+}

@@ -39,7 +39,7 @@ public class OrganizationMapper {
         return dto;
     }
 
-    public Organization organizationUpdateDTO2Entity(@NotNull OrganizationUpdateDTO orgUpdate, @NotNull Organization org) {
+    public Organization organizationUpdateDTO2Entity(@NotNull OrganizationUpdateDTO orgUpdate, @NotNull Organization org){
 
         org.setName(orgUpdate.getName());
         org.setImage(orgUpdate.getImage());
@@ -48,6 +48,7 @@ public class OrganizationMapper {
         org.setEmail(orgUpdate.getEmail());
         org.setWelcomeText(orgUpdate.getWelcomeText());
         org.setAboutUsText(orgUpdate.getAboutUsText());
+
         return org;
 
     }
@@ -69,7 +70,6 @@ public class OrganizationMapper {
 
     }
 
-
     public Organization organizationDto2Entity(OrganizationDTO organizationDto) {
         Organization organization = new Organization();
         organization.setId(organizationDto.getId());
@@ -81,4 +81,6 @@ public class OrganizationMapper {
         organization.setWelcomeText(organizationDto.getWelcomeText());
         return organization;
     }
+
+
 }

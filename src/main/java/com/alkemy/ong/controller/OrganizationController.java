@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/organization")
@@ -29,22 +31,22 @@ public class OrganizationController {
     @Autowired
     private ISlideService slidesService;
 
-    @GetMapping("/public/{id}")
-    public ResponseEntity<OrganizationDTO> getOrganizationDTO(@PathVariable Long id){
-        OrganizationDTO organizationDTO = this.organizationService.getOrg(id);
+    @GetMapping("/public")
+    public ResponseEntity<OrganizationDTO> getOrganizationDTO(){
+        OrganizationDTO organizationDTO = this.organizationService.getOrg();
         return ResponseEntity.ok().body(organizationDTO);
     }
 
 
-    @PutMapping("/public/{id}")
-    public ResponseEntity<OrganizationUpdateDTO> putUpdateOrganization (@PathVariable Long id, @RequestBody @Valid OrganizationUpdateDTO orgUpdate, BindingResult bindingResult){
-    if (bindingResult.hasErrors()){
-        throw new BadRequestException(bindingResult);
+    @PostMapping("/public")
+    public ResponseEntity<OrganizationUpdateDTO> putUpdateOrganization (@RequestBody @Valid OrganizationUpdateDTO orgUpdate, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            throw new BadRequestException(bindingResult);
+        }
+        Organization org = organizationService.updateOrganizationDto(orgUpdate);
+        organizationService.updateOrganization(org);
+        return ResponseEntity.ok().body(orgUpdate);
     }
-        OrganizationUpdateDTO org = organizationService.updateOrganizationDto(id, orgUpdate);
-
-    return ResponseEntity.ok().body(org);
-}
 
     @PostMapping
     public ResponseEntity<OrganizationDTO> addOrganization(@Valid @RequestBody OrganizationDTO organizationDTO, BindingResult result) {
@@ -53,7 +55,7 @@ public class OrganizationController {
         }
         OrganizationDTO organizationDto = organizationService.addOrganization(organizationDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(organizationDto);
-    }
+}
 
 
 }

@@ -14,7 +14,10 @@ public interface IOrganizationService {
     OrganizationDTO addOrganization(OrganizationDTO organizationDto);
 
     @Transactional(readOnly = true)
-    OrganizationDTO getOrg(Long id);
+    OrganizationDTO getOrg();
 
-    OrganizationUpdateDTO updateOrganizationDto(Long id, OrganizationUpdateDTO orgUpdate);
+
+    Organization updateOrganizationDto(OrganizationUpdateDTO orgUpdate) throws NotFoundException;
+
+    void updateOrganization(Organization org);
 }
