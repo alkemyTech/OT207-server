@@ -52,7 +52,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public PageDTO<CategoryDTO> getAllCategoriesPageable(Integer page) {
         PageDTO<CategoryDTO> categoryPageDTO = new PageDTO<>();
-        Page<Category> categories = categoryRepository.findAll(PageRequest.of(page - 1, MAX_PAGE, Sort.by("name")));
+        Page<Category> categories = this.categoryRepository.findAll(PageRequest.of(page - 1, MAX_PAGE, Sort.by("name")));
         if (categories.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }

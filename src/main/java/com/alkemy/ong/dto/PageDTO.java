@@ -11,5 +11,5 @@ public class PageDTO<T> {
     private String next;
     private String current;
     private String previous;
-    private List<T> T;
+    private List<T> t;
 }

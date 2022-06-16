@@ -4,7 +4,6 @@ import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
 import com.alkemy.ong.dto.PageDTO;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.service.ICategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -58,6 +57,18 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDtoName>> getAllCategories() {
         List<CategoryDtoName> categoriesDTOs = categoryService.getAllCategories();
         return ResponseEntity.ok().body(categoriesDTOs);
+    }
+
+    @Operation(summary = "Get all categories for paginated user role")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get all categories",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Invalid token or accessing with invalid role",
+                    content = @Content)})
+    @GetMapping("/page")
+    public ResponseEntity<?> getAllCategoriesPageable(@RequestParam(name = "page", defaultValue = "0") Integer page) {
+        PageDTO<CategoryDTO> categoryPage = categoryService.getAllCategoriesPageable(page);
+        return ResponseEntity.ok(categoryPage);
     }
 
     @Operation(summary = "Update category")

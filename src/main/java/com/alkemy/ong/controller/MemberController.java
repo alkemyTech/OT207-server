@@ -38,7 +38,7 @@ public class MemberController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<MemberDto> updateMember(@Valid @RequestBody MemberDto dto,
+    public ResponseEntity<MemberDTO> updateMember(@Valid @RequestBody MemberDTO dto,
                                                   @PathVariable Long id,
                                                   BindingResult result){
         if (result.hasErrors()) {throw new BadRequestException(result);}

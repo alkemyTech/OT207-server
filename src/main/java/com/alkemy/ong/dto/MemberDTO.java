@@ -29,7 +29,5 @@ public class MemberDTO {
     @Nullable
     private String description;
 
-    @Nullable
-    private String image;
 
 }
