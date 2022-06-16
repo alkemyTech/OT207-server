@@ -2,13 +2,14 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
-import com.alkemy.ong.dto.CategoryPageDTO;
+import com.alkemy.ong.dto.PageDTO;
 import com.alkemy.ong.exception.ConflictException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.model.Category;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.ICategoryService;
+import com.alkemy.ong.service.util.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +23,7 @@ import java.util.Optional;
 public class CategoryServiceImpl implements ICategoryService {
 
     private static final int MAX_PAGE = 10;
-    private static final String URL = "http://localhost:8080/categories/page?page=";
+    private static final String URI = Url.getURL() + "/categories/page?page=";
     @Autowired
     private CategoryMapper categoryMapper;
     @Autowired
@@ -45,25 +46,24 @@ public class CategoryServiceImpl implements ICategoryService {
         if (categories.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }
-        List<CategoryDtoName> allCategories = categoryMapper.CategoryListResponseDtoList(categories);
-        return allCategories;
+        return categoryMapper.CategoryListResponseDtoList(categories);
     }
 
     @Override
-    public CategoryPageDTO getAllCategoriesPageable(Integer page) {
-        CategoryPageDTO categoryPageDTO = new CategoryPageDTO();
+    public PageDTO<CategoryDTO> getAllCategoriesPageable(Integer page) {
+        PageDTO<CategoryDTO> categoryPageDTO = new PageDTO<>();
         Page<Category> categories = categoryRepository.findAll(PageRequest.of(page - 1, MAX_PAGE, Sort.by("name")));
         if (categories.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }
         if (categories.hasNext()) {
-            categoryPageDTO.setNext(URL + Integer.toString(page + 1));
+            categoryPageDTO.setNext(URI + (page + 1));
         }
         if (!categories.isFirst()) {
-            categoryPageDTO.setPrevious(URL + Integer.toString(page - 1));
+            categoryPageDTO.setPrevious(URI + (page - 1));
         }
         categoryPageDTO.setCurrent(Integer.toString(page));
-        categoryPageDTO.setCategoryList(this.categoryMapper.categoryEntityPage2Dto(categories));
+        categoryPageDTO.setT(this.categoryMapper.categoryEntityPage2Dto(categories));
 
         return categoryPageDTO;
     }
@@ -78,13 +78,10 @@ public class CategoryServiceImpl implements ICategoryService {
     public CategoryDTO modifyCategory(Long categoryId, CategoryDTO categoryDto) {
 
         if (categoryRepository.existsById(categoryId)) {
-
             Category category = categoryRepository.getById(categoryId);
             category = categoryMapper.categoryDtoToCategoryEntity(categoryDto);
             Category result = categoryRepository.save(category);
-            CategoryDTO newCategoryDto = categoryMapper.categoryEntityToCategoryDto(result);
-
-            return newCategoryDto;
+            return categoryMapper.categoryEntityToCategoryDto(result);
 
         } else {
             throw new NotFoundException("Category id not found");

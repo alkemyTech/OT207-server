@@ -7,9 +7,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CategoryPageDTO {
+public class PageDTO<T> {
     private String next;
     private String current;
     private String previous;
-    private List<CategoryDTO> categoryList;
+    private List<T> T;
 }

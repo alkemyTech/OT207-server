@@ -2,7 +2,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
-import com.alkemy.ong.dto.CategoryPageDTO;
+import com.alkemy.ong.dto.PageDTO;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.mapper.CategoryMapper;
 import com.alkemy.ong.service.ICategoryService;
@@ -42,8 +42,8 @@ public class CategoryController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<?> getAllCategoriesPageable(@RequestParam(name ="page", defaultValue = "0") Integer page) {
-        CategoryPageDTO categoryPage = categoryService.getAllCategoriesPageable(page);
+    public ResponseEntity<?> getAllCategoriesPageable(@RequestParam(name = "page", defaultValue = "0") Integer page) {
+        PageDTO<CategoryDTO> categoryPage = categoryService.getAllCategoriesPageable(page);
         return ResponseEntity.ok(categoryPage);
     }
 
@@ -63,7 +63,6 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDTO> getCategoryDTO(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
-
     }
 
 }
