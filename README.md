@@ -5,6 +5,7 @@ http://localhost:8080/swagger-ui/index.html
 if there are no users in the database these users will be loaded
 
             ROLE_ADMIN, ROLE_USER
+
 Usuario : "carlos1@admin.com" Password: "test1234"
 Usuario : "carlos2@admin.com" Password: "test1234"
 Usuario : "carlos3@admin.com" Password: "test1234"

@@ -33,7 +33,7 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     @Transactional
-    public MemberDto updateById(MemberDto dto, Long id) {
+    public MemberDTO updateById(MemberDTO dto, Long id) {
         Member memberEntity = memberRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("ID: " + id));
         memberMapper.memberDto2EntityWithId(memberEntity, dto);
@@ -56,7 +56,6 @@ public class MemberServiceImpl implements IMemberService {
         if (memberList.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }
-        List<MemberDTO> memberDTOList = memberMapper.memberEntityListToMemberDtoList(memberList);
-        return memberDTOList;
+        return memberMapper.memberEntityListToMemberDtoList(memberList);
     }
 }

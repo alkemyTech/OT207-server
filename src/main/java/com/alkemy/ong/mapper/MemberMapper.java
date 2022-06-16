@@ -43,11 +43,11 @@ public class MemberMapper {
     }
 
 
-    public void memberDto2EntityWithId(Member memberEntity, MemberDto dto) {
+    public void memberDto2EntityWithId(Member memberEntity, MemberDTO dto) {
         setAttributerMemberDto2Entity(dto,memberEntity);
     }
 
-    private void setAttributerMemberDto2Entity(MemberDto memberDto, Member memberEntity) {
+    private void setAttributerMemberDto2Entity(MemberDTO memberDto, Member memberEntity) {
         memberEntity.setName(memberDto.getName());
         memberEntity.setFacebookUrl(memberDto.getFacebookUrl());
         memberEntity.setInstragramUrl(memberDto.getInstagramUrl());

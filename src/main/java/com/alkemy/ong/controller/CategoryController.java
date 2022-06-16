@@ -2,6 +2,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
+import com.alkemy.ong.dto.PageDTO;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.service.ICategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,11 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 
+
 import javax.validation.Valid;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/categories")
@@ -54,6 +57,18 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDtoName>> getAllCategories() {
         List<CategoryDtoName> categoriesDTOs = categoryService.getAllCategories();
         return ResponseEntity.ok().body(categoriesDTOs);
+    }
+
+    @Operation(summary = "Get all categories for paginated user role")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get all categories",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Invalid token or accessing with invalid role",
+                    content = @Content)})
+    @GetMapping("/page")
+    public ResponseEntity<?> getAllCategoriesPageable(@RequestParam(name = "page", defaultValue = "0") Integer page) {
+        PageDTO<CategoryDTO> categoryPage = categoryService.getAllCategoriesPageable(page);
+        return ResponseEntity.ok(categoryPage);
     }
 
     @Operation(summary = "Update category")
@@ -98,7 +113,6 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDTO> getCategoryDTO(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
-
     }
 
 }
