@@ -1,6 +1,6 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.dto.TestimonialDto;
+import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.service.ITestimonialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class TestimonialController {
     private ITestimonialService testimonialService;
 
     @PostMapping
-    public ResponseEntity<TestimonialDto> createTestimonial(@Valid @RequestBody TestimonialDto dto, BindingResult bindingResult) {
+    public ResponseEntity<TestimonialDTO> createTestimonial(@Valid @RequestBody TestimonialDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }
@@ -27,8 +27,8 @@ public class TestimonialController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<TestimonialDto> updateTestimonial(@Valid @RequestBody TestimonialDto dto, BindingResult bindingResult,
-            @PathVariable Long id) {
+    public ResponseEntity<TestimonialDTO> updateTestimonial(@Valid @RequestBody TestimonialDTO dto, BindingResult bindingResult,
+                                                            @PathVariable Long id) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }

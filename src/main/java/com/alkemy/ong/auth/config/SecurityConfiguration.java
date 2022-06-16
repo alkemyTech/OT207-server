@@ -68,6 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/organization/public").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/organization/public").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/comments").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.DELETE, "/members/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement()
