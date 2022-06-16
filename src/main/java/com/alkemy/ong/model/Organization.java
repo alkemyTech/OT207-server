@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -55,6 +56,20 @@ public class Organization implements Serializable {
 
     @Column(columnDefinition = "text")
     private String aboutUsText;
+
+    @Nullable
+    @Column(name = "facebook_url")
+    private String facebookUrl;
+
+    @Nullable
+    @Column(name = "instagram_url")
+    private String instagramUrl;
+
+    @Nullable
+    @Column(name = "linkedin_url")
+    private String linkedinUrl;
+
+
 
     @CreationTimestamp
     @Column(updatable = false)

@@ -1,5 +1,6 @@
 package com.alkemy.ong.dto;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -7,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 
 @Getter
@@ -38,4 +40,15 @@ public class OrganizationUpdateDTO {
 
     @NotEmpty(message = "About text cannot be empty")
     private String aboutUsText;
+
+    @Column(name = "facebook_url")
+    private String facebookUrl;
+
+    @Column(name = "instagram_url")
+    private String instagramUrl;
+
+    @Column(name = "linkedin_url")
+    private String linkedinUrl;
+
+
 }
