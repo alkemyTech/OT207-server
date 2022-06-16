@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers("/auth/login", "/auth/register","/api-docs/**","/swagger-ui*/*").permitAll()
                 .antMatchers("/auth/users", "/auth/users/*", "/api/assets/upload").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
-                .antMatchers("/categories/page").hasAnyAuthority(RolName.ROLE_USER.toString())
+                .antMatchers("/categories/page","/news/page").hasAnyAuthority(RolName.ROLE_USER.toString())
                 .antMatchers(HttpMethod.POST, "/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.DELETE, "/slides/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())

@@ -1,6 +1,7 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.dto.NewsDTO;
+import com.alkemy.ong.dto.PageDTO;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.NewsMapper;
 import com.alkemy.ong.model.Category;
@@ -8,12 +9,15 @@ import com.alkemy.ong.model.News;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.service.INewsService;
+import com.alkemy.ong.service.util.Url;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -21,20 +25,21 @@ public class NewsServiceImpl implements INewsService {
 
     private static final String NEWS = "news";
     private static final String ID_NOT_FOUND = "Id not found: ";
+    private static final String URI = Url.getURL() + "/news/page?page=";
     @Autowired
     private NewsRepository newsRepository;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
-    private NewsMapper mapper;
+    private NewsMapper newsMapper;
 
     @Transactional
     public NewsDTO save(NewsDTO dto){
         Category category = getCategoryNews();
-        News news = mapper.newsDTO2Entity(dto);
+        News news = newsMapper.newsDTO2Entity(dto);
         news.setCategory(category);
         News newsSaved = newsRepository.save(news);
-        return mapper.newsEntity2DTO(newsSaved);
+        return newsMapper.newsEntity2DTO(newsSaved);
     }
 
     @Transactional(readOnly = true)
@@ -44,7 +49,7 @@ public class NewsServiceImpl implements INewsService {
         if(entityResult.isEmpty()){
             throw new NotFoundException(ID_NOT_FOUND);
         }
-        return this.mapper.newsEntity2DTO(entityResult.get());
+        return this.newsMapper.newsEntity2DTO(entityResult.get());
     }
 
     @Transactional
@@ -64,9 +69,9 @@ public class NewsServiceImpl implements INewsService {
         Category category = getCategoryNews();
         News newsEntity = newsRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(ID_NOT_FOUND + id));
-        mapper.newsDTO2EntityWithId(newsEntity, dto);
+        newsMapper.newsDTO2EntityWithId(newsEntity, dto);
         newsEntity.setCategory(category);
-        return mapper.newsEntity2DTO(newsRepository.save(newsEntity));
+        return newsMapper.newsEntity2DTO(newsRepository.save(newsEntity));
     }
 
     @NotNull
@@ -76,6 +81,26 @@ public class NewsServiceImpl implements INewsService {
             throw new NotFoundException("Category not found: " + NEWS);
         }
         return category.get();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public PageDTO<NewsDTO> getAllNewsPageable(Integer page) {
+        PageDTO<NewsDTO> newsDTOPageDTO = new PageDTO<>();
+        Page<News> news = this.newsRepository.findAll(PageRequest.of(page - 1, Url.getMAX_PAGE(), Sort.by("name")));
+        if (news.isEmpty()) {
+            throw new NotFoundException("The list is empty");
+        }
+        if (news.hasNext()) {
+            newsDTOPageDTO.setNext(URI + (page + 1));
+        }
+        if (!news.isFirst()) {
+            newsDTOPageDTO.setPrevious(URI + (page - 1));
+        }
+        newsDTOPageDTO.setCurrent(Integer.toString(page));
+        newsDTOPageDTO.setT(this.newsMapper.newsEntityPage2Dto(news));
+
+        return newsDTOPageDTO;
     }
 
 }
