@@ -64,9 +64,11 @@ public class CategoryController {
             @ApiResponse(responseCode = "200", description = "Get all categories",
                     content = @Content),
             @ApiResponse(responseCode = "403", description = "Invalid token or accessing with invalid role",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "The list is empty",
                     content = @Content)})
     @GetMapping("/page")
-    public ResponseEntity<?> getAllCategoriesPageable(@RequestParam(name = "page", defaultValue = "0") Integer page) {
+    public ResponseEntity<?> getAllCategoriesPageable(@RequestParam(name = "page", defaultValue = "1") Integer page) {
         PageDTO<CategoryDTO> categoryPage = categoryService.getAllCategoriesPageable(page);
         return ResponseEntity.ok(categoryPage);
     }

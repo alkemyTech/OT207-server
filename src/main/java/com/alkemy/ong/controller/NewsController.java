@@ -1,6 +1,8 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.NewsDTO;
+import com.alkemy.ong.dto.PageDTO;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.service.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,12 @@ public class NewsController {
      }
         NewsDTO newsDTO = this.newsService.updateNewsById(id, dto);
         return ResponseEntity.ok().body(newsDTO);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<PageDTO> getAllNewsPageable(@RequestParam(name = "page", defaultValue = "1") Integer page) {
+        PageDTO<NewsDTO> newsDTOPageDTO = newsService.getAllNewsPageable(page);
+        return ResponseEntity.ok().body(newsDTOPageDTO);
     }
 
 }

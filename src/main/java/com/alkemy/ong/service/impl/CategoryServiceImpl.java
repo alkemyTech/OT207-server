@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
-    private static final int MAX_PAGE = 10;
+
     private static final String URI = Url.getURL() + "/categories/page?page=";
     @Autowired
     private CategoryMapper categoryMapper;
@@ -49,10 +50,11 @@ public class CategoryServiceImpl implements ICategoryService {
         return categoryMapper.CategoryListResponseDtoList(categories);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public PageDTO<CategoryDTO> getAllCategoriesPageable(Integer page) {
         PageDTO<CategoryDTO> categoryPageDTO = new PageDTO<>();
-        Page<Category> categories = this.categoryRepository.findAll(PageRequest.of(page - 1, MAX_PAGE, Sort.by("name")));
+        Page<Category> categories = this.categoryRepository.findAll(PageRequest.of(page - 1, Url.getMAX_PAGE(), Sort.by("name")));
         if (categories.isEmpty()) {
             throw new NotFoundException("The list is empty");
         }

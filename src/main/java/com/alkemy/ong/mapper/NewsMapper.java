@@ -3,9 +3,12 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.model.News;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class NewsMapper {
@@ -37,5 +40,11 @@ public class NewsMapper {
         entity.setName(dto.getName());
         entity.setContent(dto.getContent());
         entity.setImage(dto.getImage());
+    }
+
+    public List<NewsDTO> newsEntityPage2Dto(Page<News> news) {
+        List<NewsDTO> newsDTOS = new ArrayList<>();
+        news.getContent().forEach(entity -> newsDTOS.add(this.newsEntity2DTO(entity)));
+        return newsDTOS;
     }
 }

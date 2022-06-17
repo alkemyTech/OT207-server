@@ -1,6 +1,8 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.dto.NewsDTO;
+import com.alkemy.ong.dto.PageDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface INewsService {
 
@@ -12,4 +14,6 @@ public interface INewsService {
 
     NewsDTO updateNewsById(Long id, NewsDTO dto);
 
+    @Transactional(readOnly = true)
+    PageDTO<NewsDTO> getAllNewsPageable(Integer page);
 }
