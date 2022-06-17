@@ -36,6 +36,10 @@ public class OrganizationDTO {
     @NotEmpty(message = "welcome text cannot be empty")
     private String welcomeText;
 
+    @Column(columnDefinition = "text", nullable = false)
+    @NotEmpty(message = "About text cannot be empty")
+    private String aboutUsText;
+
     private List<SlidesDTO> slidesDTOS;
 
 }

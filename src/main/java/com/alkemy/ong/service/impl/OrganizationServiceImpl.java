@@ -5,11 +5,7 @@ import com.alkemy.ong.dto.OrganizationUpdateDTO;
 import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.OrganizationMapper;
-<<<<<<< HEAD
-import com.alkemy.ong.model.Activity;
-=======
 import com.alkemy.ong.mapper.SlideMapper;
->>>>>>> develop
 import com.alkemy.ong.model.Organization;
 import com.alkemy.ong.model.Slides;
 import com.alkemy.ong.repository.OrganizationRepository;
@@ -81,22 +77,5 @@ public class OrganizationServiceImpl implements IOrganizationService {
     @Override
     public void updateOrganization(Organization org) {
         organizationRepository.save(org);
-<<<<<<< HEAD
        }
-
-    @Transactional
-    @Override
-    public OrganizationUpdateDTO updateId(Long id, OrganizationUpdateDTO organizationDTO) {
-        Optional<Organization> entity = organizationRepository.findById(id);
-        if (entity.isEmpty()) {
-            throw new NotFoundException("Organization with id provided not found");
-        }
-        this.organizationMapper.organizationEntityRefreshValues(entity.get(), organizationDTO);
-        return this.organizationMapper.organizationEntityUpdateToDTO(organizationRepository.save(entity.get()));
-    }
-
-
-=======
-    }
->>>>>>> develop
 }

@@ -8,8 +8,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
-
 
 @Getter
 @Setter
@@ -34,7 +32,8 @@ public class OrganizationUpdateDTO {
     @NotEmpty(message = "Email cannot be empty")
     @Email
     private String email;
-    
+
+
     @NotEmpty(message = "Welcome text cannot be empty")
     private String welcomeText;
 
@@ -49,6 +48,5 @@ public class OrganizationUpdateDTO {
 
     @Column(name = "linkedin_url")
     private String linkedinUrl;
-
 
 }

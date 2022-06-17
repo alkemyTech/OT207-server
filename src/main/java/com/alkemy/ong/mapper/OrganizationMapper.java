@@ -6,9 +6,8 @@ import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.model.Organization;
 import com.alkemy.ong.repository.OrganizationRepository;
 import org.springframework.stereotype.Component;
-import javax.validation.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -25,50 +24,10 @@ public class OrganizationMapper {
         dto.setAddress(entity.getAddress());
         dto.setEmail(entity.getEmail());
         dto.setWelcomeText(entity.getWelcomeText());
-        return dto;
-    }
-
-<<<<<<< HEAD
-    public OrganizationUpdateDTO organizationEntityUpdateToDTO(Organization entity) {
-        OrganizationUpdateDTO dto = new OrganizationUpdateDTO();
-        dto.setId(entity.getId());
-        dto.setName(entity.getName());
-        dto.setImage(entity.getImage());
-        dto.setAddress(entity.getAddress());
-        dto.setPhone(entity.getPhone());
-        dto.setEmail(entity.getEmail());
-        dto.setWelcomeText(entity.getWelcomeText());
         dto.setAboutUsText(entity.getAboutUsText());
-        dto.setFacebookUrl(entity.getFacebookUrl());
-        dto.setInstagramUrl(entity.getInstagramUrl());
-        dto.setLinkedinUrl(entity.getLinkedinUrl());
         return dto;
     }
 
-    public void organizationEntityRefreshValues(Organization entity, OrganizationUpdateDTO dto){
-        entity.setName(dto.getName());
-        entity.setImage(dto.getImage());
-        entity.setAddress(dto.getAddress());
-        entity.setPhone(dto.getPhone());
-        entity.setEmail(dto.getEmail());
-        entity.setWelcomeText(dto.getWelcomeText());
-        entity.setAboutUsText(dto.getAboutUsText());
-        entity.setFacebookUrl(dto.getFacebookUrl());
-        entity.setInstagramUrl(dto.getInstagramUrl());
-        entity.setLinkedinUrl(dto.getLinkedinUrl());
-        entity.setDeleted(false);
-    }
-
-    public List<OrganizationDTO> organizationEntityList2DTOList(@NotNull @NotEmpty List<Organization> entities) {
-        List<OrganizationDTO> dtoList = new ArrayList<>();
-        for (Organization entity : entities) {
-            dtoList.add(this.organizationEntity2DTO(entity));
-        }
-        return dtoList;
-    }
-
-    public Organization OrganizationUpdateDTO2Entity(@NotNull OrganizationUpdateDTO orgUpdate, @NotNull Organization org){
-=======
     public OrganizationDTO organizationEntity2DTOSlides(@NotNull Organization entity,  List<SlidesDTO> slidesDTOS) {
         OrganizationDTO dto = new OrganizationDTO();
         dto.setId(entity.getId());
@@ -78,13 +37,13 @@ public class OrganizationMapper {
         dto.setAddress(entity.getAddress());
         dto.setEmail(entity.getEmail());
         dto.setWelcomeText(entity.getWelcomeText());
+        dto.setAboutUsText(entity.getAboutUsText());
         dto.setSlidesDTOS(slidesDTOS);
         return dto;
     }
 
     public Organization organizationUpdateDTO2Entity(@NotNull OrganizationUpdateDTO orgUpdate, @NotNull Organization org){
 
->>>>>>> develop
         org.setName(orgUpdate.getName());
         org.setImage(orgUpdate.getImage());
         org.setAddress(orgUpdate.getAddress());
@@ -92,9 +51,9 @@ public class OrganizationMapper {
         org.setEmail(orgUpdate.getEmail());
         org.setWelcomeText(orgUpdate.getWelcomeText());
         org.setAboutUsText(orgUpdate.getAboutUsText());
-<<<<<<< HEAD
-        return org;
-=======
+        org.setFacebookUrl(orgUpdate.getFacebookUrl());
+        org.setInstagramUrl(orgUpdate.getInstagramUrl());
+        org.setLinkedinUrl(orgUpdate.getLinkedinUrl());
 
         return org;
 
@@ -112,6 +71,9 @@ public class OrganizationMapper {
         organizationUpdateDto.setEmail(org.getEmail());
         organizationUpdateDto.setWelcomeText(org.getWelcomeText());
         organizationUpdateDto.setAboutUsText(org.getAboutUsText());
+        organizationUpdateDto.setFacebookUrl(organizationUpdateDto.getFacebookUrl());
+        organizationUpdateDto.setInstagramUrl(organizationUpdateDto.getInstagramUrl());
+        organizationUpdateDto.setLinkedinUrl(organizationUpdateDto.getLinkedinUrl());
 
         return organizationUpdateDto;
 
@@ -126,8 +88,8 @@ public class OrganizationMapper {
         organization.setAddress(organizationDto.getAddress());
         organization.setEmail(organizationDto.getEmail());
         organization.setWelcomeText(organizationDto.getWelcomeText());
+        organization.setAboutUsText(organizationDto.getAboutUsText());
         return organization;
->>>>>>> develop
     }
 
 

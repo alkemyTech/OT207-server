@@ -57,6 +57,7 @@ public class Organization implements Serializable {
     @Column(columnDefinition = "text")
     private String aboutUsText;
 
+
     @Nullable
     @Column(name = "facebook_url")
     private String facebookUrl;
