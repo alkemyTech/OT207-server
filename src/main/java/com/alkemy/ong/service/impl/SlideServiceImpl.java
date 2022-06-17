@@ -7,18 +7,16 @@ import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.mapper.SlideMapper;
-import com.alkemy.ong.model.Category;
+import com.alkemy.ong.model.Organization;
 import com.alkemy.ong.model.Slides;
+import com.alkemy.ong.repository.OrganizationRepository;
 import com.alkemy.ong.repository.SlidesRepository;
 import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SlideServiceImpl implements ISlideService {
@@ -29,6 +27,9 @@ public class SlideServiceImpl implements ISlideService {
     private SlidesRepository slidesRepository;
     @Autowired
     private SlideMapper slidesMapper;
+    @Autowired
+    OrganizationRepository organizationRepository;
+
 
     @Transactional
     @Override
@@ -55,7 +56,7 @@ public class SlideServiceImpl implements ISlideService {
     @Override
     public List<SlidesDTO> findAll() {
         List<Slides> entities = this.slidesRepository.findAll();
-        if(entities.isEmpty()){
+        if (entities.isEmpty()) {
             throw new NotFoundException("The Slides list is empty");
         }
         List<SlidesDTO> result = this.slidesMapper.entitySlidesList2SlidesDtoList(entities);
@@ -71,11 +72,26 @@ public class SlideServiceImpl implements ISlideService {
         slidesRepository.delete(slide);
     }
 
-   @Override
+    @Override
     public SlidesResponseDTO getSlidesById(Long id) {
         Slides slidesEntity = slidesRepository.findById(id).orElseThrow(() -> new NotFoundException("Slides with id provided not found"));
         return slidesMapper.entitySlides2responseDto(slidesEntity);
 
+    }
+
+
+    @Override
+    public List<SlidesResponseDTO> getSlidesByOrganiztionId(Long organizationId) {
+
+        Optional<Organization> organization = organizationRepository.findById(organizationId);
+
+        if (!organization.isPresent()) {
+            throw new NotFoundException("Organization with id provided not found");
+        } else {
+            List<Slides> organizationSlidesList;
+            organizationSlidesList = slidesRepository.findByOrganizations(organization.get());
+            return slidesMapper.organizationSlidesList2organizationSlidesDto(organizationSlidesList);
+        }
     }
 
     public int findLargerInteger(List<Integer> integers) {

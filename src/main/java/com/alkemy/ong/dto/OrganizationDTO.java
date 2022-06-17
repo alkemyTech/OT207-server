@@ -3,7 +3,9 @@ package com.alkemy.ong.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,5 +25,16 @@ public class OrganizationDTO {
     private String phone;
 
     private String address;
+
+    @Column(nullable = false)
+    @NotEmpty(message = "email cannot be empty")
+    @Email
+    private String email;
+
+    @Column(columnDefinition = "text", nullable = false)
+    @NotEmpty(message = "welcome text cannot be empty")
+    private String welcomeText;
+
+    private List<SlidesDTO> slidesDTOS;
 
 }
