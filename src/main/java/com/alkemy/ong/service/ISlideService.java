@@ -16,4 +16,5 @@ public interface ISlideService {
 
     SlidesResponseDTO getSlidesById(Long id);
 
+    List<SlidesResponseDTO> getSlidesByOrganiztionId(Long organizationId);
 }

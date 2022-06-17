@@ -46,8 +46,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/auth/login", "/auth/register").permitAll()
+                .authorizeRequests().antMatchers("/auth/login", "/auth/register","/api-docs/**","/swagger-ui*/*").permitAll()
                 .antMatchers("/auth/users", "/auth/users/*", "/api/assets/upload").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers("/categories/page").hasAnyAuthority(RolName.ROLE_USER.toString())
                 .antMatchers(HttpMethod.POST, "/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/slides").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.DELETE, "/slides/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
@@ -66,8 +67,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/categories/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.POST, "/organization/public").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/organization/public").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+<<<<<<< HEAD
                 .antMatchers(HttpMethod.PUT, "/organization/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+=======
+                .antMatchers(HttpMethod.GET, "/organization/public/{organizationId}").hasAnyAuthority(RolName.ROLE_USER.toString())
+>>>>>>> develop
                 .antMatchers(HttpMethod.GET, "/comments").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.DELETE, "/members/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement()

@@ -13,7 +13,7 @@ import org.springframework.lang.Nullable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestimonialDto {
+public class TestimonialDTO {
 
     private Long id;
 

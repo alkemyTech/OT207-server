@@ -13,6 +13,7 @@ import com.alkemy.ong.model.UserEntity;
 import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.auth.repository.UserRepository;
 import com.alkemy.ong.service.IEmailService;
+import com.amazonaws.services.sns.model.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -55,7 +56,7 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     @Autowired
     private JwtUtils jwtTokenUtil;
-    
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -64,7 +65,7 @@ public class UserDetailsCustomService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Optional<UserEntity> userEntity = userRepository.findByEmail(userName);
-        if (userEntity.isEmpty()) {
+        if (!userEntity.isPresent()) {
             throw new UsernameNotFoundException("The username or password is incorrect");
         }
         List<GrantedAuthority> roles = new ArrayList<>();
@@ -115,7 +116,7 @@ public class UserDetailsCustomService implements UserDetailsService {
         UserResponseDto responseDto = userMapper.userEntity2ResponseDto(entity);
         return responseDto;
     }
-    
+
      public AuthenticationResponse login(AuthenticationRequest authRequest){
         UserDetails userDetails;
         try {
@@ -128,6 +129,6 @@ public class UserDetailsCustomService implements UserDetailsService {
         }
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return new AuthenticationResponse(jwt);
-   
+
      }
 }
