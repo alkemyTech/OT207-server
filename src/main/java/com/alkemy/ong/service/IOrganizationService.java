@@ -6,8 +6,6 @@ import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.model.Organization;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 public interface IOrganizationService {
 
     @Transactional
@@ -16,8 +14,8 @@ public interface IOrganizationService {
     @Transactional(readOnly = true)
     OrganizationDTO getOrg();
 
-
     Organization updateOrganizationDto(OrganizationUpdateDTO orgUpdate) throws NotFoundException;
 
     void updateOrganization(Organization org);
+
 }

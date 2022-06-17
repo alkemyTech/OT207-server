@@ -77,5 +77,5 @@ public class OrganizationServiceImpl implements IOrganizationService {
     @Override
     public void updateOrganization(Organization org) {
         organizationRepository.save(org);
-    }
+       }
 }

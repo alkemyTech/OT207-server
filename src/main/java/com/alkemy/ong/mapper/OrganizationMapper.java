@@ -4,17 +4,18 @@ import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.dto.OrganizationUpdateDTO;
 import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.model.Organization;
+import com.alkemy.ong.repository.OrganizationRepository;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class OrganizationMapper {
 
-    public OrganizationDTO organizationEntity2DTO(@NotNull Organization entity) {
+    private OrganizationRepository organizationRepository;
+
+    public OrganizationDTO organizationEntity2DTO(Organization entity) {
         OrganizationDTO dto = new OrganizationDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -23,6 +24,7 @@ public class OrganizationMapper {
         dto.setAddress(entity.getAddress());
         dto.setEmail(entity.getEmail());
         dto.setWelcomeText(entity.getWelcomeText());
+        dto.setAboutUsText(entity.getAboutUsText());
         return dto;
     }
 
@@ -35,6 +37,7 @@ public class OrganizationMapper {
         dto.setAddress(entity.getAddress());
         dto.setEmail(entity.getEmail());
         dto.setWelcomeText(entity.getWelcomeText());
+        dto.setAboutUsText(entity.getAboutUsText());
         dto.setSlidesDTOS(slidesDTOS);
         return dto;
     }
@@ -48,6 +51,9 @@ public class OrganizationMapper {
         org.setEmail(orgUpdate.getEmail());
         org.setWelcomeText(orgUpdate.getWelcomeText());
         org.setAboutUsText(orgUpdate.getAboutUsText());
+        org.setFacebookUrl(orgUpdate.getFacebookUrl());
+        org.setInstagramUrl(orgUpdate.getInstagramUrl());
+        org.setLinkedinUrl(orgUpdate.getLinkedinUrl());
 
         return org;
 
@@ -65,6 +71,9 @@ public class OrganizationMapper {
         organizationUpdateDto.setEmail(org.getEmail());
         organizationUpdateDto.setWelcomeText(org.getWelcomeText());
         organizationUpdateDto.setAboutUsText(org.getAboutUsText());
+        organizationUpdateDto.setFacebookUrl(organizationUpdateDto.getFacebookUrl());
+        organizationUpdateDto.setInstagramUrl(organizationUpdateDto.getInstagramUrl());
+        organizationUpdateDto.setLinkedinUrl(organizationUpdateDto.getLinkedinUrl());
 
         return organizationUpdateDto;
 
@@ -79,6 +88,7 @@ public class OrganizationMapper {
         organization.setAddress(organizationDto.getAddress());
         organization.setEmail(organizationDto.getEmail());
         organization.setWelcomeText(organizationDto.getWelcomeText());
+        organization.setAboutUsText(organizationDto.getAboutUsText());
         return organization;
     }
 
