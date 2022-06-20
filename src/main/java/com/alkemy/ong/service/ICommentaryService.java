@@ -1,8 +1,8 @@
 package com.alkemy.ong.service;
 
-import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -13,6 +13,10 @@ public interface ICommentaryService{
     
     List<CommentaryBodyDTO> getCommentaries();
 
+    @Transactional
+    CommentaryBodyDTO update(Long id, CommentaryBodyDTO dto, HttpServletRequest request);
+
     void deleteById(Long id, HttpServletRequest request);
+
 
 }
