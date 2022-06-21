@@ -108,6 +108,27 @@ class ContactControllerTests {
         verify(contactService).save(any());
     }
 
+    @Test
+    @WithMockUser(setupBefore = TestExecutionEvent.TEST_METHOD, username = "Alejandro")
+    void testCreateContactWithNameNull() throws Exception {
+        ContactDTO contactDTO = createDtoEntity();
+        contactDTO.setName(null);
+
+        given(contactService.save(any(ContactDTO.class)))
+                .willAnswer((invocation)-> invocation.getArgument(0));
+
+        String contactString = objectMapper.writeValueAsString(contactDTO);
+
+        // when - action or behaviour that we are going test
+        ResultActions response = mockMvc.perform(post("/contacts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(contactString));
+
+        // then - verify the result or output using assert statements
+        response.andDo(print()).
+                andExpect(status().isBadRequest());
+    }
+
     // JUnit test for Get All employees REST API
     @Test
     @WithMockUser(setupBefore = TestExecutionEvent.TEST_METHOD, username = "Alejandro")
