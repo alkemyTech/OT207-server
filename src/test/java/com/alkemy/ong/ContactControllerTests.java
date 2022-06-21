@@ -131,6 +131,24 @@ class ContactControllerTests {
 
     }
 
+    @Test
+    void givenListOfContacts_whenGetAllContacts_thenReturnContactsList_withNotRights() throws Exception{
+        // given - precondition or setup
+        ContactDTO contact1 = createDtoEntity();
+        ContactDTO contact2 = createDtoEntity();
+        List<ContactDTO> listOfContacts = new ArrayList<>();
+        listOfContacts.add(contact1);
+        listOfContacts.add(contact2);
+        given(contactService.getAll()).willReturn(listOfContacts);
+
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(get("/contacts"));
+
+        // then - verify the output
+        response.andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
     private ContactDTO createDtoEntity() {
         ContactDTO contactDTO = new ContactDTO();
         contactDTO.setName("Alejandro");
