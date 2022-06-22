@@ -14,8 +14,8 @@ public interface IOrganizationService {
     @Transactional(readOnly = true)
     OrganizationDTO getOrg();
 
-
     Organization updateOrganizationDto(OrganizationUpdateDTO orgUpdate) throws NotFoundException;
 
     void updateOrganization(Organization org);
+
 }
