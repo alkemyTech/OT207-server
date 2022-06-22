@@ -4,7 +4,7 @@ import com.alkemy.ong.dto.ContactDTO;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.service.IContactService;
+import com.alkemy.ong.domain.service.IContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

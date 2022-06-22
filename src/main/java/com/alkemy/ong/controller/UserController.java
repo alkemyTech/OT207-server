@@ -3,7 +3,7 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.auth.dto.UserUpdateDto;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.service.IUserService;
+import com.alkemy.ong.domain.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

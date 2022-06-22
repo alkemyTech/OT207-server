@@ -1,6 +1,6 @@
 package com.alkemy.ong.dto;
 
-import com.alkemy.ong.model.Organization;
+import com.alkemy.ong.domain.model.Organization;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,7 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.TestimonialDTO;
-import com.alkemy.ong.model.Testimonial;
+import com.alkemy.ong.domain.model.Testimonial;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;

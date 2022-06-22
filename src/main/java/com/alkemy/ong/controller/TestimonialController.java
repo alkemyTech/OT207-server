@@ -2,7 +2,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.service.ITestimonialService;
+import com.alkemy.ong.domain.service.ITestimonialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

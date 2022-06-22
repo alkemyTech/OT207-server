@@ -1,10 +1,9 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.dto.PageDTO;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.service.INewsService;
+import com.alkemy.ong.domain.service.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

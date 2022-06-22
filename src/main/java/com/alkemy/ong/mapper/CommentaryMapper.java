@@ -2,8 +2,8 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
-import com.alkemy.ong.model.Commentary;
-import com.alkemy.ong.repository.CommentaryRepository;
+import com.alkemy.ong.domain.model.Commentary;
+import com.alkemy.ong.domain.repository.CommentaryRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;

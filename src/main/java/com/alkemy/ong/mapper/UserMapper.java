@@ -2,7 +2,7 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.auth.dto.UserRequestDto;
 import com.alkemy.ong.auth.dto.UserResponseDto;
-import com.alkemy.ong.model.UserEntity;
+import com.alkemy.ong.domain.model.UserEntity;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;

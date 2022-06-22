@@ -4,7 +4,7 @@ import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
 import com.alkemy.ong.dto.PageDTO;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.service.ICategoryService;
+import com.alkemy.ong.domain.service.ICategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

@@ -3,12 +3,10 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.dto.OrganizationUpdateDTO;
 import com.alkemy.ong.dto.SlidesDTO;
-import com.alkemy.ong.model.Organization;
+import com.alkemy.ong.domain.model.Organization;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component

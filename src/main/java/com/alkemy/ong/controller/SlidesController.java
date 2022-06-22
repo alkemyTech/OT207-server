@@ -3,7 +3,7 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
-import com.alkemy.ong.service.ISlideService;
+import com.alkemy.ong.domain.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

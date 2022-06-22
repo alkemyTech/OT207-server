@@ -1,15 +1,14 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
-import com.alkemy.ong.service.ICommentaryService;
-import java.util.List;
+import com.alkemy.ong.domain.service.ICommentaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
