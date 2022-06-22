@@ -1,10 +1,10 @@
 package com.alkemy.ong.mapper;
 
+import com.alkemy.ong.domain.model.Organization;
+import com.alkemy.ong.domain.repository.OrganizationRepository;
 import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.dto.OrganizationUpdateDTO;
 import com.alkemy.ong.dto.SlidesDTO;
-import com.alkemy.ong.model.Organization;
-import com.alkemy.ong.repository.OrganizationRepository;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;

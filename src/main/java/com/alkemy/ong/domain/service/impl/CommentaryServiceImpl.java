@@ -1,31 +1,25 @@
-package com.alkemy.ong.service.impl;
+package com.alkemy.ong.domain.service.impl;
 
 import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.auth.repository.UserRepository;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
+import com.alkemy.ong.domain.model.Commentary;
+import com.alkemy.ong.domain.model.UserEntity;
+import com.alkemy.ong.domain.repository.CommentaryRepository;
+import com.alkemy.ong.domain.service.ICommentaryService;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
-import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.exception.ForbiddenException;
 import com.alkemy.ong.exception.NotFoundException;
-import com.alkemy.ong.exception.UnauthorizedException;
 import com.alkemy.ong.mapper.CommentaryMapper;
-import com.alkemy.ong.model.Commentary;
-import com.alkemy.ong.model.Role;
-import com.alkemy.ong.model.Testimonial;
-import com.alkemy.ong.model.UserEntity;
-import com.alkemy.ong.repository.CommentaryRepository;
-import com.alkemy.ong.service.ICommentaryService;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class CommentaryServiceImpl implements ICommentaryService {
@@ -71,7 +65,7 @@ public class CommentaryServiceImpl implements ICommentaryService {
         Commentary commentary = commentaryRepository.findById(id).orElseThrow(() -> new NotFoundException(ID_NOT_FOUND + id));
         UserResponseDto responseDto = userDetailsCustomService.getProfile(request);
         UserEntity user = userRepository.findByEmail(responseDto.getEmail()).get();
-        if (user.getId() == commentary.getUserEntity().getId() || request.isUserInRole("ROLE_ADMIN")) {
+        if (Objects.equals(user.getId(), commentary.getUserEntity().getId()) || request.isUserInRole("ROLE_ADMIN")) {
             this.mapper.entityCommentaryRefreshValues(entity.get(), dto);
             Commentary result = this.commentaryRepository.save(entity.get());
             return this.mapper.commentaryEntityBodyToDTO(result);
@@ -86,7 +80,7 @@ public class CommentaryServiceImpl implements ICommentaryService {
         Commentary commentary = commentaryRepository.findById(id).orElseThrow(() -> new NotFoundException(ID_NOT_FOUND + id));
         UserResponseDto responseDto = userDetailsCustomService.getProfile(request);
         UserEntity user = userRepository.findByEmail(responseDto.getEmail()).get();
-        if (user.getId() == commentary.getUserEntity().getId() || request.isUserInRole("ROLE_ADMIN")){
+        if (Objects.equals(user.getId(), commentary.getUserEntity().getId()) || request.isUserInRole("ROLE_ADMIN")){
             commentaryRepository.deleteById(id);
         }else{
             throw new ForbiddenException("User with no access.");
