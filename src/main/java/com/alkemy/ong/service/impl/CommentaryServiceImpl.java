@@ -100,7 +100,11 @@ public class CommentaryServiceImpl implements ICommentaryService {
     public List<CommentaryBodyDTO> findAllById(Long id){
         News news = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Post no exist Id: "+id));
         List<Commentary> listAll = commentaryRepository.findByNews(news);
-        return mapper.entityListToDtoList(listAll);
+        if (listAll.isEmpty()){
+            throw new NotFoundException("Post list is empty");
+        }else {
+            return mapper.entityListToDtoList(listAll);
+        }
     }
 
 }
