@@ -35,11 +35,13 @@ class MemberControllerTest {
     private MockMvc mockMvc;
 
     @InjectMocks
-    MemberController controller;
+    private MemberController controller;
     @Mock
-    IMemberService service;
+    private IMemberService service;
     @Spy
-    MemberMapper mapper;
+    private MemberMapper mapper;
+
+    private MemberDTO request;
 
     @BeforeEach
     void setUp() {
@@ -47,13 +49,7 @@ class MemberControllerTest {
                 .setControllerAdvice(ApiExceptionHandler.class)
                 .build();
         mapper = new MemberMapper();
-
-    }
-
-    @Test
-    void createMember_shouldReturn201() throws Exception {
-
-        MemberDTO request = MemberDTO.builder()
+        request = MemberDTO.builder()
                 .name("member")
                 .facebookUrl("facebook")
                 .instagramUrl("instagram")
@@ -61,6 +57,12 @@ class MemberControllerTest {
                 .image("image")
                 .description("some description")
                 .build();
+
+    }
+
+    @Test
+    void createMember_shouldReturn201() throws Exception {
+
 
         given(service.addMember(any(MemberDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
 
@@ -81,18 +83,9 @@ class MemberControllerTest {
     @Test
     void updateMember_shouldReturn200() throws Exception {
 
-        MemberDTO request = MemberDTO.builder()
-                .id(99L)
-                .name("updatename")
-                .facebookUrl("facebook")
-                .instagramUrl("instagram")
-                .linkedinUrl("linkedin")
-                .image("image")
-                .description("some description")
-                .build();
-
+        request.setId(99L);
         given(service.updateById(any(MemberDTO.class), eq(request.getId()))).willReturn(request);
-        mockMvc.perform(put(Url.MEMBERS_URI+ "/" + request.getId())
+        mockMvc.perform(put(Url.MEMBERS_URI + "/" + request.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.objectToJson(request)))
                 .andExpect(status().isOk())
@@ -109,7 +102,7 @@ class MemberControllerTest {
     @Test
     void deleteMember_shouldReturn204() throws Exception {
 
-        mockMvc.perform(delete(Url.MEMBERS_URI+ "/1"))
+        mockMvc.perform(delete(Url.MEMBERS_URI + "/1"))
                 .andExpect(status().isNoContent())
                 .andDo(print())
                 .andReturn()
@@ -120,30 +113,18 @@ class MemberControllerTest {
     @Test
     public void listAllUsers_whenGetMethod()
             throws Exception {
-
-        MemberDTO member = MemberDTO.builder()
-                .name("member")
-                .facebookUrl("facebook")
-                .instagramUrl("instagram")
-                .linkedinUrl("linkedin")
-                .image("image")
-                .description("some description")
-                .build();
-
-        List<MemberDTO> allMembers = Arrays.asList(member);
-
+        List<MemberDTO> allMembers = Arrays.asList(request);
         given(service.getAll()).willReturn(allMembers);
-
         this.mockMvc.perform(get(Url.MEMBERS_URI)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(member.getName())))
-                .andExpect(jsonPath("$[0].facebook_url", is(member.getFacebookUrl())))
-                .andExpect(jsonPath("$[0].instagram_url", is(member.getInstagramUrl())))
-                .andExpect(jsonPath("$[0].linkedin_url", is(member.getLinkedinUrl())))
-                .andExpect(jsonPath("$[0].image", is(member.getImage())))
-                .andExpect(jsonPath("$[0].description", is(member.getDescription())));
+                .andExpect(jsonPath("$[0].name", is(request.getName())))
+                .andExpect(jsonPath("$[0].facebook_url", is(request.getFacebookUrl())))
+                .andExpect(jsonPath("$[0].instagram_url", is(request.getInstagramUrl())))
+                .andExpect(jsonPath("$[0].linkedin_url", is(request.getLinkedinUrl())))
+                .andExpect(jsonPath("$[0].image", is(request.getImage())))
+                .andExpect(jsonPath("$[0].description", is(request.getDescription())));
     }
 
 //    @Test TODO:Implementar cuando se agrege paginacion al endpoint

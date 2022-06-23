@@ -5,10 +5,8 @@ import com.alkemy.ong.domain.service.IMemberService;
 import com.alkemy.ong.domain.util.JsonUtils;
 import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.MemberDTO;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import com.alkemy.ong.mapper.MemberMapper;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,6 +16,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,15 +38,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MemberControllerIT {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
     @Mock
-    IMemberService service;
+    private IMemberService service;
+    private MemberDTO request;
 
-    @Test
-    @Order(1)
-    @WithUserDetails("test@admin.com")
-    void createMembers_shouldReturn201() throws Exception {
-        MemberDTO request = MemberDTO.builder()
+    @BeforeEach
+    void setUp() {
+        request = MemberDTO.builder()
                 .name("member")
                 .facebookUrl("facebook")
                 .instagramUrl("instagram")
@@ -56,8 +54,13 @@ class MemberControllerIT {
                 .description("some description")
                 .build();
 
-        given(service.addMember(any(MemberDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
+    }
 
+    @Test
+    @Order(1)
+    @WithUserDetails("test@admin.com")
+    void createMembers_shouldReturn201() throws Exception {
+        given(service.addMember(any(MemberDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
 
         this.mockMvc.perform(post(Url.MEMBERS_URI)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -71,21 +74,12 @@ class MemberControllerIT {
                 .andExpect(jsonPath("$.description", is(request.getDescription())));
     }
 
-
     @Test
     @Order(2)
     @WithUserDetails("test@admin.com")
     void createMembers_shouldReturn400_name_null() throws Exception {
-        MemberDTO request = MemberDTO.builder()
-                .facebookUrl("facebook")
-                .instagramUrl("instagram")
-                .linkedinUrl("linkedin")
-                .image("image")
-                .description("some description")
-                .build();
-
+        request.setName(null);
         given(service.addMember(any(MemberDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
-
 
         this.mockMvc.perform(post(Url.MEMBERS_URI)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -94,20 +88,10 @@ class MemberControllerIT {
                 .andDo(print());
     }
 
-
     @Test
     @Order(3)
     void createMembers_shouldReturn403_Forbidden() throws Exception {
-        MemberDTO request = MemberDTO.builder()
-                .facebookUrl("facebook")
-                .instagramUrl("instagram")
-                .linkedinUrl("linkedin")
-                .image("image")
-                .description("some description")
-                .build();
-
         given(service.addMember(any(MemberDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
-
 
         this.mockMvc.perform(post(Url.MEMBERS_URI)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -116,21 +100,12 @@ class MemberControllerIT {
                 .andDo(print());
     }
 
-
     @Test
     @Order(4)
     @WithUserDetails("test@admin.com")
     void createMembers_shouldReturn400_image_null() throws Exception {
-        MemberDTO request = MemberDTO.builder()
-                .name("name")
-                .facebookUrl("facebook")
-                .instagramUrl("instagram")
-                .linkedinUrl("linkedin")
-                .description("some description")
-                .build();
-
+        request.setImage(null);
         given(service.addMember(any(MemberDTO.class))).willAnswer((invocation) -> invocation.getArgument(0));
-
 
         this.mockMvc.perform(post(Url.MEMBERS_URI)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -143,40 +118,22 @@ class MemberControllerIT {
     @Order(5)
     @WithUserDetails("test@admin.com")
     void updateMembers_shouldReturn404() throws Exception {
-        MemberDTO request = MemberDTO.builder()
-                .id(99L)
-                .name("updatename")
-                .facebookUrl("facebook")
-                .instagramUrl("instagram")
-                .linkedinUrl("linkedin")
-                .image("image")
-                .description("some description")
-                .build();
-
+        request.setId(99L);
         given(service.updateById(any(MemberDTO.class), eq(request.getId()))).willReturn(request);
-        mockMvc.perform(put(Url.MEMBERS_URI + "/" + request.getId())
+
+        this.mockMvc.perform(put(Url.MEMBERS_URI + "/" + request.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.objectToJson(request)))
                 .andExpect(status().isNotFound())
                 .andDo(print());
-
     }
 
     @Test
     @Order(6)
     void updateMembers_shouldReturn401_Forbidden() throws Exception {
-        MemberDTO request = MemberDTO.builder()
-                .id(99L)
-                .name("updatename")
-                .facebookUrl("facebook")
-                .instagramUrl("instagram")
-                .linkedinUrl("linkedin")
-                .image("image")
-                .description("some description")
-                .build();
-
         given(service.updateById(any(MemberDTO.class), eq(request.getId()))).willReturn(request);
-        mockMvc.perform(put(Url.MEMBERS_URI + "/" + request.getId())
+
+        this.mockMvc.perform(put(Url.MEMBERS_URI + "/" + request.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.objectToJson(request)))
                 .andExpect(status().isForbidden())
@@ -187,17 +144,7 @@ class MemberControllerIT {
     @Order(7)
     @WithUserDetails("test@admin.com")
     void getAllMembers_shouldReturn200() throws Exception {
-        MemberDTO member = MemberDTO.builder()
-                .name("member")
-                .facebookUrl("facebook")
-                .instagramUrl("instagram")
-                .linkedinUrl("linkedin")
-                .image("image")
-                .description("some description")
-                .build();
-
-        List<MemberDTO> allMembers = Arrays.asList(member);
-
+        List<MemberDTO> allMembers = Arrays.asList(request);
         given(service.getAll()).willReturn(allMembers);
 
         this.mockMvc.perform(get(Url.MEMBERS_URI)
@@ -206,12 +153,11 @@ class MemberControllerIT {
                 .andDo(print());
     }
 
-
     @Test
     @Order(8)
     @WithUserDetails("test@admin.com")
     void deteleMember_shouldReturn204() throws Exception {
-        mockMvc.perform(delete(Url.MEMBERS_URI + "/1"))
+        this.mockMvc.perform(delete(Url.MEMBERS_URI + "/1"))
                 .andExpect(status().isNoContent());
     }
 
@@ -219,7 +165,7 @@ class MemberControllerIT {
     @Order(16)
     @WithUserDetails("test@user.com")
     void deteleMember_shouldReturn403_role_user_forbidden() throws Exception {
-        mockMvc.perform(delete(Url.MEMBERS_URI + "/1"))
+        this.mockMvc.perform(delete(Url.MEMBERS_URI + "/1"))
                 .andExpect(status().isForbidden());
     }
 }
