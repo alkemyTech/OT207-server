@@ -55,7 +55,16 @@ class ContactControllerTests {
         objectMapper = new ObjectMapper();
     }
 
-    //(authorities={}, password="password", roles={"ROLE_ADMIN"}, setupBefore=TEST_METHOD, username="Alejandro", value="user")
+    @BeforeEach
+    private ContactDTO createDtoEntity() {
+        ContactDTO contactDTO = new ContactDTO();
+        contactDTO.setName("Alejandro");
+        contactDTO.setPhone("+548959526");
+        contactDTO.setEmail("ale@gmail.com");
+        contactDTO.setMessage("Ale, mi buen amigo");
+        return contactDTO;
+    }
+
     @Test
     @WithMockUser(setupBefore = TestExecutionEvent.TEST_METHOD, username = "Alejandro")
     void testCreateContact() throws Exception {
@@ -82,30 +91,6 @@ class ContactControllerTests {
                         is(contactDTO.getEmail())))
                 .andExpect(jsonPath("$.message",
                         is(contactDTO.getMessage())));
-    }
-
-    @Test
-    @WithMockUser(setupBefore = TestExecutionEvent.TEST_METHOD, username = "Alejandro")
-    void testCreateContact2() throws Exception {
-        ContactDTO contactDTO = createDtoEntity();
-
-        when(contactService.save(any())).then(invocation -> {
-            ContactDTO c  = invocation.getArgument(0);
-            c.setId(3L);
-            return c;
-        });
-        String contactString = objectMapper.writeValueAsString(contactDTO);
-
-        mockMvc.perform(post("/contacts").contentType(MediaType.APPLICATION_JSON).content(contactString))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id",is(3)))
-                .andExpect(jsonPath("$.name",is("Alejandro")))
-                .andExpect(jsonPath("$.phone",is("+548959526")))
-                .andExpect(jsonPath("$.email",is("ale@gmail.com")))
-                .andExpect(jsonPath("$.message",is("Ale, mi buen amigo")));
-
-        verify(contactService).save(any());
     }
 
     @Test
@@ -149,7 +134,6 @@ class ContactControllerTests {
                 .andDo(print())
                 .andExpect(jsonPath("$.size()",
                         CoreMatchers.is(listOfContacts.size())));
-
     }
 
     @Test
@@ -170,14 +154,7 @@ class ContactControllerTests {
                 .andDo(print());
     }
 
-    private ContactDTO createDtoEntity() {
-        ContactDTO contactDTO = new ContactDTO();
-        contactDTO.setName("Alejandro");
-        contactDTO.setPhone("+548959526");
-        contactDTO.setEmail("ale@gmail.com");
-        contactDTO.setMessage("Ale, mi buen amigo");
-        return contactDTO;
-    }
+
 
 
 }
