@@ -5,19 +5,20 @@ import com.alkemy.ong.auth.repository.UserRepository;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
+import com.alkemy.ong.dto.NewsDTO;
 import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.exception.ForbiddenException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.exception.UnauthorizedException;
 import com.alkemy.ong.mapper.CommentaryMapper;
-import com.alkemy.ong.model.Commentary;
-import com.alkemy.ong.model.Role;
-import com.alkemy.ong.model.Testimonial;
-import com.alkemy.ong.model.UserEntity;
+import com.alkemy.ong.model.*;
 import com.alkemy.ong.repository.CommentaryRepository;
+import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.service.ICommentaryService;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +35,9 @@ public class CommentaryServiceImpl implements ICommentaryService {
 
     @Autowired
     private CommentaryRepository commentaryRepository;
+
+    @Autowired
+    private NewsRepository newsRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -92,4 +96,11 @@ public class CommentaryServiceImpl implements ICommentaryService {
             throw new ForbiddenException("User with no access.");
         }
     }
+
+    public List<CommentaryBodyDTO> findAllById(Long id){
+        News news = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Post no exist Id: "+id));
+        List<Commentary> listAll = commentaryRepository.findByNews(news);
+        return mapper.entityListToDtoList(listAll);
+    }
+
 }
