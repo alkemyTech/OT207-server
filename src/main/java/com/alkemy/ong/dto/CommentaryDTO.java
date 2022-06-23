@@ -18,7 +18,7 @@ public class CommentaryDTO {
     private String body;
 
     @NotNull(message = "User id cannot be null")
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @NotNull(message = "News id cannot be null")
     private News news;

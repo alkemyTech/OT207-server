@@ -19,7 +19,7 @@ public class CommentaryMapper {
         Commentary entity = new Commentary();
         entity.setBody(dto.getBody());
         entity.setNews(dto.getNews());
-        entity.setUserEntity(dto.getUserEntity());
+        entity.setUserEntity(dto.getUser());
         return entity;
     }
 
@@ -28,7 +28,7 @@ public class CommentaryMapper {
         dto.setId(entity.getId());
         dto.setBody(entity.getBody());
         dto.setNews(entity.getNews());
-        dto.setUserEntity(entity.getUserEntity());
+        dto.setUser(entity.getUserEntity());
         return dto;
     }
 
