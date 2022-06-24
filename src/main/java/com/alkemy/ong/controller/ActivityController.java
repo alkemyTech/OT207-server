@@ -1,5 +1,6 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.ActivityDTO;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.domain.service.IActivityService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/activities")
+@RequestMapping(Url.ACTIVITIES_URI)
 public class ActivityController {
 
     @Autowired

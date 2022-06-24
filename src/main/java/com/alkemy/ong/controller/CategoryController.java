@@ -1,5 +1,6 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
 import com.alkemy.ong.dto.PageDTO;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping(Url.CATEGORY_URI)
 public class CategoryController {
 
     @Autowired

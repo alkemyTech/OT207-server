@@ -25,7 +25,7 @@ public class NewsServiceImpl implements INewsService {
 
     private static final String NEWS = "news";
     private static final String ID_NOT_FOUND = "Id not found: ";
-    private static final String URI = Url.URL + "/news/page?page=";
+    private static final String URI = Url.URL + Url.NEWS_URI + Url.PAGE_URI;
     @Autowired
     private NewsRepository newsRepository;
     @Autowired

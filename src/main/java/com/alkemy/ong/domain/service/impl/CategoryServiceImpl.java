@@ -24,7 +24,7 @@ import java.util.Optional;
 public class CategoryServiceImpl implements ICategoryService {
 
 
-    private static final String URI = Url.URL + "/categories/page?page=";
+    private static final String URI = Url.URL + Url.CATEGORY_URI + Url.PAGE_URI;
     @Autowired
     private CategoryMapper categoryMapper;
     @Autowired

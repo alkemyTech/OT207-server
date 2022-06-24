@@ -1,10 +1,10 @@
-package com.alkemy.ong;
+package com.alkemy.ong.controller;
 
 import com.alkemy.ong.auth.service.JwtUtils;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.controller.ContactController;
+import com.alkemy.ong.domain.service.IContactService;
 import com.alkemy.ong.dto.ContactDTO;
-import com.alkemy.ong.service.IContactService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,20 +18,17 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ContactController.class)
 class ContactControllerTests {
@@ -75,12 +72,10 @@ class ContactControllerTests {
 
         String contactString = objectMapper.writeValueAsString(contactDTO);
 
-        // when - action or behaviour that we are going test
         ResultActions response = mockMvc.perform(post("/contacts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(contactString));
 
-        // then - verify the result or output using assert statements
         response.andDo(print()).
                 andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name",
@@ -104,21 +99,17 @@ class ContactControllerTests {
 
         String contactString = objectMapper.writeValueAsString(contactDTO);
 
-        // when - action or behaviour that we are going test
         ResultActions response = mockMvc.perform(post("/contacts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(contactString));
 
-        // then - verify the result or output using assert statements
         response.andDo(print()).
                 andExpect(status().isBadRequest());
     }
 
-    // JUnit test for Get All employees REST API
     @Test
     @WithMockUser(setupBefore = TestExecutionEvent.TEST_METHOD, username = "Alejandro")
     void givenListOfContacts_whenGetAllContacts_thenReturnContactsList() throws Exception{
-        // given - precondition or setup
         ContactDTO contact1 = createDtoEntity();
         ContactDTO contact2 = createDtoEntity();
         List<ContactDTO> listOfContacts = new ArrayList<>();
@@ -126,10 +117,8 @@ class ContactControllerTests {
         listOfContacts.add(contact2);
         given(contactService.getAll()).willReturn(listOfContacts);
 
-        // when -  action or the behaviour that we are going test
         ResultActions response = mockMvc.perform(get("/contacts"));
 
-        // then - verify the output
         response.andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$.size()",
@@ -138,7 +127,6 @@ class ContactControllerTests {
 
     @Test
     void givenListOfContacts_whenGetAllContacts_thenReturnContactsList_withNotRights() throws Exception{
-        // given - precondition or setup
         ContactDTO contact1 = createDtoEntity();
         ContactDTO contact2 = createDtoEntity();
         List<ContactDTO> listOfContacts = new ArrayList<>();
@@ -146,10 +134,8 @@ class ContactControllerTests {
         listOfContacts.add(contact2);
         given(contactService.getAll()).willReturn(listOfContacts);
 
-        // when -  action or the behaviour that we are going test
         ResultActions response = mockMvc.perform(get("/contacts"));
 
-        // then - verify the output
         response.andExpect(status().isForbidden())
                 .andDo(print());
     }

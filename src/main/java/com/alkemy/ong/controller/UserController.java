@@ -2,6 +2,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.auth.dto.UserUpdateDto;
+import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.domain.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(Url.USER_URI)
 public class UserController {
 
-@Autowired
+    @Autowired
     private IUserService userService;
 
     @GetMapping("/users")
@@ -28,21 +29,18 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") Long userId) {
-
         this.userService.deleteUserById(userId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
 
     @PatchMapping("users/{id}")
     public UserResponseDto updateUser(
-            @PathVariable(value = "id") Long userId, @Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) throws Exception {
+            @PathVariable(value = "id") Long userId, @Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }
-        UserResponseDto userResponseDto = userService.updateUser(userId, userUpdateDto);
-        return userResponseDto;
+        return userService.updateUser(userId, userUpdateDto);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.ContactDTO;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/contacts")
+@RequestMapping(Url.CONTACTS_URI)
 public class ContactController {
 
     @Autowired

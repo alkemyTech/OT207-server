@@ -1,6 +1,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.domain.service.ICommentaryService;
+import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping(Url.COMMENTS_URI)
 public class CommentaryController {
     
     @Autowired

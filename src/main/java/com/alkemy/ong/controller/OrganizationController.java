@@ -4,6 +4,7 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.domain.model.Organization;
 import com.alkemy.ong.domain.service.IOrganizationService;
 import com.alkemy.ong.domain.service.ISlideService;
+import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.dto.OrganizationUpdateDTO;
 import com.alkemy.ong.exception.BadRequestException;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/organization")
+@RequestMapping(Url.ORGANIZATION_URI)
 public class OrganizationController {
 
     @Autowired
