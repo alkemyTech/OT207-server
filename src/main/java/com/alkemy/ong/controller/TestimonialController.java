@@ -1,8 +1,9 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.service.ITestimonialService;
+import com.alkemy.ong.domain.service.ITestimonialService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/testimonials")
+@RequestMapping(Url.TESTIMONIALS_URI)
 public class TestimonialController {
 
     @Autowired

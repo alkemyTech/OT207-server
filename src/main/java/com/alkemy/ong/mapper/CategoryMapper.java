@@ -2,9 +2,8 @@ package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
-import com.alkemy.ong.model.Category;
+import com.alkemy.ong.domain.model.Category;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
