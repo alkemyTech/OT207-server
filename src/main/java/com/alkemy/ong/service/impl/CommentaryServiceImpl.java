@@ -5,24 +5,17 @@ import com.alkemy.ong.auth.repository.UserRepository;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
-import com.alkemy.ong.dto.NewsDTO;
-import com.alkemy.ong.dto.TestimonialDTO;
 import com.alkemy.ong.exception.ForbiddenException;
 import com.alkemy.ong.exception.NotFoundException;
-import com.alkemy.ong.exception.UnauthorizedException;
 import com.alkemy.ong.mapper.CommentaryMapper;
 import com.alkemy.ong.model.*;
 import com.alkemy.ong.repository.CommentaryRepository;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.service.ICommentaryService;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,11 +93,7 @@ public class CommentaryServiceImpl implements ICommentaryService {
     public List<CommentaryBodyDTO> findAllById(Long id){
         News news = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Post no exist Id: "+id));
         List<Commentary> listAll = commentaryRepository.findByNews(news);
-        if (listAll.isEmpty()){
-            throw new NotFoundException("Post list is empty");
-        }else {
             return mapper.entityListToDtoList(listAll);
-        }
     }
 
 }

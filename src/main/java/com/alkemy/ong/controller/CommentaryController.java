@@ -41,8 +41,11 @@ public class CommentaryController {
     }
 
     @GetMapping("/news/{id}")
-    public ResponseEntity<List<CommentaryBodyDTO>> getCommentaryByPost(@PathVariable Long id){
+    public ResponseEntity<?> getCommentaryByPost(@PathVariable Long id) {
         List<CommentaryBodyDTO> list = commentaryService.findAllById(id);
+        if(list.isEmpty()){
+            return new ResponseEntity<>("List is Empty",HttpStatus.OK);
+        }
         return ResponseEntity.ok().body(list);
     }
 }
