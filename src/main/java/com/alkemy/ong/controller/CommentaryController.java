@@ -3,13 +3,13 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.domain.service.ICommentaryService;
 import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
+import com.alkemy.ong.dto.CommentaryDTO;
 import com.alkemy.ong.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import com.alkemy.ong.service.impl.CommentaryServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
@@ -33,7 +33,7 @@ public class CommentaryController {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(bindingResult);
         }
-        return new ResponseEntity<>(commentaryService.update(id, dto, request), HttpStatus.CREATED);
+        return new ResponseEntity<>(commentaryService.update(id, dto ,request), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -50,4 +50,13 @@ public class CommentaryController {
         return ResponseEntity.ok(commentaryService.save(dto));
     }
 
+
+    @GetMapping("/news/{id}")
+    public ResponseEntity<?> getCommentaryByPost(@PathVariable Long id) {
+        List<CommentaryBodyDTO> list = commentaryService.findAllById(id);
+        if(list.isEmpty()){
+            return new ResponseEntity<>("List is Empty",HttpStatus.OK);
+        }
+        return ResponseEntity.ok().body(list);
+    }
 }

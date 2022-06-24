@@ -32,6 +32,9 @@ public class CommentaryServiceImpl implements ICommentaryService {
     private CommentaryRepository commentaryRepository;
 
     @Autowired
+    private NewsRepository newsRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -46,8 +49,8 @@ public class CommentaryServiceImpl implements ICommentaryService {
     @Override
     public CommentaryDTO save(CommentaryDTO commentaryDTO) {
 
-        News news = newsRepository.findById(commentaryDTO.getNews().getId()).orElseThrow(() -> new NotFoundException("Post does not exist"));
-        UserEntity user = userRepository.findById(commentaryDTO.getUser().getId()).orElseThrow(() -> new NotFoundException("User does not exist"));
+        newsRepository.findById(commentaryDTO.getNews().getId()).orElseThrow(() -> new NotFoundException("Post does not exist"));
+        userRepository.findById(commentaryDTO.getUser().getId()).orElseThrow(() -> new NotFoundException("User does not exist"));
         Commentary commentary = mapper.commentaryDTO2Entity(commentaryDTO);
         Commentary commentarySaved = commentaryRepository.save(commentary);
         return mapper.commentaryEntity2DTO(commentarySaved);
@@ -94,4 +97,11 @@ public class CommentaryServiceImpl implements ICommentaryService {
             throw new ForbiddenException("User with no access.");
         }
     }
+
+    public List<CommentaryBodyDTO> findAllById(Long id){
+        News news = newsRepository.findById(id).orElseThrow(() -> new NotFoundException("Post no exist Id: "+id));
+        List<Commentary> listAll = commentaryRepository.findByNews(news);
+            return mapper.entityListToDtoList(listAll);
+    }
+
 }

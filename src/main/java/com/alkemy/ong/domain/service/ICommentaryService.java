@@ -2,6 +2,7 @@ package com.alkemy.ong.domain.service;
 
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
+import com.alkemy.ong.model.News;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,5 +19,6 @@ public interface ICommentaryService{
 
     void deleteById(Long id, HttpServletRequest request);
 
+    List<CommentaryBodyDTO> findAllById(Long id);
 
 }
