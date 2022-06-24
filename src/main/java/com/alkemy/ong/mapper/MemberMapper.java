@@ -1,7 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.MemberDTO;
-import com.alkemy.ong.model.Member;
+import com.alkemy.ong.domain.model.Member;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

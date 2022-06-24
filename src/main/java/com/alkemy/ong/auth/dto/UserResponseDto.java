@@ -1,6 +1,6 @@
 package com.alkemy.ong.auth.dto;
 
-import com.alkemy.ong.model.Role;
+import com.alkemy.ong.domain.model.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

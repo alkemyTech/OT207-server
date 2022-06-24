@@ -2,9 +2,9 @@ package com.alkemy.ong.dataseed;
 
 import com.alkemy.ong.auth.repository.UserRepository;
 import com.alkemy.ong.enums.RolName;
-import com.alkemy.ong.model.Role;
-import com.alkemy.ong.model.UserEntity;
-import com.alkemy.ong.repository.RoleRepository;
+import com.alkemy.ong.domain.model.Role;
+import com.alkemy.ong.domain.model.UserEntity;
+import com.alkemy.ong.domain.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

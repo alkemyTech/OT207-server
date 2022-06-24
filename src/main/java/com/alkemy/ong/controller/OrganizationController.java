@@ -1,22 +1,23 @@
 package com.alkemy.ong.controller;
 
 
+import com.alkemy.ong.domain.model.Organization;
+import com.alkemy.ong.domain.service.IOrganizationService;
+import com.alkemy.ong.domain.service.ISlideService;
+import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.OrganizationDTO;
 import com.alkemy.ong.dto.OrganizationUpdateDTO;
 import com.alkemy.ong.exception.BadRequestException;
-import com.alkemy.ong.model.Organization;
-import com.alkemy.ong.service.IOrganizationService;
-import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import org.springframework.validation.BindingResult;
 
 @RestController
-@RequestMapping("/organization")
+@RequestMapping(Url.ORGANIZATION_URI)
 public class OrganizationController {
 
     @Autowired
