@@ -6,6 +6,8 @@ import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.domain.model.Commentary;
 import com.alkemy.ong.domain.model.UserEntity;
 import com.alkemy.ong.domain.repository.CommentaryRepository;
+import com.alkemy.ong.domain.repository.model.*;
+import com.alkemy.ong.domain.repository.NewsRepository;
 import com.alkemy.ong.domain.service.ICommentaryService;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
@@ -38,8 +40,14 @@ public class CommentaryServiceImpl implements ICommentaryService {
     @Autowired
     private CommentaryMapper mapper;
 
+    @Autowired
+    private NewsRepository newsRepository;
+
     @Override
     public CommentaryDTO save(CommentaryDTO commentaryDTO) {
+
+        News news = newsRepository.findById(commentaryDTO.getNews().getId()).orElseThrow(() -> new NotFoundException("Post does not exist"));
+        UserEntity user = userRepository.findById(commentaryDTO.getUser().getId()).orElseThrow(() -> new NotFoundException("User does not exist"));
         Commentary commentary = mapper.commentaryDTO2Entity(commentaryDTO);
         Commentary commentarySaved = commentaryRepository.save(commentary);
         return mapper.commentaryEntity2DTO(commentarySaved);
