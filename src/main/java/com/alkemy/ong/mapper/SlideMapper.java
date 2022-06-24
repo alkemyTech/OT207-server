@@ -3,7 +3,7 @@ package com.alkemy.ong.mapper;
 import com.alkemy.ong.dto.SlidesDTO;
 import com.alkemy.ong.dto.SlidesRequestDTO;
 import com.alkemy.ong.dto.SlidesResponseDTO;
-import com.alkemy.ong.model.Slides;
+import com.alkemy.ong.domain.model.Slides;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

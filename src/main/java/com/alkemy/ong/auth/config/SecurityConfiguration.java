@@ -3,6 +3,7 @@ package com.alkemy.ong.auth.config;
 import com.alkemy.ong.auth.filter.JwtRequestFilter;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.enums.RolName;
+import com.alkemy.ong.domain.util.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -69,7 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/organization/public").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .antMatchers(HttpMethod.GET, "/organization/public/{organizationId}").hasAnyAuthority(RolName.ROLE_USER.toString())
                 .antMatchers(HttpMethod.GET, "/comments").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
-                .antMatchers(HttpMethod.DELETE, "/members/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
+                .antMatchers(HttpMethod.DELETE, Url.MEMBERS_URI + "/{id}").hasAnyAuthority(RolName.ROLE_ADMIN.toString())
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement()

@@ -1,7 +1,7 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.dto.ActivityDTO;
-import com.alkemy.ong.model.Activity;
+import com.alkemy.ong.domain.model.Activity;
 import org.springframework.stereotype.Component;
 
 @Component

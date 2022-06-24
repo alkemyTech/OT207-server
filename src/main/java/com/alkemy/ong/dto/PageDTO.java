@@ -1,12 +1,13 @@
 package com.alkemy.ong.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageDTO<T> {
     private String next;
     private String current;
