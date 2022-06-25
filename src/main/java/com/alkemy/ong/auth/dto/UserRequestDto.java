@@ -1,6 +1,6 @@
 package com.alkemy.ong.auth.dto;
 
-import com.alkemy.ong.model.Role;
+import com.alkemy.ong.domain.model.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
