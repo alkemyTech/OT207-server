@@ -4,9 +4,9 @@ import com.alkemy.ong.auth.dto.UserResponseDto;
 import com.alkemy.ong.auth.repository.UserRepository;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.domain.model.Commentary;
+import com.alkemy.ong.domain.model.News;
 import com.alkemy.ong.domain.model.UserEntity;
 import com.alkemy.ong.domain.repository.CommentaryRepository;
-import com.alkemy.ong.domain.repository.model.*;
 import com.alkemy.ong.domain.repository.NewsRepository;
 import com.alkemy.ong.domain.service.ICommentaryService;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
@@ -30,9 +30,6 @@ public class CommentaryServiceImpl implements ICommentaryService {
 
     @Autowired
     private CommentaryRepository commentaryRepository;
-
-    @Autowired
-    private NewsRepository newsRepository;
 
     @Autowired
     private UserRepository userRepository;

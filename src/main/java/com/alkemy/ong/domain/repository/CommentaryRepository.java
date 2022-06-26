@@ -1,6 +1,5 @@
 package com.alkemy.ong.domain.repository;
 
-import com.alkemy.ong.domain.dto.CommentaryBodyD
 import com.alkemy.ong.domain.model.Commentary;
 import java.util.List;
 import com.alkemy.ong.domain.model.News;

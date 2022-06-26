@@ -1,6 +1,13 @@
 package com.alkemy.ong.domain.util;
 
 
+import com.alkemy.ong.dto.PageDTO;
+import com.alkemy.ong.exception.NotFoundException;
+import org.springframework.data.domain.Page;
+
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
+
 public class Url {
 
     public static final String MEMBERS_URI = "/members";
@@ -16,6 +23,21 @@ public class Url {
     public static final String PAGE_URI = "/page?page=";
     public static final String URL= "http://localhost:8080";
     public static final int MAX_PAGE = 10;
+
+    public static PageDTO pagination (PageDTO pageDTO, Page pageEntity, Integer page, List entityPage2Dto,@NotEmpty  String url ){
+        if (pageEntity.isEmpty()) {
+            throw new NotFoundException("The list is empty");
+        }
+        if (pageEntity.hasNext()) {
+            pageDTO.setNext(url + (page + 1));
+        }
+        if (!pageEntity.isFirst()) {
+            pageDTO.setPrevious(url + (page - 1));
+        }
+        pageDTO.setCurrent(Integer.toString(page));
+        pageDTO.setT(entityPage2Dto);
+        return pageDTO;
+    }
 
 
 }
