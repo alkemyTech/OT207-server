@@ -32,6 +32,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -169,7 +170,7 @@ class CategoryControllerTests {
 
     @Test
     @WithMockUser(username="admin",roles={"USER","ADMIN"})
-    void givenUpdatedEmployee_whenUpdateEmployee_thenReturnIsAccepted() throws Exception{
+    void givenUpdatedCategory_whenUpdateCategory_thenReturnIsAccepted() throws Exception{
         long categoryId = 99L;
         CategoryDTO updateCategoryDTO = createDtoEntity();
         given(categoryService.modifyCategory(eq(categoryId),any(CategoryDTO.class))).willReturn(updateCategoryDTO);
