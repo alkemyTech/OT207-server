@@ -1,15 +1,13 @@
 package com.alkemy.ong.domain.service.impl;
 
-import com.alkemy.ong.domain.model.News;
-import com.alkemy.ong.domain.util.Url;
-import com.alkemy.ong.dto.MemberDTO;
-import com.alkemy.ong.dto.NewsDTO;
-import com.alkemy.ong.dto.PageDTO;
-import com.alkemy.ong.exception.NotFoundException;
-import com.alkemy.ong.mapper.MemberMapper;
 import com.alkemy.ong.domain.model.Member;
 import com.alkemy.ong.domain.repository.MemberRepository;
 import com.alkemy.ong.domain.service.IMemberService;
+import com.alkemy.ong.domain.util.Url;
+import com.alkemy.ong.dto.MemberDTO;
+import com.alkemy.ong.dto.PageDTO;
+import com.alkemy.ong.exception.NotFoundException;
+import com.alkemy.ong.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,9 +33,9 @@ public class MemberServiceImpl implements IMemberService {
     @Transactional
     public MemberDTO addMember(MemberDTO memberDto) {
 
-            Member MemberEntity = memberMapper.memberDtoToMemberEntity(memberDto);
-            Member savedEntity = memberRepository.save(MemberEntity);
-            return memberMapper.memberEntityToMemberDto(savedEntity);
+        Member MemberEntity = memberMapper.memberDtoToMemberEntity(memberDto);
+        Member savedEntity = memberRepository.save(MemberEntity);
+        return memberMapper.memberEntityToMemberDto(savedEntity);
 
     }
 
@@ -75,20 +73,8 @@ public class MemberServiceImpl implements IMemberService {
     @Override
     public PageDTO<MemberDTO> getAllMembersPageable(Integer page) {
         PageDTO<MemberDTO> memberDTOPageDTO = new PageDTO<>();
-        Page<Member> member = this.memberRepository.findAll(PageRequest.of(page - 1, Url.MAX_PAGE, Sort.by("name")));
-        if (member.isEmpty()) {
-            throw new NotFoundException("The list is empty");
-        }
-        if (member.hasNext()) {
-            memberDTOPageDTO.setNext(URI + (page + 1));
-        }
-        if (!member.isFirst()) {
-            memberDTOPageDTO.setPrevious(URI + (page - 1));
-        }
-        memberDTOPageDTO.setCurrent(Integer.toString(page));
-        memberDTOPageDTO.setT(this.memberMapper.membersEntityPage2Dto(member));
-
-        return memberDTOPageDTO;
+        Page<Member> members = this.memberRepository.findAll(PageRequest.of(page - 1, Url.MAX_PAGE, Sort.by("name")));
+        return Url.pagination(memberDTOPageDTO, members, page, this.memberMapper.membersEntityPage2Dto(members), URI);
     }
 
 }
