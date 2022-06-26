@@ -5,10 +5,7 @@ import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.domain.service.ICategoryService;
 import com.alkemy.ong.domain.util.JsonUtils;
 import com.alkemy.ong.domain.util.Url;
-import com.alkemy.ong.dto.CategoryDTO;
-import com.alkemy.ong.dto.CategoryDtoName;
-import com.alkemy.ong.dto.ContactDTO;
-import com.alkemy.ong.dto.MemberDTO;
+import com.alkemy.ong.dto.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +16,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -81,7 +76,7 @@ class CategoryControllerTests {
         CategoryDTO categoryDTO = createDtoEntity();
 
         given(categoryService.addCategory(any(CategoryDTO.class)))
-                .willAnswer((invocation)-> invocation.getArgument(0));
+                .willAnswer((invocation) -> invocation.getArgument(0));
 
         String contactString = objectMapper.writeValueAsString(categoryDTO);
 
@@ -100,8 +95,8 @@ class CategoryControllerTests {
     }
 
     @Test
-    @WithMockUser(username="admin",roles={"USER","ADMIN"})
-    void givenListOfCategories_whenGetAllCategories_thenReturnCategoriesList() throws Exception{
+    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
+    void givenListOfCategories_whenGetAllCategories_thenReturnCategoriesList() throws Exception {
         CategoryDtoName categoryDTO1 = createDtoNameEntity();
         CategoryDtoName categoryDTO2 = createDtoNameEntity();
         List<CategoryDtoName> listOfCategories = new ArrayList<>();
@@ -118,7 +113,7 @@ class CategoryControllerTests {
     }
 
     @Test
-    void givenListOfCategories_whenGetAllCategories_thenReturnCategoriesList_withNotRights() throws Exception{
+    void givenListOfCategories_whenGetAllCategories_thenReturnCategoriesList_withNotRights() throws Exception {
         CategoryDtoName categoryDTO1 = createDtoNameEntity();
         CategoryDtoName categoryDTO2 = createDtoNameEntity();
         List<CategoryDtoName> listOfCategories = new ArrayList<>();
@@ -135,15 +130,15 @@ class CategoryControllerTests {
     // positive scenario - valid employee id
     // JUnit test for GET category by id REST API
     @Test
-    @WithMockUser(username="admin",roles={"USER","ADMIN"})
-    void givenCategoryId_whenGetCategoryById_thenReturnCategoryObject() throws Exception{
+    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
+    void givenCategoryId_whenGetCategoryById_thenReturnCategoryObject() throws Exception {
         // given - precondition or setup
         long categoryId = 1L;
         CategoryDTO categoryDTO = createDtoEntity();
         given(categoryService.getCategoryById(categoryId)).willReturn(categoryDTO);
 
         // when -  action or the behaviour that we are going test
-        ResultActions response = mockMvc.perform(get(Url.CATEGORY_URI+"/{id}", categoryId));
+        ResultActions response = mockMvc.perform(get(Url.CATEGORY_URI + "/{id}", categoryId));
 
         // then - verify the output
         response.andExpect(status().isOk())
@@ -156,8 +151,8 @@ class CategoryControllerTests {
     // negative scenario - valid employee id
     // JUnit test for GET employee by id REST API
     @Test
-    @WithMockUser(username="admin",roles={"USER","ADMIN"})
-    void givenInvalidCategoryId_whenGetCategoryById_thenReturnIsNotFound() throws Exception{
+    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
+    void givenInvalidCategoryId_whenGetCategoryById_thenReturnIsNotFound() throws Exception {
         long categoryId = 99L;
         given(categoryService.getCategoryById(categoryId)).willReturn(null);
 
@@ -169,11 +164,11 @@ class CategoryControllerTests {
     }
 
     @Test
-    @WithMockUser(username="admin",roles={"USER","ADMIN"})
-    void givenUpdatedCategory_whenUpdateCategory_thenReturnIsAccepted() throws Exception{
+    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
+    void givenUpdatedCategory_whenUpdateCategory_thenReturnIsAccepted() throws Exception {
         long categoryId = 99L;
         CategoryDTO updateCategoryDTO = createDtoEntity();
-        given(categoryService.modifyCategory(eq(categoryId),any(CategoryDTO.class))).willReturn(updateCategoryDTO);
+        given(categoryService.modifyCategory(eq(categoryId), any(CategoryDTO.class))).willReturn(updateCategoryDTO);
         mockMvc.perform(put(Url.CATEGORY_URI + "/" + categoryId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.objectToJson(updateCategoryDTO)))
@@ -185,14 +180,14 @@ class CategoryControllerTests {
     }
 
     @Test
-    @WithMockUser(username="admin",roles={"USER","ADMIN"})
-    void givenCategoryId_whenDeleteCategory_thenReturnIsNoContent() throws Exception{
+    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
+    void givenCategoryId_whenDeleteCategory_thenReturnIsNoContent() throws Exception {
         // given - precondition or setup
         long categoryId = 1L;
         willDoNothing().given(categoryService).deleteCategory(categoryId);
 
         // when -  action or the behaviour that we are going test
-        ResultActions response = mockMvc.perform(delete(Url.CATEGORY_URI+"/{id}", categoryId));
+        ResultActions response = mockMvc.perform(delete(Url.CATEGORY_URI + "/{id}", categoryId));
 
         // then - verify the output
         response.andExpect(status().isNoContent())
