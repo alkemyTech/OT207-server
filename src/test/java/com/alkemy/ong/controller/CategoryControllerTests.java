@@ -3,10 +3,12 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.auth.service.JwtUtils;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
 import com.alkemy.ong.domain.service.ICategoryService;
+import com.alkemy.ong.domain.util.JsonUtils;
 import com.alkemy.ong.domain.util.Url;
 import com.alkemy.ong.dto.CategoryDTO;
 import com.alkemy.ong.dto.CategoryDtoName;
 import com.alkemy.ong.dto.ContactDTO;
+import com.alkemy.ong.dto.MemberDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +29,9 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -149,4 +151,19 @@ class CategoryControllerTests {
                 .andExpect(jsonPath("$.description", CoreMatchers.is(categoryDTO.getDescription())));
     }
 
+    // negative scenario - valid employee id
+    // JUnit test for GET employee by id REST API
+    @Test
+    @WithMockUser(username="admin",roles={"USER","ADMIN"})
+    void givenInvalidCategoryId_whenGetCategoryById_thenReturn404() throws Exception{
+        long categoryId = 99L;
+        CategoryDTO categoryDTO = createDtoEntity();
+        given(categoryService.getCategoryById(categoryId)).willReturn(categoryDTO);
+
+        this.mockMvc.perform(put(Url.MEMBERS_URI + "/" + categoryId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.objectToJson(categoryDTO)))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
 }
