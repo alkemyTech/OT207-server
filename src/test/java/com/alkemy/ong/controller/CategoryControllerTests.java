@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -155,15 +156,30 @@ class CategoryControllerTests {
     // JUnit test for GET employee by id REST API
     @Test
     @WithMockUser(username="admin",roles={"USER","ADMIN"})
-    void givenInvalidCategoryId_whenGetCategoryById_thenReturn404() throws Exception{
+    void givenInvalidCategoryId_whenGetCategoryById_thenReturnIsNotFound() throws Exception{
         long categoryId = 99L;
-        CategoryDTO categoryDTO = createDtoEntity();
-        given(categoryService.getCategoryById(categoryId)).willReturn(categoryDTO);
+        given(categoryService.getCategoryById(categoryId)).willReturn(null);
 
-        this.mockMvc.perform(put(Url.MEMBERS_URI + "/" + categoryId)
+        this.mockMvc.perform(put(Url.CATEGORY_URI + "/" + categoryId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonUtils.objectToJson(categoryDTO)))
-                .andExpect(status().isNotFound())
+                        .content(JsonUtils.objectToJson(null)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    @WithMockUser(username="admin",roles={"USER","ADMIN"})
+    void givenUpdatedEmployee_whenUpdateEmployee_thenReturnIsAccepted() throws Exception{
+        long categoryId = 99L;
+        CategoryDTO updateCategoryDTO = createDtoEntity();
+        given(categoryService.modifyCategory(eq(categoryId),any(CategoryDTO.class))).willReturn(updateCategoryDTO);
+        mockMvc.perform(put(Url.CATEGORY_URI + "/" + categoryId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.objectToJson(updateCategoryDTO)))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.name", CoreMatchers.is(updateCategoryDTO.getName())))
+                .andExpect(jsonPath("$.image", CoreMatchers.is(updateCategoryDTO.getImage())))
+                .andExpect(jsonPath("$.description", CoreMatchers.is(updateCategoryDTO.getDescription())))
                 .andDo(print());
     }
 }
