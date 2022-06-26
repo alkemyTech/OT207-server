@@ -2,7 +2,6 @@ package com.alkemy.ong.domain.service;
 
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
-import com.alkemy.ong.domain.model.News;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;

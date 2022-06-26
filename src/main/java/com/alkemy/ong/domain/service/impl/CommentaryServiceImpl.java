@@ -32,9 +32,6 @@ public class CommentaryServiceImpl implements ICommentaryService {
     private CommentaryRepository commentaryRepository;
 
     @Autowired
-    private NewsRepository newsRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
