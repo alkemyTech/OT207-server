@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -95,7 +96,6 @@ class CategoryControllerTests {
     }
 
     @Test
-//    @WithMockUser(setupBefore = TestExecutionEvent.TEST_METHOD, username = "Alejandro")
     @WithMockUser(username="admin",roles={"USER","ADMIN"})
     void givenListOfCategories_whenGetAllCategories_thenReturnCategoriesList() throws Exception{
         CategoryDtoName categoryDTO1 = createDtoNameEntity();
@@ -126,6 +126,27 @@ class CategoryControllerTests {
 
         response.andExpect(status().isForbidden())
                 .andDo(print());
+    }
+
+    // positive scenario - valid employee id
+    // JUnit test for GET category by id REST API
+    @Test
+    @WithMockUser(username="admin",roles={"USER","ADMIN"})
+    void givenCategoryId_whenGetCategoryById_thenReturnCategoryObject() throws Exception{
+        // given - precondition or setup
+        long categoryId = 1L;
+        CategoryDTO categoryDTO = createDtoEntity();
+        given(categoryService.getCategoryById(categoryId)).willReturn(categoryDTO);
+
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(get(Url.CATEGORY_URI+"/{id}", categoryId));
+
+        // then - verify the output
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.name", CoreMatchers.is(categoryDTO.getName())))
+                .andExpect(jsonPath("$.image", CoreMatchers.is(categoryDTO.getImage())))
+                .andExpect(jsonPath("$.description", CoreMatchers.is(categoryDTO.getDescription())));
     }
 
 }
