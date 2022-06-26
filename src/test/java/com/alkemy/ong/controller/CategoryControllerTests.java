@@ -183,4 +183,19 @@ class CategoryControllerTests {
                 .andExpect(jsonPath("$.description", CoreMatchers.is(updateCategoryDTO.getDescription())))
                 .andDo(print());
     }
+
+    @Test
+    @WithMockUser(username="admin",roles={"USER","ADMIN"})
+    void givenCategoryId_whenDeleteCategory_thenReturnIsNoContent() throws Exception{
+        // given - precondition or setup
+        long categoryId = 1L;
+        willDoNothing().given(categoryService).deleteCategory(categoryId);
+
+        // when -  action or the behaviour that we are going test
+        ResultActions response = mockMvc.perform(delete(Url.CATEGORY_URI+"/{id}", categoryId));
+
+        // then - verify the output
+        response.andExpect(status().isNoContent())
+                .andDo(print());
+    }
 }
