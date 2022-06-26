@@ -113,4 +113,19 @@ class CategoryControllerTests {
                         CoreMatchers.is(listOfCategories.size())));
     }
 
+    @Test
+    void givenListOfCategories_whenGetAllCategories_thenReturnCategoriesList_withNotRights() throws Exception{
+        CategoryDtoName categoryDTO1 = createDtoNameEntity();
+        CategoryDtoName categoryDTO2 = createDtoNameEntity();
+        List<CategoryDtoName> listOfCategories = new ArrayList<>();
+        listOfCategories.add(categoryDTO1);
+        listOfCategories.add(categoryDTO2);
+        given(categoryService.getAllCategories()).willReturn(listOfCategories);
+
+        ResultActions response = mockMvc.perform(get(Url.CATEGORY_URI));
+
+        response.andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
 }
