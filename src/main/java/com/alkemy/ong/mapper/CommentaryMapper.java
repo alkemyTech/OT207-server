@@ -1,7 +1,6 @@
 package com.alkemy.ong.mapper;
 
 import com.alkemy.ong.domain.model.Commentary;
-import com.alkemy.ong.domain.repository.CommentaryRepository;
 import com.alkemy.ong.dto.CommentaryBodyDTO;
 import com.alkemy.ong.dto.CommentaryDTO;
 import org.springframework.stereotype.Component;
@@ -11,8 +10,6 @@ import java.util.List;
 
 @Component
 public class CommentaryMapper {
-
-    private CommentaryRepository commentaryRepository;
 
     public Commentary commentaryDTO2Entity(CommentaryDTO dto) {
         Commentary entity = new Commentary();

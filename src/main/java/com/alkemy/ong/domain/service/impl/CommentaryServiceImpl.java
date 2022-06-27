@@ -40,9 +40,6 @@ public class CommentaryServiceImpl implements ICommentaryService {
     @Autowired
     private CommentaryMapper mapper;
 
-    @Autowired
-    private NewsRepository newsRepository;
-
     @Override
     public CommentaryDTO save(CommentaryDTO commentaryDTO) {
 
