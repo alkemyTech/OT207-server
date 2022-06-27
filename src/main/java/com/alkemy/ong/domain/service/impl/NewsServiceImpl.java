@@ -88,19 +88,7 @@ public class NewsServiceImpl implements INewsService {
     public PageDTO<NewsDTO> getAllNewsPageable(Integer page) {
         PageDTO<NewsDTO> newsDTOPageDTO = new PageDTO<>();
         Page<News> news = this.newsRepository.findAll(PageRequest.of(page - 1, Url.MAX_PAGE, Sort.by("name")));
-        if (news.isEmpty()) {
-            throw new NotFoundException("The list is empty");
-        }
-        if (news.hasNext()) {
-            newsDTOPageDTO.setNext(URI + (page + 1));
-        }
-        if (!news.isFirst()) {
-            newsDTOPageDTO.setPrevious(URI + (page - 1));
-        }
-        newsDTOPageDTO.setCurrent(Integer.toString(page));
-        newsDTOPageDTO.setT(this.newsMapper.newsEntityPage2Dto(news));
-
-        return newsDTOPageDTO;
+        return Url.pagination(newsDTOPageDTO,news,page,this.newsMapper.newsEntityPage2Dto(news),URI);
     }
 
 }

@@ -55,20 +55,9 @@ public class CategoryServiceImpl implements ICategoryService {
     public PageDTO<CategoryDTO> getAllCategoriesPageable(Integer page) {
         PageDTO<CategoryDTO> categoryPageDTO = new PageDTO<>();
         Page<Category> categories = this.categoryRepository.findAll(PageRequest.of(page - 1, Url.MAX_PAGE, Sort.by("name")));
-        if (categories.isEmpty()) {
-            throw new NotFoundException("The list is empty");
-        }
-        if (categories.hasNext()) {
-            categoryPageDTO.setNext(URI + (page + 1));
-        }
-        if (!categories.isFirst()) {
-            categoryPageDTO.setPrevious(URI + (page - 1));
-        }
-        categoryPageDTO.setCurrent(Integer.toString(page));
-        categoryPageDTO.setT(this.categoryMapper.categoryEntityPage2Dto(categories));
-
-        return categoryPageDTO;
+        return Url.pagination(categoryPageDTO,categories,page,this.categoryMapper.categoryEntityPage2Dto(categories),URI);
     }
+
 
 
     public CategoryDTO getCategoryById(Long id) {

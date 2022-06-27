@@ -3,6 +3,7 @@ package com.alkemy.ong.auth.controller;
 import com.alkemy.ong.auth.dto.*;
 import com.alkemy.ong.auth.service.JwtUtils;
 import com.alkemy.ong.auth.service.impl.UserDetailsCustomService;
+import com.alkemy.ong.controller.documentation.AuthContollerDoc;
 import com.alkemy.ong.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthController implements AuthContollerDoc {
 
     private UserDetailsCustomService userDetailsCustomService;
     private AuthenticationManager authenticationManager;
@@ -29,6 +30,7 @@ public class AuthController {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
+    @Override
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> userRegistration(@Valid @RequestBody UserRequestDto userRequestDto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
@@ -40,12 +42,14 @@ public class AuthController {
         return ResponseEntity.ok().body(authResponse);
     }
 
+    @Override
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> singIn(@RequestBody AuthenticationRequest authRequest) {
         AuthenticationResponse authResponse = this.userDetailsCustomService.login(authRequest);
         return ResponseEntity.ok().body(authResponse);
     }
 
+    @Override
     @GetMapping("/me")
     public ResponseEntity<UserResponseDto> getProfile(HttpServletRequest request) {
         UserResponseDto responseDto = userDetailsCustomService.getProfile(request);
