@@ -23,7 +23,9 @@ import org.springframework.lang.Nullable;
 @SQLDelete(sql = "UPDATE testimonials SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 @Table(name = "testimonials")
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class Testimonial implements Serializable {
 
     private static final long serialVersionUID = 1L;
